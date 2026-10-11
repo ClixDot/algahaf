@@ -20,11 +20,11 @@ import NotFound from './pages/NotFound';
 
 function App() {
   return (
-    <div className="alghaf-app" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
+    <div className="alghaf-app" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '100%', overflowX: 'clip' }}>
       <ScrollToTop />
       <Navbar />
 
-      <div style={{ flex: 1, width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
+      <div style={{ flex: 1, width: '100%', maxWidth: '100%', overflowX: 'clip' }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
