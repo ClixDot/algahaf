@@ -64,7 +64,7 @@ export default function Home() {
 
   const heroScenes = [
     { id: 'hero1', url: '/assets/images/hero1.jpeg', label: 'Palm Residence' },
-    { id: 'twilight', url: '/assets/images/imgupscaler-enhanced-6.jpg', label: 'Twilight Villa' },
+    { id: 'hero2', url: '/assets/images/hero 2.png', label: 'Twilight Villa' },
     { id: 'dune', url: '/assets/images/imgupscaler-enhanced-4.jpg', label: 'Desert Dune Residence' },
     { id: 'pool', url: '/assets/renders/MOVA_EXT_3D_img1.jpg', label: 'MOVA Pool Pavilion' },
   ];
