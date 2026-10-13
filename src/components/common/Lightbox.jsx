@@ -13,6 +13,21 @@ export default function Lightbox({ images = [], currentIndex = 0, isOpen, onClos
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, currentIndex, images, onClose, onNavigate]);
 
+  // Lock body scroll and pause Lenis while Lightbox is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      window.lenis?.stop();
+    } else {
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
+    };
+  }, [isOpen]);
+
   if (!isOpen || images.length === 0) return null;
 
   const currentImage = images[currentIndex];
@@ -23,6 +38,7 @@ export default function Lightbox({ images = [], currentIndex = 0, isOpen, onClos
     <div 
       role="dialog" 
       aria-modal="true"
+      data-lenis-prevent="true"
       style={{
         position: 'fixed',
         inset: 0,

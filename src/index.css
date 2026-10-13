@@ -107,6 +107,28 @@
   font-display: swap;
 }
 
+/* --- Lenis Smooth Scrolling Core --- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 /* --- Design Tokens --- */
 :root {
   /* Brand Palette */
@@ -231,6 +253,16 @@ body {
   margin-bottom: 1.5rem;
   word-break: break-word;
   overflow-wrap: break-word;
+}
+
+/* Hero Scene Indicator Progress Animation */
+@keyframes heroSceneProgress {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
 }
 
 @media (max-width: 768px) {
@@ -928,11 +960,11 @@ h1, h2, h3, h4, h5, h6,
   display: block;
 }
 
-/* 4 Stage Columns Grid */
+/* 3 Stage Columns Grid */
 .hwb-stages-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(1.25rem, 2.2vw, 2.75rem);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 3.5rem);
   align-items: start;
   position: relative;
   z-index: 2;
@@ -1045,23 +1077,15 @@ h1, h2, h3, h4, h5, h6,
   /* Stage 1 & 2 standard portrait */
   .hwb-col-1 .hwb-media-frame,
   .hwb-col-2 .hwb-media-frame {
-    height: 380px;
+    height: 410px;
   }
 
-  /* Stage 3: Starts ~130px higher up, taller height */
+  /* Stage 3: Starts slightly higher up, taller height */
   .hwb-col-3 .hwb-media-outer {
-    margin-top: -130px;
+    margin-top: -60px;
   }
   .hwb-col-3 .hwb-media-frame {
-    height: 510px;
-  }
-
-  /* Stage 4: Offset slightly lower */
-  .hwb-col-4 .hwb-media-outer {
-    margin-top: 40px;
-  }
-  .hwb-col-4 .hwb-media-frame {
-    height: 340px;
+    height: 470px;
   }
 }
 
@@ -1157,8 +1181,7 @@ h1, h2, h3, h4, h5, h6,
     display: none;
   }
 
-  .hwb-col-3 .hwb-media-outer,
-  .hwb-col-4 .hwb-media-outer {
+  .hwb-col-3 .hwb-media-outer {
     margin-top: 0;
   }
 }
@@ -1192,14 +1215,14 @@ h1, h2, h3, h4, h5, h6,
 /* --- Footer Responsive 1-Row Grid --- */
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: clamp(1.5rem, 2.5vw, 3.25rem);
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(1.75rem, 3.5vw, 4.5rem);
   padding-bottom: 3.5rem;
   border-bottom: 1px solid rgba(242, 238, 229, 0.12);
   align-items: start;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 2.75rem 2rem;
@@ -1302,50 +1325,28 @@ h1, h2, h3, h4, h5, h6,
   margin: 0;
 }
 
-/* Staggered Heights for Desktop matching Image 2 */
-@media (min-width: 992px) {
+/* Applications Layout for 4 Cards */
+@media (min-width: 1024px) {
   .applications-bento-grid {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 290px 140px 290px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
   }
-  .app-bento-card-0 {
-    grid-column: 1;
-    grid-row: 1;
+  .app-bento-card {
+    height: 420px;
   }
-  .app-bento-card-3 {
-    grid-column: 1;
-    grid-row: 2 / 4;
-  }
-  .app-bento-card-1 {
-    grid-column: 2;
-    grid-row: 1 / 3;
-  }
-  .app-bento-card-4 {
-    grid-column: 2;
-    grid-row: 3;
-  }
-  .app-bento-card-2 {
-    grid-column: 3;
-    grid-row: 1;
-  }
-  .app-bento-card-5 {
-    grid-column: 3;
-    grid-row: 2 / 4;
-  }
-  .app-bento-card-1 .app-bento-title,
-  .app-bento-card-3 .app-bento-title,
-  .app-bento-card-5 .app-bento-title {
-    font-size: 1.35rem;
+  .app-bento-card .app-bento-title {
+    font-size: 1.25rem;
   }
 }
 
 /* Tablet: 2 columns */
-@media (min-width: 641px) and (max-width: 991px) {
+@media (min-width: 641px) and (max-width: 1023px) {
   .applications-bento-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
   .app-bento-card {
-    height: 320px;
+    height: 330px;
   }
 }
 
@@ -2027,4 +2028,57 @@ h1, h2, h3, h4, h5, h6,
   }
 }
 
+/* Homepage Origin / About Section Responsive Styling */
+@media (max-width: 900px) {
+  .about-section {
+    min-height: auto !important;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(243, 237, 226, 0.98) 0%,
+      rgba(243, 237, 226, 0.93) 55%,
+      rgba(243, 237, 226, 0.45) 85%,
+      rgba(243, 237, 226, 0.15) 100%
+    ), url('/assets/images/bg%20img%20alghaf%201.jpg.jpeg') !important;
+    background-position: right bottom !important;
+  }
+}
 
+/* ==========================================================================
+   LENIS SMOOTH SCROLLING STYLES & OPTIMIZATION
+   ========================================================================== */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Prevent horizontal overflow causing scroll jitter */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+}

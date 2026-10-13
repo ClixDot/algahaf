@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
   ArrowRight, 
   Sparkles, 
@@ -15,6 +17,7 @@ import Lightbox from '../components/common/Lightbox';
 import { products } from '../data/productsData';
 import { companyInfo } from '../data/companyData';
 import { applicationsData } from '../data/applicationsData';
+import FromProjectToProduct from '../components/home/FromProjectToProduct';
 
 // Four process cards matching the architectural editorial layout
 const howWeBuildCards = [
@@ -38,13 +41,6 @@ const howWeBuildCards = [
     description: "On-site assembly with precision and minimal disruption, delivering spaces that last.",
     image: "/assets/renders/CINE_EXT_3D_img4.jpg",
     link: "/process"
-  },
-  {
-    number: "04",
-    title: "Live Better.",
-    description: "Sustainable, high-quality spaces designed for people and built for a brighter tomorrow.",
-    image: "/assets/images/imgupscaler-enhanced-6.jpg",
-    link: "/products"
   }
 ];
 
@@ -67,33 +63,174 @@ export default function Home() {
   };
 
   const heroScenes = [
+    { id: 'hero1', url: '/assets/images/hero1.jpeg', label: 'Palm Residence' },
     { id: 'twilight', url: '/assets/images/imgupscaler-enhanced-6.jpg', label: 'Twilight Villa' },
     { id: 'dune', url: '/assets/images/imgupscaler-enhanced-4.jpg', label: 'Desert Dune Residence' },
     { id: 'pool', url: '/assets/renders/MOVA_EXT_3D_img1.jpg', label: 'MOVA Pool Pavilion' },
   ];
   const [activeHeroScene, setActiveHeroScene] = useState(0);
+  const homeRef = useRef(null);
+
+  // Preload hero scene images on mount to ensure instant, buttery-smooth transitions without lag
+  useEffect(() => {
+    heroScenes.forEach((scene) => {
+      const img = new Image();
+      img.src = scene.url;
+    });
+  }, []);
+
+  // Automatic hero slider with smooth timed transitions (snappier 3.4s interval)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveHeroScene(prev => (prev + 1) % heroScenes.length);
+    }, 3400);
+    return () => clearInterval(timer);
+  }, [activeHeroScene]);
+
+  // Refined architectural GSAP scroll-triggered entrance animations
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Origin text reveal
+      const originItems = document.querySelectorAll('.home-origin-reveal');
+      if (originItems.length) {
+        gsap.from(originItems, {
+          y: 26,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.about-section',
+            start: 'top 78%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+      // 2. Pillars staggered reveal
+      const pillarCards = document.querySelectorAll('.home-pillar-card');
+      if (pillarCards.length) {
+        gsap.from(pillarCards, {
+          y: 28,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.home-pillars-grid',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+      // 3. How We Build 3 Stages
+      const stageCards = document.querySelectorAll('.hwb-stage-card');
+      if (stageCards.length) {
+        gsap.from(stageCards, {
+          y: 30,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.hwb-stages-row',
+            start: 'top 78%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+      // 4. Product Cards reveal
+      const productCards = document.querySelectorAll('.home-product-card');
+      if (productCards.length) {
+        gsap.from(productCards, {
+          y: 32,
+          opacity: 0,
+          duration: 0.9,
+          stagger: 0.14,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.home-products-grid',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+      // 5. Applications Bento Cards reveal
+      const bentoCards = document.querySelectorAll('.app-bento-card');
+      if (bentoCards.length) {
+        gsap.from(bentoCards, {
+          y: 26,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.applications-bento-grid',
+            start: 'top 82%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+      // 6. Closing Hero Content Reveal
+      const closingItems = document.querySelectorAll('.home-closing-reveal');
+      if (closingItems.length) {
+        gsap.from(closingItems, {
+          y: 24,
+          opacity: 0,
+          duration: 0.85,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.home-closing-section',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+    }, homeRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <main>
+    <main ref={homeRef}>
       {/* =========================================================================
-          HERO SECTION — Clean Native Hero
+          HERO SECTION — Clean Native Hero with Automatic Smooth Slider
           ========================================================================= */}
       <section 
         className="hero-section"
       >
-        {/* Natural Architectural Background Image without green tint or grid lines */}
-        <div 
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.3) 45%, transparent 75%), linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 35%), url('${heroScenes[activeHeroScene].url}')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center 42%',
-            transform: 'scale(1.02)',
-            transition: 'background-image 0.6s ease-in-out',
-            zIndex: 1
-          }}
-        />
+        {/* Layered Architectural Background Slider for Seamless Crossfade & Subtle Zoom */}
+        {heroScenes.map((scene, idx) => {
+          const isActive = activeHeroScene === idx;
+          return (
+            <div 
+              key={scene.id}
+              aria-hidden={!isActive}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.3) 45%, transparent 75%), linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 35%), url('${scene.url}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center 42%',
+                opacity: isActive ? 1 : 0,
+                transform: isActive ? 'scale(1.025)' : 'scale(1.07)',
+                transition: 'opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), transform 3.8s cubic-bezier(0.25, 1, 0.5, 1)',
+                zIndex: isActive ? 2 : 1,
+                pointerEvents: 'none',
+                willChange: 'opacity, transform'
+              }}
+            />
+          );
+        })}
 
         {/* Hero Main Content Area (Positioned lower down towards bottom bar) */}
         <div 
@@ -117,72 +254,7 @@ export default function Home() {
               <span style={{ display: 'block' }}>Meets Structure</span>
             </h1>
 
-            {/* CTA Action Buttons with reduced border radius */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem' }}>
-              <button 
-                onClick={() => openEnquiry()} 
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.625rem',
-                  backgroundColor: '#FFFFFF',
-                  color: '#52694B',
-                  fontFamily: 'var(--font-body)',
-                  fontWeight: 700,
-                  fontSize: '0.9375rem',
-                  letterSpacing: '0.02em',
-                  padding: '0.95rem 2.25rem',
-                  borderRadius: '4px',
-                  border: 'none',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.25)',
-                  cursor: 'pointer',
-                  transition: 'all 0.25s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--color-sand)';
-                  e.currentTarget.style.color = '#52694B';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#FFFFFF';
-                  e.currentTarget.style.color = '#52694B';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                Start Your Project
-              </button>
 
-              <Link 
-                to="/products" 
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  backgroundColor: 'rgba(255, 255, 255, 0.12)',
-                  color: '#FAF8F5',
-                  fontFamily: 'var(--font-body)',
-                  fontWeight: 600,
-                  fontSize: '0.9375rem',
-                  padding: '0.95rem 1.85rem',
-                  borderRadius: '4px',
-                  border: '1px solid rgba(255, 255, 255, 0.28)',
-                  textDecoration: 'none',
-                  transition: 'background-color 0.2s ease, transform 0.2s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.22)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                Explore Collections <ArrowRight size={16} />
-              </Link>
-            </div>
           </div>
         </div>
 
@@ -221,97 +293,6 @@ export default function Home() {
                 Designing buildings that respond to real needs and real environments, with a focus on the function.
               </p>
             </div>
-
-            {/* Bottom Right 3 Stats in a Row */}
-            <div 
-              style={{ 
-                display: 'flex', 
-                alignItems: 'flex-end', 
-                gap: 'clamp(1.25rem, 3.5vw, 3.75rem)',
-                flexWrap: 'wrap'
-              }}
-            >
-              <div>
-                <div 
-                  style={{ 
-                    fontFamily: 'var(--font-display)', 
-                    fontSize: 'clamp(2.25rem, 3.5vw, 3.5rem)', 
-                    fontWeight: 300, 
-                    color: '#FAF8F5', 
-                    lineHeight: 1,
-                    letterSpacing: '-0.01em'
-                  }}
-                >
-                  10+
-                </div>
-                <div 
-                  style={{ 
-                    fontFamily: 'var(--font-body)', 
-                    fontSize: '0.8125rem', 
-                    fontWeight: 400,
-                    color: '#BDB4A3', 
-                    marginTop: '0.45rem',
-                    letterSpacing: '0.02em'
-                  }}
-                >
-                  Years of Innovation
-                </div>
-              </div>
-
-              <div>
-                <div 
-                  style={{ 
-                    fontFamily: 'var(--font-display)', 
-                    fontSize: 'clamp(2.25rem, 3.5vw, 3.5rem)', 
-                    fontWeight: 300, 
-                    color: '#FAF8F5', 
-                    lineHeight: 1,
-                    letterSpacing: '-0.01em'
-                  }}
-                >
-                  150+
-                </div>
-                <div 
-                  style={{ 
-                    fontFamily: 'var(--font-body)', 
-                    fontSize: '0.8125rem', 
-                    fontWeight: 400,
-                    color: '#BDB4A3', 
-                    marginTop: '0.45rem',
-                    letterSpacing: '0.02em'
-                  }}
-                >
-                  Concepts Evolved
-                </div>
-              </div>
-
-              <div>
-                <div 
-                  style={{ 
-                    fontFamily: 'var(--font-display)', 
-                    fontSize: 'clamp(2.25rem, 3.5vw, 3.5rem)', 
-                    fontWeight: 300, 
-                    color: '#FAF8F5', 
-                    lineHeight: 1,
-                    letterSpacing: '-0.01em'
-                  }}
-                >
-                  200+
-                </div>
-                <div 
-                  style={{ 
-                    fontFamily: 'var(--font-body)', 
-                    fontSize: '0.8125rem', 
-                    fontWeight: 400,
-                    color: '#BDB4A3', 
-                    marginTop: '0.45rem',
-                    letterSpacing: '0.02em'
-                  }}
-                >
-                  Ideas in Motion
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Interactive Scene Switcher Indicator */}
@@ -327,26 +308,47 @@ export default function Home() {
               borderTop: '1px solid rgba(255, 255, 255, 0.08)'
             }}
           >
-            <span style={{ fontSize: '0.6875rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8F8677', marginRight: '0.5rem' }}>
-              Scene:
+            <span style={{ fontSize: '0.6875rem', letterSpacing: '0.12em', fontWeight: 600, textTransform: 'uppercase', color: '#B5AC9E', marginRight: '0.45rem' }}>
+              SCENE:
             </span>
-            {heroScenes.map((scene, idx) => (
-              <button
-                key={scene.id}
-                onClick={() => setActiveHeroScene(idx)}
-                aria-label={`Switch to ${scene.label}`}
-                title={scene.label}
-                style={{
-                  height: '4px',
-                  width: activeHeroScene === idx ? '28px' : '14px',
-                  backgroundColor: activeHeroScene === idx ? 'var(--color-sand)' : 'rgba(255, 255, 255, 0.25)',
-                  borderRadius: '2px',
-                  transition: 'all 0.3s ease',
-                  padding: 0,
-                  cursor: 'pointer'
-                }}
-              />
-            ))}
+            {heroScenes.map((scene, idx) => {
+              const isActive = activeHeroScene === idx;
+              return (
+                <button
+                  key={scene.id}
+                  onClick={() => setActiveHeroScene(idx)}
+                  aria-label={`Switch to ${scene.label}`}
+                  title={scene.label}
+                  style={{
+                    height: '4px',
+                    width: isActive ? '38px' : '16px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.22)',
+                    borderRadius: '2px',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    padding: 0,
+                    cursor: 'pointer',
+                    border: 'none',
+                    outline: 'none',
+                    transition: 'width 0.35s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                >
+                  {isActive && (
+                    <span 
+                      key={`progress-${idx}-${activeHeroScene}`}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundColor: 'var(--color-sand)',
+                        borderRadius: '2px',
+                        transformOrigin: 'left',
+                        animation: 'heroSceneProgress 3.4s linear forwards'
+                      }}
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -363,83 +365,86 @@ export default function Home() {
           style={{
             position: 'relative',
             zIndex: 2,
-            minHeight: '760px',
+            minHeight: '800px',
             display: 'flex',
             alignItems: 'center',
             backgroundColor: '#F3EDE2',
-            backgroundImage: `linear-gradient(to right, rgba(243, 237, 226, 0.98) 0%, rgba(243, 237, 226, 0.94) 34%, rgba(243, 237, 226, 0.38) 52%, transparent 68%), url('/assets/images/about_bg.png')`,
+            backgroundImage: `linear-gradient(to right, rgba(243, 237, 226, 0.98) 0%, rgba(243, 237, 226, 0.94) 38%, rgba(243, 237, 226, 0.32) 58%, transparent 74%), url('/assets/images/bg%20img%20alghaf%201.jpg.jpeg')`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center right',
+            backgroundPosition: 'right center',
             backgroundRepeat: 'no-repeat',
-            paddingTop: '6rem',
-            paddingBottom: '5rem',
+            paddingTop: '6.5rem',
+            paddingBottom: '5.5rem',
             overflow: 'hidden'
           }}
         >
         <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
-          <div style={{ maxWidth: '580px' }}>
+          <div style={{ maxWidth: '660px' }}>
             {/* Eyebrow with extending divider line */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '2rem' }}>
+            <div className="home-origin-reveal" style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '2.25rem' }}>
               <span 
                 style={{ 
                   fontFamily: 'var(--font-body)', 
-                  fontSize: '0.8125rem', 
+                  fontSize: '0.875rem', 
                   fontWeight: 600, 
-                  letterSpacing: '0.22em', 
+                  letterSpacing: '0.24em', 
                   textTransform: 'uppercase', 
                   color: '#7D7565' 
                 }}
               >
                 OUR ORIGIN / 01
               </span>
-              <span style={{ height: '1px', width: '70px', backgroundColor: 'rgba(125, 117, 101, 0.35)' }}></span>
+              <span style={{ height: '1px', width: '80px', backgroundColor: 'rgba(125, 117, 101, 0.35)' }}></span>
             </div>
 
-            {/* Main Headline in Hero Brand Font Family (Aftika): 52px, reduced weight */}
+            {/* Main Headline in Hero Brand Font Family (Aftika): Enriched editorial scale */}
             <h2 
+              className="home-origin-reveal"
               style={{ 
                 fontFamily: 'var(--font-display)',
                 fontWeight: 400,
-                fontSize: 'clamp(2.25rem, 4.2vw, 52px)',
-                lineHeight: 1.15,
-                letterSpacing: '-0.015em',
+                fontSize: 'clamp(2.75rem, 5vw, 64px)',
+                lineHeight: 1.12,
+                letterSpacing: '-0.02em',
                 color: '#52694B',
-                marginBottom: '1.75rem'
+                marginBottom: '2rem'
               }}
             >
               Rooted<br />
               in the UAE.
             </h2>
 
-            {/* Body Description */}
+            {/* Body Description - Enhanced editorial size and legibility */}
             <p 
-              style={{
+              className="home-origin-reveal"
+              style={{ 
                 fontFamily: 'var(--font-body)',
-                fontSize: 'clamp(0.95rem, 1.15vw, 1.0625rem)',
+                fontSize: 'clamp(1.0625rem, 1.25vw, 1.2rem)',
                 fontWeight: 400,
-                lineHeight: 1.7,
+                lineHeight: 1.75,
                 color: '#3A3E39',
-                maxWidth: '510px',
-                marginBottom: '2.5rem'
+                maxWidth: '620px',
+                marginBottom: '2.75rem'
               }}
             >
-              Born from a region defined by resilience and vision, AlGhaf Collective draws inspiration from the UAE’s landscape, culture and ambition. We create modular living solutions that are rooted in place, designed for people and built for a better tomorrow.
+              Inspired by the resilience of the UAE’s Ghaf tree, two Emirati women envisioned smarter, more sustainable homes. Combining their vision with the design, prefabrication, and modular construction expertise of CK Living Concepts, Al Ghaf Collective was born.
             </p>
 
             {/* Dark Forest Green About Us Button */}
             <Link
               to="/about"
+              className="home-origin-reveal"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '2.5rem',
+                gap: '2.75rem',
                 backgroundColor: '#52694B',
                 color: '#FFFFFF',
                 fontFamily: 'var(--font-body)',
                 fontWeight: 500,
-                fontSize: '0.9375rem',
+                fontSize: '1rem',
                 letterSpacing: '0.04em',
-                padding: '0.95rem 1.75rem',
+                padding: '1.05rem 2rem',
                 borderRadius: '3px',
                 textDecoration: 'none',
                 boxShadow: '0 4px 16px rgba(82, 105, 75, 0.25)',
@@ -457,18 +462,18 @@ export default function Home() {
               }}
             >
               <span>About Us</span>
-              <ArrowRight size={18} />
+              <ArrowRight size={19} />
             </Link>
 
             {/* Bottom Accent Line & Philosophy Words */}
-            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem', marginTop: '3.5rem' }}>
-              <span style={{ height: '1px', width: '38px', backgroundColor: '#8A8272', flexShrink: 0 }}></span>
+            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem', marginTop: '4rem' }}>
+              <span style={{ height: '1px', width: '44px', backgroundColor: '#8A8272', flexShrink: 0 }}></span>
               <span 
                 style={{ 
                   fontFamily: 'var(--font-body)', 
-                  fontSize: '0.72rem', 
+                  fontSize: '0.78rem', 
                   fontWeight: 600, 
-                  letterSpacing: '0.14em', 
+                  letterSpacing: '0.16em', 
                   textTransform: 'uppercase', 
                   color: '#7D7565',
                   lineHeight: 1.5
@@ -481,6 +486,10 @@ export default function Home() {
         </div>
       </section>
 
+      {/* =========================================================================
+          SECTION 2 — CORE IDEA: FROM PROJECT TO PRODUCT (Editorial & Video Preview)
+          ========================================================================= */}
+      <FromProjectToProduct />
 
       {/* =========================================================================
           SECTION 3 — CORE STRENGTHS (Comfort, Quality, Speed, Value)
@@ -493,12 +502,13 @@ export default function Home() {
             centered
           />
 
-          <div className="grid-4">
+          <div className="grid-4 home-pillars-grid">
             {companyInfo.pillars.map((pillar, idx) => {
               const icons = [<Sparkles key="1" size={28} />, <ShieldCheck key="2" size={28} />, <Zap key="3" size={28} />, <Compass key="4" size={28} />];
               return (
                 <div
                   key={pillar.title}
+                  className="home-pillar-card"
                   style={{
                     backgroundColor: '#FFFFFF',
                     padding: '2.25rem 1.75rem',
@@ -559,10 +569,6 @@ export default function Home() {
           {/* Top Header: Left Title */}
           <div className="hwb-header">
             <div className="hwb-header-left hwb-intro-anim">
-              <div className="hwb-eyebrow">
-                <span className="hwb-eyebrow-text">OUR PROCESS</span>
-                <span className="hwb-eyebrow-line"></span>
-              </div>
               <h2 className="hwb-heading">How We Build</h2>
               <p className="hwb-lead">
                 From idea to installation, we follow a precise, integrated process to deliver exceptional spaces — faster, cleaner and better.
@@ -591,10 +597,10 @@ export default function Home() {
                   strokeOpacity="0.65" 
                 />
                 
-                {/* Upward Arch from Stage 2 up through Stage 3 and down to Stage 4 */}
+                {/* Upward Arch from Stage 2 up through Stage 3 */}
                 <path 
                   className="hwb-line-path"
-                  d="M 480 260 C 530 260 560 190 620 180 L 760 180 C 820 180 855 140 930 150 C 1000 160 1050 250 1140 370" 
+                  d="M 480 260 C 530 260 560 190 620 180 L 820 180" 
                   stroke="#9D9886" 
                   strokeWidth="1" 
                   strokeOpacity="0.65" 
@@ -614,12 +620,6 @@ export default function Home() {
                 {/* Node 4: Stage 3 center guide */}
                 <circle className="hwb-node" cx="720" cy="180" r="4.5" stroke="#9D9886" strokeWidth="1" fill="#F5EFE3" />
                 <circle className="hwb-node" cx="720" cy="180" r="1.5" fill="#9D9886" />
-
-                {/* Node 5: Between Stage 3 and 4 peak */}
-                <circle className="hwb-node" cx="890" cy="145" r="3.5" stroke="#9D9886" strokeWidth="1" fill="#F5EFE3" />
-
-                {/* Node 6: Stage 4 entrance */}
-                <circle className="hwb-node" cx="990" cy="195" r="3" fill="#9D9886" fillOpacity="0.8" />
               </svg>
             </div>
 
@@ -628,7 +628,7 @@ export default function Home() {
               {howWeBuildCards.map((card, idx) => (
                 <article 
                   key={card.number} 
-                  className={`hwb-stage-col hwb-col-${idx + 1}`}
+                  className={`hwb-stage-col hwb-stage-card hwb-col-${idx + 1}`}
                 >
                   {/* Media Composition with Overlapping Backdrops */}
                   <div className="hwb-media-outer">
@@ -636,12 +636,6 @@ export default function Home() {
                     {idx === 0 && <div className="hwb-backdrop-panel panel-olive"></div>}
                     {idx === 1 && <div className="hwb-backdrop-panel panel-sand-1"></div>}
                     {idx === 2 && <div className="hwb-backdrop-panel panel-sand-2"></div>}
-                    {idx === 3 && (
-                      <>
-                        <div className="hwb-backdrop-panel panel-forest"></div>
-                        <div className="hwb-blueprint-badge" aria-hidden="true"></div>
-                      </>
-                    )}
 
                     {/* Image Frame */}
                     <div className="hwb-media-frame">
@@ -685,15 +679,18 @@ export default function Home() {
       <section className="section-padding bg-ivory-light">
         <div className="container">
           <SectionHeader
-            title="Homes, Engineered as Products."
-            subtitle="Three distinct architectural systems. One unified standard of prefabrication."
+            eyebrow="OUR PRODUCTS"
+            title="DESIGNED AS A PRODUCT. BUILT FOR LIVING."
+            subtitle="Not just a better way to build. A new way to think about housing."
             centered
+            style={{ maxWidth: '840px' }}
           />
 
-          <div className="grid-3">
+          <div className="grid-3 home-products-grid">
             {products.map((prod) => (
               <div
                 key={prod.id}
+                className="home-product-card"
                 style={{
                   backgroundColor: '#FFFFFF',
                   borderRadius: '6px',
@@ -803,11 +800,20 @@ export default function Home() {
           />
 
           <div className="applications-bento-grid">
-            {applicationsData.slice(0, 6).map((app, index) => (
-              <Link
+            {applicationsData.slice(0, 4).map((app, index) => (
+              <div
                 key={app.id}
-                to="/applications"
+                onClick={() => window.dispatchEvent(new CustomEvent('open-coming-soon'))}
                 className={`app-bento-card app-bento-card-${index}`}
+                style={{ cursor: 'pointer' }}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    window.dispatchEvent(new CustomEvent('open-coming-soon'));
+                  }
+                }}
               >
                 <img
                   src={app.image}
@@ -822,14 +828,19 @@ export default function Home() {
                     {app.title}
                   </h3>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-            <Link to="/applications" className="btn btn-outline-dark">
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-coming-soon'))}
+              className="btn btn-outline-dark"
+              style={{ cursor: 'pointer' }}
+            >
               Explore All Typologies & Project Applications <ArrowRight size={16} />
-            </Link>
+            </button>
           </div>
         </div>
       </section>
@@ -838,6 +849,7 @@ export default function Home() {
           SECTION 7 — LIVE BETTER CLOSING HERO & CTA
           ========================================================================= */}
       <section 
+        className="home-closing-section"
         style={{
           backgroundColor: '#FAF8F5',
           paddingTop: '3rem',
@@ -870,10 +882,11 @@ export default function Home() {
             />
 
             <div style={{ position: 'relative', zIndex: 2, maxWidth: '840px', margin: '0 auto' }}>
-              <span className="eyebrow" style={{ color: 'var(--color-sand)' }}>
+              <span className="eyebrow home-closing-reveal" style={{ color: 'var(--color-sand)' }}>
                 Closing Statement
               </span>
               <h2 
+                className="home-closing-reveal"
                 style={{ 
                   fontFamily: 'var(--font-display)', 
                   fontSize: 'clamp(2.25rem, 4vw, 52px)', 
@@ -887,27 +900,16 @@ export default function Home() {
               </h2>
 
               <p 
+                className="home-closing-reveal"
                 style={{ 
                   fontSize: 'clamp(1.125rem, 1.8vw, 1.375rem)', 
                   color: '#E5DFD4', 
                   lineHeight: '1.7', 
-                  marginBottom: '2.5rem' 
+                  marginBottom: 0 
                 }}
               >
                 Everything we design and build begins with one purpose — to improve the way people live. We bring architecture, technology, nature, and human experience together to create spaces that are smarter, more comfortable, and more sustainable.
               </p>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
-                <button
-                  onClick={() => openEnquiry()}
-                  className="btn btn-sand btn-lg"
-                >
-                  Start a Conversation <ArrowRight size={18} />
-                </button>
-                <Link to="/contact" className="btn btn-outline-light btn-lg">
-                  Contact Our Engineers
-                </Link>
-              </div>
             </div>
           </div>
         </div>

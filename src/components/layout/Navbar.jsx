@@ -1,34 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ArrowRight, Phone } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, MapPin } from 'lucide-react';
 import QuickEnquiryModal from '../common/QuickEnquiryModal';
-import { companyInfo } from '../../data/companyData';
+import ComingSoonModal from '../common/ComingSoonModal';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [navVisible, setNavVisible] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
   const location = useLocation();
 
+  // Listen for global open-coming-soon events from Footer or other pages
   useEffect(() => {
+    const handleOpenComingSoon = () => setIsComingSoonOpen(true);
+    window.addEventListener('open-coming-soon', handleOpenComingSoon);
+    return () => window.removeEventListener('open-coming-soon', handleOpenComingSoon);
+  }, []);
+
+  // Hide navbar on scroll down, reveal smoothly on scroll up
+  useEffect(() => {
+    let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
     let ticking = false;
+
+    const updateNav = (currentScrollY) => {
+      const isScrolled = currentScrollY > 30;
+      setScrolled(isScrolled);
+
+      if (currentScrollY <= 30) {
+        // Always show navbar at the very top of the page
+        setNavVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 60) {
+        // Scrolling down -> hide navbar
+        setNavVisible(false);
+        setProductsDropdownOpen(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up -> reveal navbar smoothly
+        setNavVisible(true);
+      }
+
+      lastScrollY = Math.max(0, currentScrollY);
+    };
+
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          const isScrolled = window.scrollY > 30;
-          setScrolled(prev => (prev !== isScrolled ? isScrolled : prev));
+          updateNav(window.scrollY);
           ticking = false;
         });
         ticking = true;
       }
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close mobile menu and reset visibility on route change
   useEffect(() => {
+    setNavVisible(true);
     setMobileMenuOpen(false);
     setProductsDropdownOpen(false);
   }, [location.pathname]);
@@ -37,11 +69,14 @@ export default function Navbar() {
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      window.lenis?.stop();
     } else {
       document.body.style.overflow = 'unset';
+      window.lenis?.start();
     }
     return () => {
       document.body.style.overflow = 'unset';
+      window.lenis?.start();
     };
   }, [mobileMenuOpen]);
 
@@ -70,7 +105,7 @@ export default function Navbar() {
       ]
     },
     // { label: 'Our Process', path: '/process' },
-    { label: 'Applications', path: '/applications' },
+    { label: 'Applications', path: '/applications', isComingSoon: true },
     { label: 'Contact', path: '/contact' }
   ];
 
@@ -85,41 +120,33 @@ export default function Navbar() {
           top: 0,
           left: 0,
           right: 0,
+          width: '100%',
           zIndex: 1000,
-          pointerEvents: 'none',
-          padding: scrolled ? '0.65rem 0' : '0.65rem 0',
-          transition: 'none'
+          transform: (navVisible || mobileMenuOpen) ? 'translateY(0)' : 'translateY(-100%)',
+          backgroundColor: scrolled 
+            ? '#52694B' 
+            : (isDarkHeroPage ? 'transparent' : '#52694B'),
+          borderBottom: scrolled 
+            ? '1px solid rgba(255, 255, 255, 0.14)' 
+            : 'none',
+          boxShadow: scrolled ? '0 4px 20px rgba(0, 0, 0, 0.16)' : 'none',
+          padding: 0,
+          transition: 'transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease'
         }}
       >
         <div
-          className="navbar-card"
+          className="navbar-container"
           style={{
-            pointerEvents: 'auto',
-            width: scrolled 
-              ? 'min(var(--container-max), calc(100% - 2rem))' 
-              : 'min(var(--container-max), 100%)',
+            width: '100%',
             maxWidth: 'var(--container-max)',
             margin: '0 auto',
-            backgroundColor: scrolled 
-              ? '#FFFFFF' 
-              : isDarkHeroPage ? 'transparent' : '#FFFFFF',
-            borderRadius: scrolled ? '4px' : '0px',
-            border: 'none',
-            boxShadow: scrolled ? '0 8px 24px rgba(0, 0, 0, 0.08)' : 'none',
-            padding: '0.65rem 1.75rem',
-            transition: 'background-color 0.25s ease, box-shadow 0.25s ease, border-radius 0.25s ease'
+            padding: scrolled ? '0.7rem 2rem' : '1.15rem 2rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            transition: 'padding 0.35s cubic-bezier(0.16, 1, 0.3, 1)'
           }}
         >
-          <div
-            style={{
-              width: '100%',
-              maxWidth: '100%',
-              margin: '0 auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
             {/* Logo */}
             <Link 
               to="/" 
@@ -134,15 +161,14 @@ export default function Navbar() {
               <img
                 src="/assets/logos/AlGhaf_logo_-08.png"
                 alt="AlGhaf Collective"
+                className="nav-logo-img"
                 style={{
-                  height: '44px',
+                  height: scrolled ? '48px' : '71px',
                   width: 'auto',
-                  maxWidth: '200px',
+                  maxWidth: scrolled ? '200px' : '260px',
                   objectFit: 'contain',
-                  filter: scrolled || !isDarkHeroPage 
-                    ? 'brightness(0)' 
-                    : 'none',
-                  transition: 'filter 0.2s ease'
+                  filter: 'brightness(0) invert(1)',
+                  transition: 'height 0.35s cubic-bezier(0.16, 1, 0.3, 1), max-width 0.35s ease, filter 0.2s ease'
                 }}
               />
             </Link>
@@ -174,9 +200,7 @@ export default function Navbar() {
                         fontSize: '0.875rem',
                         fontWeight: 600,
                         letterSpacing: '0.02em',
-                        color: scrolled || !isDarkHeroPage
-                          ? (isActive ? '#52694B' : '#20231F')
-                          : (isActive ? 'var(--color-sand)' : '#FAF8F5'),
+                        color: isActive ? '#C9A779' : '#FAF8F5',
                         padding: '0.5rem 0',
                         transition: 'color 0.2s ease'
                       })}
@@ -244,17 +268,22 @@ export default function Navbar() {
                   <NavLink
                     key={item.label}
                     to={item.path}
+                    onClick={(e) => {
+                      if (item.isComingSoon) {
+                        e.preventDefault();
+                        setIsComingSoonOpen(true);
+                      }
+                    }}
                     style={({ isActive }) => ({
                       fontFamily: 'var(--font-body)',
                       fontSize: '0.875rem',
                       fontWeight: 600,
                       letterSpacing: '0.02em',
                       position: 'relative',
-                      color: scrolled || !isDarkHeroPage 
-                        ? (isActive ? '#52694B' : '#20231F') 
-                        : (isActive ? 'var(--color-sand)' : '#FAF8F5'),
+                      color: isActive ? '#C9A779' : '#FAF8F5',
                       padding: '0.5rem 0',
-                      transition: 'color 0.2s ease'
+                      transition: 'color 0.2s ease',
+                      cursor: 'pointer'
                     })}
                   >
                     {({ isActive }) => (
@@ -268,7 +297,7 @@ export default function Navbar() {
                               left: 0,
                               right: 0,
                               height: '2px',
-                              backgroundColor: scrolled || !isDarkHeroPage ? '#52694B' : 'var(--color-sand)',
+                              backgroundColor: '#C9A779',
                               borderRadius: '1px'
                             }} 
                           />
@@ -282,55 +311,6 @@ export default function Navbar() {
 
             {/* Right Action Buttons */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              {/* Phone Box matching reference */}
-              <a
-                href={`tel:${companyInfo.contact.phone.replace(/[^0-9+]/g, '')}`}
-                className="nav-phone-box"
-                style={{
-                  display: 'none',
-                  alignItems: 'center',
-                  textDecoration: 'none',
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '0.8125rem',
-                  fontWeight: 600,
-                  letterSpacing: '0.02em',
-                  padding: '0.55rem 1rem',
-                  borderRadius: '3px',
-                  transition: 'all 0.2s ease',
-                  border: scrolled || !isDarkHeroPage
-                    ? '1px solid rgba(32, 35, 31, 0.25)'
-                    : '1px solid rgba(255, 255, 255, 0.35)',
-                  color: scrolled || !isDarkHeroPage
-                    ? '#20231F'
-                    : '#FAF8F5',
-                  backgroundColor: 'transparent',
-                  whiteSpace: 'nowrap'
-                }}
-                onMouseEnter={(e) => {
-                  if (scrolled || !isDarkHeroPage) {
-                    e.currentTarget.style.borderColor = '#52694B';
-                    e.currentTarget.style.color = '#52694B';
-                    e.currentTarget.style.backgroundColor = 'rgba(82, 105, 75, 0.05)';
-                  } else {
-                    e.currentTarget.style.borderColor = '#FFFFFF';
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (scrolled || !isDarkHeroPage) {
-                    e.currentTarget.style.borderColor = 'rgba(32, 35, 31, 0.25)';
-                    e.currentTarget.style.color = '#20231F';
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                  } else {
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.35)';
-                    e.currentTarget.style.color = '#FAF8F5';
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                  }
-                }}
-              >
-                {companyInfo.contact.phone}
-              </a>
-
               {/* Contact Button matching reference */}
               <button
                 onClick={() => setIsModalOpen(true)}
@@ -339,8 +319,8 @@ export default function Navbar() {
                   display: 'none',
                   alignItems: 'center',
                   gap: '0.45rem',
-                  backgroundColor: scrolled || !isDarkHeroPage ? '#20231F' : '#FFFFFF',
-                  color: scrolled || !isDarkHeroPage ? '#FFFFFF' : '#20231F',
+                  backgroundColor: '#FAF8F5',
+                  color: '#52694B',
                   fontFamily: 'var(--font-body)',
                   fontWeight: 700,
                   fontSize: '0.8125rem',
@@ -349,20 +329,22 @@ export default function Navbar() {
                   borderRadius: '3px',
                   padding: '0.55rem 1.15rem',
                   border: 'none',
-                  boxShadow: scrolled ? '0 2px 8px rgba(0, 0, 0, 0.12)' : '0 4px 16px rgba(0, 0, 0, 0.15)',
+                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.12)',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#52694B';
-                  e.currentTarget.style.color = '#FFFFFF';
+                  e.currentTarget.style.backgroundColor = '#FFFFFF';
+                  e.currentTarget.style.color = '#384933';
                   e.currentTarget.style.transform = 'translateY(-1px)';
+                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = scrolled || !isDarkHeroPage ? '#20231F' : '#FFFFFF';
-                  e.currentTarget.style.color = scrolled || !isDarkHeroPage ? '#FFFFFF' : '#20231F';
+                  e.currentTarget.style.backgroundColor = '#FAF8F5';
+                  e.currentTarget.style.color = '#52694B';
                   e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.12)';
                 }}
               >
                 CONTACT
@@ -374,9 +356,7 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Navigation Menu'}
                 style={{
-                  color: scrolled || !isDarkHeroPage 
-                    ? '#20231F' 
-                    : '#FAF8F5',
+                  color: '#FAF8F5',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -390,12 +370,12 @@ export default function Navbar() {
               </button>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
       {/* Mobile Fullscreen Navigation Overlay */}
       {mobileMenuOpen && (
         <div
+          data-lenis-prevent="true"
           style={{
             position: 'fixed',
             inset: 0,
@@ -483,7 +463,15 @@ export default function Navbar() {
                 <div key={item.label}>
                   <NavLink
                     to={item.path}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={(e) => {
+                      if (item.isComingSoon) {
+                        e.preventDefault();
+                        setMobileMenuOpen(false);
+                        setIsComingSoonOpen(true);
+                      } else {
+                        setMobileMenuOpen(false);
+                      }
+                    }}
                     style={{
                       fontFamily: 'var(--font-display)',
                       fontSize: '1.75rem',
@@ -491,7 +479,8 @@ export default function Navbar() {
                       color: '#FAF8F5',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'space-between'
+                      justifyContent: 'space-between',
+                      cursor: 'pointer'
                     }}
                   >
                     {item.label}
@@ -532,8 +521,8 @@ export default function Navbar() {
               Start a Conversation
             </button>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#E5DFD4', fontSize: '0.875rem' }}>
-              <Phone size={16} color="var(--color-sand)" />
-              <span>+971 4 288 9412 &bull; Dubai, UAE</span>
+              <MapPin size={16} color="var(--color-sand)" />
+              <span>Dubai, United Arab Emirates</span>
             </div>
           </div>
         </div>
@@ -543,6 +532,18 @@ export default function Navbar() {
       <QuickEnquiryModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+      />
+
+      {/* Applications Coming Soon Modal */}
+      <ComingSoonModal
+        isOpen={isComingSoonOpen}
+        onClose={() => setIsComingSoonOpen(false)}
+        onOpenEnquiry={() => {
+          setIsComingSoonOpen(false);
+          setIsModalOpen(true);
+        }}
+        title="APPLICATIONS & TYPOLOGIES"
+        subtitle="Curated Architectural Portfolio"
       />
 
       <style>{`
@@ -557,18 +558,17 @@ export default function Navbar() {
             display: none !important;
           }
         }
-        @media (min-width: 1080px) {
-          .nav-phone-box {
-            display: inline-flex !important;
-          }
-        }
         @media (max-width: 640px) {
-          .header-scrolled {
-            padding: 0.65rem 0 !important;
+          .navbar-container {
+            padding: 0.65rem 1.25rem !important;
           }
-          .header-scrolled .navbar-card {
-            width: calc(100% - 1.25rem) !important;
-            padding: 0.5rem 0.85rem !important;
+          .nav-logo-img {
+            height: 54px !important;
+            max-width: 180px !important;
+          }
+          .header-scrolled .nav-logo-img {
+            height: 42px !important;
+            max-width: 150px !important;
           }
         }
       `}</style>

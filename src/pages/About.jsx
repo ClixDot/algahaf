@@ -1,13 +1,142 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MessageSquare, MapPin } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import QuickEnquiryModal from '../components/common/QuickEnquiryModal';
 
 export default function About() {
   const [modalOpen, setModalOpen] = useState(false);
+  const aboutRef = useRef(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Hero Reveal
+      const heroItems = document.querySelectorAll('.hero-anim-item');
+      if (heroItems.length) {
+        gsap.from(heroItems, {
+          y: 24,
+          opacity: 0,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: 'power2.out',
+          delay: 0.15
+        });
+      }
+
+      // 2. Origin Section Reveal
+      const originItems = document.querySelectorAll('.origin-anim-item');
+      if (originItems.length) {
+        gsap.from(originItems, {
+          y: 28,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.origin-section',
+            start: 'top 78%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+      // 3. Origin Metrics Cards
+      const originCards = document.querySelectorAll('.origin-card');
+      if (originCards.length) {
+        gsap.from(originCards, {
+          y: 32,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.14,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.origin-cards-grid',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+      // 4. Philosophy Section Reveal & Restrained Image Parallax
+      const philItems = document.querySelectorAll('.philosophy-anim-item');
+      if (philItems.length) {
+        gsap.from(philItems, {
+          y: 28,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.philosophy-section',
+            start: 'top 78%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+      const philImg = document.querySelector('.philosophy-img-main img');
+      if (philImg) {
+        gsap.fromTo(philImg, 
+          { yPercent: -4 },
+          { 
+            yPercent: 4, 
+            ease: 'none', 
+            scrollTrigger: {
+              trigger: '.philosophy-section',
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1
+            }
+          }
+        );
+      }
+
+      // 5. Office Section
+      const officeItems = document.querySelectorAll('.office-anim-item');
+      if (officeItems.length) {
+        gsap.from(officeItems, {
+          y: 26,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.office-location-section',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+
+      // 6. CTA Section
+      const ctaItems = document.querySelectorAll('.cta-anim-item');
+      if (ctaItems.length) {
+        gsap.from(ctaItems, {
+          y: 24,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.about-cta-section',
+            start: 'top 82%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+    }, aboutRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <main style={{ margin: 0, padding: 0 }}>
+    <main ref={aboutRef} style={{ margin: 0, padding: 0 }}>
       {/* =========================================================================
           SECTION 01 — ABOUT HERO
           Full-width cinematic architectural hero with high-contrast editorial typography

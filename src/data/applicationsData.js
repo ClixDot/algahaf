@@ -6,7 +6,7 @@ export const applicationsData = [
     tagline: "Architecture designed for mindful modern living.",
     description: "From primary luxury residences to estate guest pavilions and independent family annexes. AlGhaf modular homes offer expansive double-height volumes, floor-to-ceiling desert-tested glass facades, and bespoke interiors completed with turnkey precision.",
     recommendedProducts: ["PENTA", "MOVA"],
-    image: "/assets/images/ax.jpg",
+    image: "/assets/images/built_more_than_homes_01_web.jpg",
     features: [
       "Customizable configurations from 30 m² to 300 m²",
       "Integrated designer kitchens and spa-grade en-suites",
@@ -21,27 +21,12 @@ export const applicationsData = [
     tagline: "Accelerated development for world-class guest sanctuaries.",
     description: "Empowering resort operators and developers to deploy luxury guest keys in remote or pristine terrains with minimal environmental disturbance. Deliver exceptional guest experiences months ahead of conventional construction schedules.",
     recommendedProducts: ["PENTA", "MOVA", "ENTRA"],
-    image: "/assets/images/image_bg_alghaf222.jpg",
+    image: "/assets/images/built_more_than_homes_02_web.jpg",
     features: [
       "Rapid deployment compressing opening timelines by up to 50%",
       "Acoustically isolated suites ensuring total guest privacy",
       "Repeatable, luxury-grade consistency across multiple keys",
       "Turnkey pre-furnished units ready for immediate guest check-in"
-    ]
-  },
-  {
-    id: "eco-retreats",
-    title: "Eco Retreats & Nature Escapes",
-    category: "Hospitality & Wellness",
-    tagline: "Light on the land, deeply connected to nature.",
-    description: "Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways. Built with sustainable materials and compatible with off-grid solar and greywater systems.",
-    recommendedProducts: ["MOVA", "PENTA"],
-    image: "/assets/images/imgupscaler-enhanced-4.jpg",
-    features: [
-      "Lightweight foundation options leaving natural topography undisturbed",
-      "High solar reflectivity and passive natural ventilation principles",
-      "Off-grid battery and photovoltaic solar system integration",
-      "Recyclable steel structural frame with non-toxic interior finishes"
     ]
   },
   {
@@ -51,12 +36,27 @@ export const applicationsData = [
     tagline: "Sanctuaries of calm set amidst agricultural landscapes.",
     description: "Modern architectural retreats tailored for agricultural estates, equestrian ranches, and desert farms. Designed to frame panoramic views, provide insulated comfort against day-and-night temperature swings, and blend harmoniously into rural surroundings.",
     recommendedProducts: ["MOVA", "PENTA"],
-    image: "/assets/images/image_bg_alghafefegveg.jpg",
+    image: "/assets/images/built_more_than_homes_03_web.jpg",
     features: [
       "Generous shaded verandas and outdoor dining pergolas",
       "Dust-sealed multi-point locking fenestration",
       "Durable exterior materials resistant to sand abrasion and sun exposure",
       "Independent utility compatibility for remote rural plots"
+    ]
+  },
+  {
+    id: "eco-retreats",
+    title: "Eco Retreats & Nature Escapes",
+    category: "Hospitality & Wellness",
+    tagline: "Light on the land, deeply connected to nature.",
+    description: "Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways. Built with sustainable materials and compatible with off-grid solar and greywater systems.",
+    recommendedProducts: ["MOVA", "PENTA"],
+    image: "/assets/images/built_more_than_homes_04_web.jpg",
+    features: [
+      "Lightweight foundation options leaving natural topography undisturbed",
+      "High solar reflectivity and passive natural ventilation principles",
+      "Off-grid battery and photovoltaic solar system integration",
+      "Recyclable steel structural frame with non-toxic interior finishes"
     ]
   },
 

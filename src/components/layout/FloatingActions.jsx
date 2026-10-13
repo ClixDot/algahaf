@@ -22,7 +22,11 @@ export default function FloatingActions() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { duration: 1.2 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const whatsappUrl = `https://wa.me/${companyInfo.contact.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello AlGhaf Collective, I would like to enquire about your modular living systems.')}`;

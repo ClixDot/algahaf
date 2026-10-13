@@ -1,15 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Clock, Check, ChevronRight } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SectionHeader from '../components/common/SectionHeader';
 import QuickEnquiryModal from '../components/common/QuickEnquiryModal';
 import { processSteps, processComparison } from '../data/processData';
 
 export default function Process() {
   const [modalOpen, setModalOpen] = useState(false);
+  const processRef = useRef(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      // Reveal each process step card smoothly as it scrolls into view
+      const stepCards = document.querySelectorAll('.process-step-card');
+      stepCards.forEach((card) => {
+        gsap.from(card, {
+          y: 35,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 82%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
+
+      // Comparison table reveal
+      const comparisonCard = document.querySelector('.process-comparison-card');
+      if (comparisonCard) {
+        gsap.from(comparisonCard, {
+          y: 30,
+          opacity: 0,
+          duration: 0.85,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: comparisonCard,
+            start: 'top 82%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+    }, processRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <main style={{ margin: 0, padding: 0 }}>
+    <main ref={processRef} style={{ margin: 0, padding: 0 }}>
       {/* =========================================================================
           HERO BANNER
           ========================================================================= */}
@@ -68,6 +114,7 @@ export default function Process() {
               return (
                 <div
                   key={step.number}
+                  className="process-step-card"
                   style={{
                     backgroundColor: '#FFFFFF',
                     borderRadius: '8px',
@@ -171,15 +218,18 @@ export default function Process() {
             centered
           />
 
-          <div style={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: '8px',
-            border: '1px solid rgba(82, 105, 75, 0.14)',
-            overflowX: 'auto',
-            boxShadow: 'var(--shadow-md)',
-            maxWidth: '1100px',
-            margin: '0 auto'
-          }}>
+          <div 
+            className="process-comparison-card"
+            style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: '8px',
+              border: '1px solid rgba(82, 105, 75, 0.14)',
+              overflowX: 'auto',
+              boxShadow: 'var(--shadow-md)',
+              maxWidth: '1100px',
+              margin: '0 auto'
+            }}
+          >
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '700px' }}>
               <thead>
                 <tr style={{ backgroundColor: 'var(--color-forest-dark)', color: '#FAF8F5' }}>

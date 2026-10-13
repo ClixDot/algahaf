@@ -107,7 +107,7 @@ export const products = [
     category: "Luxury Architectural Living",
     fullName: "Elevated Modular Living",
     tagline: "Designed to Stand Apart. Built to Perform.",
-    heroImage: "/assets/images/axa_s_.jpg",
+    heroImage: "/assets/images/imgupscaler-enhanced-7.jpg",
     previewImage: "/assets/renders/Penta___interior_3d__f_img1.jpg",
     sizeRange: "50–300 m²",
     sizeRangeImperial: "538–3,229 sq ft",
@@ -163,8 +163,8 @@ export const products = [
     ],
     gallery: {
       exterior: [
-        "/assets/images/ax.jpg",
-        "/assets/images/axa_s_.jpg",
+        "/assets/images/imgupscaler-enhanced-7.jpg",
+        "/assets/images/imgupscaler-enhanced-8.jpg",
         "/assets/images/image_bg_more_alghafcefdev.jpg",
         "/assets/images/image_bg_more_alghafdfdfd.jpg"
       ],

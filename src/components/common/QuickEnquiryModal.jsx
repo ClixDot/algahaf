@@ -23,6 +23,21 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
     }
   }, [initialProduct]);
 
+  // Lock body scroll and pause Lenis while open
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      window.lenis?.stop();
+    } else {
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const validate = () => {
@@ -72,6 +87,7 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
     <div
       role="dialog"
       aria-modal="true"
+      data-lenis-prevent="true"
       style={{
         position: 'fixed',
         inset: 0,

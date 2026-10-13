@@ -18,11 +18,14 @@ import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import NotFound from './pages/NotFound';
 
+import SmoothScrollProvider from './components/common/SmoothScrollProvider';
+
 function App() {
   return (
-    <div className="alghaf-app" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '100%', overflowX: 'clip' }}>
-      <ScrollToTop />
-      <Navbar />
+    <SmoothScrollProvider>
+      <div className="alghaf-app" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '100%', overflowX: 'clip' }}>
+        <ScrollToTop />
+        <Navbar />
 
       <div style={{ flex: 1, width: '100%', maxWidth: '100%', overflowX: 'clip' }}>
         <Routes>
@@ -41,9 +44,10 @@ function App() {
         </Routes>
       </div>
 
-      <FloatingActions />
-      <Footer />
-    </div>
+        <FloatingActions />
+        <Footer />
+      </div>
+    </SmoothScrollProvider>
   );
 }
 

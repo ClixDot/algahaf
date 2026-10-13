@@ -62,9 +62,12 @@ export default function Applications() {
         />
 
         <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '880px' }}>
-          <span className="eyebrow" style={{ color: 'var(--color-sand)' }}>
-            Typologies & Use Cases
-          </span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', backgroundColor: 'rgba(201, 167, 121, 0.15)', border: '1px solid rgba(201, 167, 121, 0.35)', borderRadius: '999px', padding: '0.35rem 0.95rem' }}>
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#C9A779' }} />
+            <span style={{ color: 'var(--color-sand)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+              COMING SOON — ACTIVE CURATION
+            </span>
+          </div>
           <h1 className="hero-title" style={{ color: '#FAF8F5', marginBottom: '1.5rem' }}>
             Built For More Than Homes.
           </h1>

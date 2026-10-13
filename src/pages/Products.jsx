@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check, Maximize2 } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SectionHeader from '../components/common/SectionHeader';
 import QuickEnquiryModal from '../components/common/QuickEnquiryModal';
 import Lightbox from '../components/common/Lightbox';
@@ -12,6 +14,33 @@ export default function Products() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const productsRef = useRef(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      const items = document.querySelectorAll('.products-catalog-item');
+      items.forEach((item) => {
+        gsap.from(item, {
+          y: 35,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 82%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
+    }, productsRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const openEnquiry = (prod = '') => {
     setModalProduct(prod);
@@ -25,7 +54,7 @@ export default function Products() {
   };
 
   return (
-    <main>
+    <main ref={productsRef}>
       {/* =========================================================================
           HERO BANNER
           ========================================================================= */}
@@ -85,6 +114,7 @@ export default function Products() {
                 <div
                   key={prod.id}
                   id={prod.id}
+                  className="products-catalog-item"
                   style={{
                     backgroundColor: '#FFFFFF',
                     borderRadius: '8px',

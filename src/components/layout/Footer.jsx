@@ -32,44 +32,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Col 2: Modular Products */}
-          <div>
-            <h4 style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '1.125rem',
-              fontWeight: 700,
-              color: '#FAF8F5',
-              marginBottom: '1.25rem',
-              letterSpacing: '0.04em'
-            }}>
-              Modular Systems
-            </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
-              <li>
-                <Link to="/products/mova" style={{ color: '#E5DFD4', fontSize: '0.9375rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                  <span>MOVA (30–75 m²)</span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--color-sand)', opacity: 0.9 }}>Versatile Living</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/products/penta" style={{ color: '#E5DFD4', fontSize: '0.9375rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                  <span>PENTA (50–300 m²)</span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--color-sand)', opacity: 0.9 }}>Elevated Living</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/products/entra" style={{ color: '#E5DFD4', fontSize: '0.9375rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                  <span>ENTRA</span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--color-sand)', opacity: 0.9 }}>Private Entertainment</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/products" style={{ color: 'var(--color-sand)', fontSize: '0.875rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.5rem' }}>
-                  View All Product Catalog <ArrowUpRight size={14} />
-                </Link>
-              </li>
-            </ul>
-          </div>
 
           {/* Col 3: Company & Approach */}
           <div>
@@ -95,9 +57,26 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/applications" style={{ color: '#E5DFD4', fontSize: '0.9375rem' }}>
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new CustomEvent('open-coming-soon'))}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    padding: 0,
+                    margin: 0,
+                    color: '#E5DFD4',
+                    fontSize: '0.9375rem',
+                    fontFamily: 'inherit',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'color 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-sand)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#E5DFD4'}
+                >
                   Applications & Typologies
-                </Link>
+                </button>
               </li>
               <li>
                 <Link to="/contact" style={{ color: '#E5DFD4', fontSize: '0.9375rem' }}>
