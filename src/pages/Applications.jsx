@@ -174,10 +174,11 @@ export default function Applications() {
                   <h3 style={{ 
                     fontFamily: 'var(--font-display)', 
                     fontSize: '1.2rem', 
-                    fontWeight: 700, 
+                    fontWeight: 350, 
                     color: 'var(--color-forest-dark)', 
                     marginBottom: '0.35rem',
-                    lineHeight: 1.3,
+                    lineHeight: 1.35,
+                    letterSpacing: '0.015em',
                     minHeight: '3.1rem',
                     display: 'flex',
                     alignItems: 'center'

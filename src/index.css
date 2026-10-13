@@ -1303,19 +1303,20 @@ h1, h2, h3, h4, h5, h6,
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--color-sand, #E5DFD4);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.55rem;
   display: block;
 }
 
 .app-bento-title {
   font-family: var(--font-display, inherit);
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 350;
   color: #FAF8F5;
   margin-bottom: 0;
-  line-height: 1.25;
+  line-height: 1.38;
+  letter-spacing: 0.015em;
 }
 
 .app-bento-tagline {
@@ -1336,6 +1337,9 @@ h1, h2, h3, h4, h5, h6,
   }
   .app-bento-card .app-bento-title {
     font-size: 1.25rem;
+    font-weight: 350;
+    line-height: 1.38;
+    letter-spacing: 0.015em;
   }
 }
 

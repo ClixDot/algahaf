@@ -824,7 +824,14 @@ export default function Home() {
                   <span className="app-bento-category">
                     {app.category}
                   </span>
-                  <h3 className="app-bento-title">
+                  <h3 
+                    className="app-bento-title"
+                    style={{
+                      fontWeight: 350,
+                      lineHeight: 1.38,
+                      letterSpacing: '0.015em'
+                    }}
+                  >
                     {app.title}
                   </h3>
                 </div>
