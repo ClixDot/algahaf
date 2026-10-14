@@ -23,13 +23,30 @@ export default function Products() {
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
+      const sectionHeaders = document.querySelectorAll('.section-header-reveal');
+      sectionHeaders.forEach((sh) => {
+        gsap.from(sh, {
+          y: 26,
+          opacity: 0,
+          duration: 0.85,
+          ease: 'power2.out',
+          clearProps: 'all',
+          scrollTrigger: {
+            trigger: sh,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
+
       const items = document.querySelectorAll('.products-catalog-item');
       items.forEach((item) => {
         gsap.from(item, {
-          y: 35,
+          y: 32,
           opacity: 0,
-          duration: 0.9,
+          duration: 0.85,
           ease: 'power2.out',
+          clearProps: 'all',
           scrollTrigger: {
             trigger: item,
             start: 'top 82%',

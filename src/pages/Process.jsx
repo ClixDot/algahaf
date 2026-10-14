@@ -18,6 +18,22 @@ export default function Process() {
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
+      const sectionHeaders = document.querySelectorAll('.section-header-reveal');
+      sectionHeaders.forEach((sh) => {
+        gsap.from(sh, {
+          y: 26,
+          opacity: 0,
+          duration: 0.85,
+          ease: 'power2.out',
+          clearProps: 'all',
+          scrollTrigger: {
+            trigger: sh,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
+
       // Reveal each process step card smoothly as it scrolls into view
       const stepCards = document.querySelectorAll('.process-step-card');
       stepCards.forEach((card) => {
@@ -26,6 +42,7 @@ export default function Process() {
           opacity: 0,
           duration: 0.9,
           ease: 'power2.out',
+          clearProps: 'all',
           scrollTrigger: {
             trigger: card,
             start: 'top 82%',
@@ -42,6 +59,7 @@ export default function Process() {
           opacity: 0,
           duration: 0.85,
           ease: 'power2.out',
+          clearProps: 'all',
           scrollTrigger: {
             trigger: comparisonCard,
             start: 'top 82%',

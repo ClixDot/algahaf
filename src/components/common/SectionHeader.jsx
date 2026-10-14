@@ -13,7 +13,7 @@ export default function SectionHeader({
 
   return (
     <div
-      className={className}
+      className={`section-header-reveal ${className}`.trim()}
       style={{
         textAlign: centered ? 'center' : 'left',
         maxWidth: centered ? '760px' : '680px',

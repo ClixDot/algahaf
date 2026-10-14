@@ -63,7 +63,7 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [activeHeroScene]);
 
-  // Refined architectural GSAP scroll-triggered entrance animations
+  // Standard architectural GSAP scroll-triggered entrance animations
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -71,6 +71,19 @@ export default function Home() {
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
+      // 0. Hero Elements graceful entrance on load
+      const heroEls = document.querySelectorAll('.home-hero-reveal');
+      if (heroEls.length) {
+        gsap.from(heroEls, {
+          y: 28,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.12,
+          ease: 'power3.out',
+          clearProps: 'all'
+        });
+      }
+
       // 1. Origin text reveal
       const originItems = document.querySelectorAll('.home-origin-reveal');
       if (originItems.length) {
@@ -80,6 +93,7 @@ export default function Home() {
           duration: 0.85,
           stagger: 0.1,
           ease: 'power2.out',
+          clearProps: 'all',
           scrollTrigger: {
             trigger: '.about-section',
             start: 'top 78%',
@@ -88,8 +102,58 @@ export default function Home() {
         });
       }
 
+      // 2. Pillars cards entrance
+      const pillarCards = document.querySelectorAll('.home-pillar-card');
+      if (pillarCards.length) {
+        gsap.from(pillarCards, {
+          y: 24,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.08,
+          ease: 'power2.out',
+          clearProps: 'all',
+          scrollTrigger: {
+            trigger: '.home-pillars-grid',
+            start: 'top 82%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
 
+      // 3. Section Headers reveal
+      const sectionHeaders = document.querySelectorAll('.section-header-reveal');
+      sectionHeaders.forEach((sh) => {
+        gsap.from(sh, {
+          y: 26,
+          opacity: 0,
+          duration: 0.85,
+          ease: 'power2.out',
+          clearProps: 'all',
+          scrollTrigger: {
+            trigger: sh,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
 
+      // 4. Products Grid reveal (MOVA, PENTA, ENTRA)
+      const productCards = document.querySelectorAll('.home-product-card');
+      if (productCards.length) {
+        gsap.from(productCards, {
+          y: 26,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: 'power2.out',
+          clearProps: 'all',
+          scrollTrigger: {
+            trigger: '.home-products-grid',
+            start: 'top 82%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
 
       // 5. Applications Bento Cards reveal
       const bentoCards = document.querySelectorAll('.app-bento-card');
@@ -97,9 +161,10 @@ export default function Home() {
         gsap.from(bentoCards, {
           y: 26,
           opacity: 0,
-          duration: 0.8,
+          duration: 0.85,
           stagger: 0.1,
           ease: 'power2.out',
+          clearProps: 'all',
           scrollTrigger: {
             trigger: '.applications-bento-grid',
             start: 'top 82%',
@@ -115,7 +180,9 @@ export default function Home() {
           y: 24,
           opacity: 0,
           duration: 0.85,
+          stagger: 0.1,
           ease: 'power2.out',
+          clearProps: 'all',
           scrollTrigger: {
             trigger: '.home-closing-section',
             start: 'top 80%',
@@ -123,7 +190,24 @@ export default function Home() {
           }
         });
       }
+
+      // 7. Subtle architectural parallax for closing hero background
+      const closingBg = document.querySelector('.home-closing-bg');
+      if (closingBg) {
+        gsap.to(closingBg, {
+          yPercent: 12,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.home-closing-section',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+      }
     }, homeRef);
+
+    ScrollTrigger.refresh();
 
     return () => ctx.revert();
   }, []);
@@ -176,7 +260,7 @@ export default function Home() {
           <div style={{ maxWidth: '760px' }}>
             {/* Main Headline in Brand Aftika Font: font-weight 500 */}
             <h1 
-              className="home-hero-headline"
+              className="home-hero-headline home-hero-reveal"
             >
               <span style={{ display: 'block' }}>Where Vision</span>
               <span style={{ display: 'block' }}>Meets Structure</span>
@@ -210,6 +294,7 @@ export default function Home() {
             {/* Bottom Left Statement */}
             <div style={{ maxWidth: '440px' }}>
               <p
+                className="home-hero-reveal"
                 style={{
                   fontFamily: 'var(--font-body)',
                   fontSize: 'clamp(0.875rem, 1.05vw, 0.95rem)',
@@ -724,9 +809,10 @@ export default function Home() {
         }}
       >
         <div 
+          className="home-closing-bg"
           style={{
             position: 'absolute',
-            inset: 0,
+            inset: '-15% 0',
             backgroundImage: `linear-gradient(to bottom, rgba(14, 16, 14, 0.72) 0%, rgba(14, 16, 14, 0.48) 45%, rgba(14, 16, 14, 0.82) 100%), url('/assets/images/imgupscaler-enhanced-4.jpg')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center 48%',
