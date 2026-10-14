@@ -26,13 +26,13 @@ export default function SmoothScrollProvider({ children }) {
 
     // Initialize Lenis with tuned architectural smoothing
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth exponential ease-out
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 0.95,
+      touchMultiplier: 1.25,
       infinite: false,
       autoRaf: false // Controlled strictly by GSAP ticker for 100% synchronicity
     });

@@ -23,7 +23,6 @@ export default function FromProjectToProduct() {
           duration: 0.9,
           stagger: 0.12,
           ease: 'power2.out',
-          clearProps: 'all',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 78%',

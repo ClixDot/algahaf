@@ -27,7 +27,6 @@ export default function ApplicationDetail() {
           duration: 0.9,
           stagger: 0.12,
           ease: 'power2.out',
-          clearProps: 'all',
           delay: 0.15
         });
       }
@@ -41,7 +40,6 @@ export default function ApplicationDetail() {
           duration: 0.85,
           stagger: 0.1,
           ease: 'power2.out',
-          clearProps: 'all',
           scrollTrigger: {
             trigger: '.origin-section',
             start: 'top 78%',

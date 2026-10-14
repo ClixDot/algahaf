@@ -25,7 +25,6 @@ export default function About() {
           duration: 0.9,
           stagger: 0.12,
           ease: 'power2.out',
-          clearProps: 'all',
           delay: 0.15
         });
       }
@@ -39,7 +38,6 @@ export default function About() {
           duration: 0.85,
           stagger: 0.1,
           ease: 'power2.out',
-          clearProps: 'all',
           scrollTrigger: {
             trigger: '.origin-section',
             start: 'top 78%',
@@ -57,7 +55,6 @@ export default function About() {
           duration: 0.85,
           stagger: 0.14,
           ease: 'power2.out',
-          clearProps: 'all',
           scrollTrigger: {
             trigger: '.origin-cards-grid',
             start: 'top 80%',
@@ -75,7 +72,6 @@ export default function About() {
           duration: 0.85,
           stagger: 0.12,
           ease: 'power2.out',
-          clearProps: 'all',
           scrollTrigger: {
             trigger: '.philosophy-section',
             start: 'top 78%',
@@ -110,7 +106,6 @@ export default function About() {
           duration: 0.85,
           stagger: 0.1,
           ease: 'power2.out',
-          clearProps: 'all',
           scrollTrigger: {
             trigger: '.office-location-section',
             start: 'top 80%',
@@ -128,7 +123,6 @@ export default function About() {
           duration: 0.85,
           stagger: 0.1,
           ease: 'power2.out',
-          clearProps: 'all',
           scrollTrigger: {
             trigger: '.about-cta-section',
             start: 'top 82%',

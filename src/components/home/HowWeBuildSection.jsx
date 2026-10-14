@@ -24,7 +24,6 @@ export default function HowWeBuildSection() {
           duration: 0.85,
           stagger: 0.12,
           ease: 'power2.out',
-          clearProps: 'all',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 75%',
@@ -39,7 +38,6 @@ export default function HowWeBuildSection() {
           opacity: 0,
           duration: 1,
           ease: 'power2.out',
-          clearProps: 'all',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 75%',
