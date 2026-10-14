@@ -14,6 +14,9 @@ export const companyInfo = {
     email: "info@alghafcollective.ae",
     phone: "+971 4 288 9412",
     whatsapp: "+971 50 892 4110",
+    instagram: "https://www.instagram.com/alghafcollective",
+    linkedin: "https://www.linkedin.com/company/alghafcollective",
+    facebook: "https://www.facebook.com/alghafcollective",
     address: "Dubai Design District (d3), Building 7, Dubai, United Arab Emirates",
     country: "United Arab Emirates",
     workingHours: "Monday – Friday: 9:00 AM – 6:00 PM GST"

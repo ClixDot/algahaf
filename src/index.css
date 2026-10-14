@@ -1287,6 +1287,7 @@ h1, h2, h3, h4, h5, h6,
   justify-content: flex-end;
   color: #FAF8F5;
   transition: background 0.4s ease;
+  overflow: hidden;
 }
 
 .app-bento-card:hover .app-bento-overlay {
@@ -1297,6 +1298,16 @@ h1, h2, h3, h4, h5, h6,
     rgba(14, 20, 15, 0.18) 80%,
     transparent 100%
   );
+}
+
+.app-bento-text-group {
+  transform: translateY(48px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.app-bento-card:hover .app-bento-text-group {
+  transform: translateY(0);
 }
 
 .app-bento-category {
@@ -1319,11 +1330,66 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 0.015em;
 }
 
-.app-bento-tagline {
-  font-size: 0.85rem;
-  color: rgba(245, 243, 240, 0.85);
-  line-height: 1.5;
-  margin: 0;
+.app-bento-btn-wrapper {
+  margin-top: 0.85rem;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.app-bento-explore-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.35rem;
+  background-color: var(--color-sand, #C9A779);
+  color: #141713;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+  transition: background-color 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.app-bento-card:hover .app-bento-btn-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.app-bento-btn-arrow {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-bento-card:hover .app-bento-btn-arrow {
+  transform: translateX(3px);
+}
+
+.app-bento-card:hover .app-bento-explore-btn {
+  background-color: #FAF8F5;
+  color: #141713;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.38);
+}
+
+@media (hover: none) {
+  .app-bento-text-group {
+    transform: translateY(0);
+  }
+  .app-bento-btn-wrapper {
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 0.75rem;
+    pointer-events: auto;
+  }
 }
 
 /* Applications Layout for 4 Cards */
@@ -2086,3 +2152,56 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   HOME PRODUCTS SECTION (MOVA, PENTA, ENTRA) — STABLE ALIGNMENT
+   ========================================================================== */
+.home-products-grid {
+  align-items: stretch !important;
+}
+
+.home-product-card {
+  background-color: #FFFFFF;
+  border-radius: 6px;
+  border: 1px solid rgba(82, 105, 75, 0.14);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transform: none !important;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.home-product-card:hover {
+  box-shadow: 0 12px 32px rgba(32, 35, 31, 0.12);
+  border-color: rgba(82, 105, 75, 0.28);
+  transform: none !important;
+}
+
+/* ==========================================================================
+   HOME PILLARS SECTION (COMFORT, QUALITY, SPEED, VALUE) — STABLE ALIGNMENT
+   ========================================================================== */
+.home-pillars-grid {
+  align-items: stretch !important;
+}
+
+.home-pillar-card {
+  background-color: #FFFFFF;
+  padding: 2.25rem 1.75rem;
+  border-radius: 6px;
+  border: 1px solid rgba(82, 105, 75, 0.14);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transform: none !important;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.home-pillar-card:hover {
+  box-shadow: 0 12px 30px rgba(32, 35, 31, 0.1);
+  border-color: rgba(82, 105, 75, 0.3);
+  transform: none !important;
+}
+

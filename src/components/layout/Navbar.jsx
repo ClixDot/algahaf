@@ -1,14 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ArrowRight, MapPin } from 'lucide-react';
+import { Menu, X, ArrowRight, MapPin } from 'lucide-react';
+import { companyInfo } from '../../data/companyData';
 import QuickEnquiryModal from '../common/QuickEnquiryModal';
 import ComingSoonModal from '../common/ComingSoonModal';
 
+function InstagramIcon({ size = 18, color = 'currentColor', ...props }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      {...props}
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [navVisible, setNavVisible] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
   const location = useLocation();
@@ -20,49 +40,55 @@ export default function Navbar() {
     return () => window.removeEventListener('open-coming-soon', handleOpenComingSoon);
   }, []);
 
-  // Hide navbar on scroll down, reveal smoothly on scroll up
+  // Always sticky navbar: transparent over hero section, solid green only when scrolled past hero
   useEffect(() => {
-    let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
     let ticking = false;
 
-    const updateNav = (currentScrollY) => {
-      const isScrolled = currentScrollY > 30;
-      setScrolled(isScrolled);
+    const checkScrolledState = () => {
+      const currentScrollY = window.scrollY;
+      const isPlainLightPage = ['/privacy', '/terms'].some(path => location.pathname.startsWith(path));
 
-      if (currentScrollY <= 30) {
-        // Always show navbar at the very top of the page
-        setNavVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 60) {
-        // Scrolling down -> hide navbar
-        setNavVisible(false);
-        setProductsDropdownOpen(false);
-      } else if (currentScrollY < lastScrollY) {
-        // Scrolling up -> reveal navbar smoothly
-        setNavVisible(true);
+      if (isPlainLightPage) {
+        setScrolled(true);
+        return;
       }
 
-      lastScrollY = Math.max(0, currentScrollY);
+      // Transition to solid background as soon as user starts scrolling (past 30px)
+      // This ensures scrolling content slides cleanly underneath the solid navbar
+      const threshold = 30;
+      setScrolled(currentScrollY >= threshold);
     };
 
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          updateNav(window.scrollY);
+          checkScrolledState();
           ticking = false;
         });
         ticking = true;
       }
     };
 
+    checkScrolledState();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('resize', checkScrolledState, { passive: true });
 
-  // Close mobile menu and reset visibility on route change
+    if (window.lenis) {
+      window.lenis.on('scroll', handleScroll);
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkScrolledState);
+      if (window.lenis) {
+        window.lenis.off('scroll', handleScroll);
+      }
+    };
+  }, [location.pathname]);
+
+  // Close mobile menu on route change
   useEffect(() => {
-    setNavVisible(true);
     setMobileMenuOpen(false);
-    setProductsDropdownOpen(false);
   }, [location.pathname]);
 
   // Prevent background scroll when mobile menu is open
@@ -94,16 +120,7 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
-    { 
-      label: 'Products', 
-      path: '/products',
-      hasDropdown: true,
-      children: [
-        { name: 'MOVA (30–75 m²)', path: '/products/mova', desc: 'Versatile Modular Architecture' },
-        { name: 'PENTA (50–300 m²)', path: '/products/penta', desc: 'Elevated Double-Height Living' },
-        { name: 'ENTRA', path: '/products/entra', desc: 'Private Entertainment. Reimagined' }
-      ]
-    },
+    { label: 'Products', path: '/products' },
     // { label: 'Our Process', path: '/process' },
     { label: 'Applications', path: '/applications', isComingSoon: true },
     { label: 'Contact', path: '/contact' }
@@ -122,7 +139,7 @@ export default function Navbar() {
           right: 0,
           width: '100%',
           zIndex: 1000,
-          transform: (navVisible || mobileMenuOpen) ? 'translateY(0)' : 'translateY(-100%)',
+          transform: 'translateY(0)',
           backgroundColor: scrolled 
             ? '#52694B' 
             : (isDarkHeroPage ? 'transparent' : '#52694B'),
@@ -131,7 +148,7 @@ export default function Navbar() {
             : 'none',
           boxShadow: scrolled ? '0 4px 20px rgba(0, 0, 0, 0.16)' : 'none',
           padding: 0,
-          transition: 'transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease'
+          transition: 'background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease'
         }}
       >
         <div
@@ -159,16 +176,15 @@ export default function Navbar() {
               }}
             >
               <img
-                src="/assets/logos/AlGhaf_logo_-08.png"
+                src="/assets/logos/AlGhaf_logo_-10.png"
                 alt="AlGhaf Collective"
                 className="nav-logo-img"
                 style={{
-                  height: scrolled ? '48px' : '71px',
+                  height: scrolled ? '46px' : '62px',
                   width: 'auto',
-                  maxWidth: scrolled ? '200px' : '260px',
                   objectFit: 'contain',
-                  filter: 'brightness(0) invert(1)',
-                  transition: 'height 0.35s cubic-bezier(0.16, 1, 0.3, 1), max-width 0.35s ease, filter 0.2s ease'
+                  display: 'block',
+                  transition: 'height 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s ease'
                 }}
               />
             </Link>
@@ -183,113 +199,37 @@ export default function Navbar() {
               className="desktop-nav"
             >
               {navLinks.map((item) => (
-                item.hasDropdown ? (
-                  <div 
-                    key={item.label}
-                    style={{ position: 'relative' }}
-                    onMouseEnter={() => setProductsDropdownOpen(true)}
-                    onMouseLeave={() => setProductsDropdownOpen(false)}
-                  >
-                    <NavLink
-                      to={item.path}
-                      style={({ isActive }) => ({
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.35rem',
-                        fontFamily: 'var(--font-body)',
-                        fontSize: '0.875rem',
-                        fontWeight: 600,
-                        letterSpacing: '0.02em',
-                        color: isActive ? '#C9A779' : '#FAF8F5',
-                        padding: '0.5rem 0',
-                        transition: 'color 0.2s ease'
-                      })}
-                    >
-                      {item.label}
-                      <ChevronDown size={14} style={{ opacity: 0.7 }} />
-                    </NavLink>
-
-                    {/* Dropdown Menu */}
-                    {productsDropdownOpen && (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          top: '100%',
-                          left: '-1rem',
-                          width: '280px',
-                          backgroundColor: '#FFFFFF',
-                          borderRadius: '4px',
-                          boxShadow: '0 12px 36px rgba(0,0,0,0.12)',
-                          border: '1px solid rgba(82, 105, 75, 0.14)',
-                          padding: '0.75rem',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: '0.35rem',
-                          animation: 'fadeIn 0.2s ease',
-                          zIndex: 100
-                        }}
-                      >
-                        {item.children.map((child) => (
-                          <Link
-                            key={child.path}
-                            to={child.path}
-                            style={{
-                              padding: '0.625rem 0.875rem',
-                              borderRadius: '4px',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              textDecoration: 'none',
-                              transition: 'background-color 0.15s ease'
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--color-ivory)'}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                          >
-                            <span style={{ 
-                              fontFamily: 'var(--font-display)', 
-                              fontSize: '0.9375rem', 
-                              fontWeight: 500, 
-                              letterSpacing: '0.01em',
-                              color: 'var(--color-forest)' 
-                            }}>
-                              {child.name}
-                            </span>
-                            <span style={{ 
-                              fontSize: '0.75rem', 
-                              color: 'var(--color-charcoal-muted)' 
-                            }}>
-                              {child.desc}
-                            </span>
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <NavLink
-                    key={item.label}
-                    to={item.path}
-                    onClick={(e) => {
-                      if (item.isComingSoon) {
-                        e.preventDefault();
-                        setIsComingSoonOpen(true);
-                      }
-                    }}
-                    style={({ isActive }) => ({
+                <NavLink
+                  key={item.label}
+                  to={item.path}
+                  end={true}
+                  onClick={(e) => {
+                    if (item.isComingSoon) {
+                      e.preventDefault();
+                      setIsComingSoonOpen(true);
+                    }
+                  }}
+                  style={({ isActive }) => {
+                    const active = !item.isComingSoon && isActive;
+                    return {
                       fontFamily: 'var(--font-body)',
                       fontSize: '0.875rem',
                       fontWeight: 600,
                       letterSpacing: '0.02em',
                       position: 'relative',
-                      color: isActive ? '#C9A779' : '#FAF8F5',
+                      color: active ? '#C9A779' : '#FAF8F5',
                       padding: '0.5rem 0',
                       transition: 'color 0.2s ease',
                       cursor: 'pointer'
-                    })}
-                  >
-                    {({ isActive }) => (
+                    };
+                  }}
+                >
+                  {({ isActive }) => {
+                    const active = !item.isComingSoon && isActive;
+                    return (
                       <>
                         {item.label}
-                        {isActive && (
+                        {active && (
                           <span 
                             style={{
                               position: 'absolute',
@@ -303,22 +243,64 @@ export default function Navbar() {
                           />
                         )}
                       </>
-                    )}
-                  </NavLink>
-                )
+                    );
+                  }}
+                </NavLink>
               ))}
             </nav>
 
             {/* Right Action Buttons */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              {/* Contact Button matching reference */}
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="desktop-only-btn nav-contact-btn"
+              {/* Instagram Icon Link (to the left of Contact button) */}
+              <a
+                href={companyInfo.contact.instagram || 'https://www.instagram.com/alghafcollective'}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow AlGhaf Collective on Instagram"
+                title="Follow on Instagram"
+                className="desktop-only-btn nav-instagram-btn"
                 style={{
                   display: 'none',
                   alignItems: 'center',
-                  gap: '0.45rem',
+                  justifyContent: 'center',
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '50%',
+                  color: '#FAF8F5',
+                  backgroundColor: 'rgba(255, 255, 255, 0.12)',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                  transition: 'all 0.22s ease',
+                  textDecoration: 'none',
+                  flexShrink: 0
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+                  e.currentTarget.style.color = '#C9A779';
+                  e.currentTarget.style.transform = 'translateY(-1px) scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+                  e.currentTarget.style.color = '#FAF8F5';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                }}
+              >
+                <InstagramIcon size={18} />
+              </a>
+
+              {/* Enquiry Button */}
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="desktop-only-btn nav-contact-btn"
+                aria-label="Make an enquiry"
+                style={{
+                  display: 'none',
+                  alignItems: 'center',
+                  gap: '0.5rem',
                   backgroundColor: '#FAF8F5',
                   color: '#52694B',
                   fontFamily: 'var(--font-body)',
@@ -326,12 +308,12 @@ export default function Navbar() {
                   fontSize: '0.8125rem',
                   letterSpacing: '0.06em',
                   textTransform: 'uppercase',
-                  borderRadius: '3px',
-                  padding: '0.55rem 1.15rem',
+                  borderRadius: '4px',
+                  padding: '0.6rem 1.25rem',
                   border: 'none',
                   boxShadow: '0 2px 10px rgba(0, 0, 0, 0.12)',
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
+                  transition: 'all 0.22s ease',
                   whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
@@ -347,8 +329,8 @@ export default function Navbar() {
                   e.currentTarget.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.12)';
                 }}
               >
-                CONTACT
-                <ArrowRight size={13} />
+                ENQUIRY
+                <ArrowRight size={14} />
               </button>
 
               {/* Mobile Menu Toggle Button */}
@@ -412,12 +394,11 @@ export default function Navbar() {
               style={{ display: 'flex', alignItems: 'center' }}
             >
               <img
-                src="/assets/logos/AlGhaf_logo_-08.png"
+                src="/assets/logos/AlGhaf_logo_-10.png"
                 alt="AlGhaf Collective"
                 style={{
-                  height: '38px',
+                  height: '42px',
                   width: 'auto',
-                  maxWidth: '180px',
                   objectFit: 'contain'
                 }}
               />
@@ -486,24 +467,6 @@ export default function Navbar() {
                     {item.label}
                     <ArrowRight size={20} color="var(--color-sand)" />
                   </NavLink>
-                  {item.hasDropdown && (
-                    <div style={{ marginLeft: '1rem', marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.path}
-                          to={child.path}
-                          onClick={() => setMobileMenuOpen(false)}
-                          style={{
-                            fontSize: '1rem',
-                            color: '#E5DFD4',
-                            opacity: 0.85
-                          }}
-                        >
-                          — {child.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
             </nav>
@@ -520,9 +483,32 @@ export default function Navbar() {
             >
               Start a Conversation
             </button>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#E5DFD4', fontSize: '0.875rem' }}>
-              <MapPin size={16} color="var(--color-sand)" />
-              <span>Dubai, United Arab Emirates</span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#E5DFD4', fontSize: '0.875rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <MapPin size={16} color="var(--color-sand)" />
+                <span>Dubai, United Arab Emirates</span>
+              </div>
+              <a
+                href={companyInfo.contact.instagram || 'https://www.instagram.com/alghafcollective'}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow AlGhaf Collective on Instagram"
+                title="Follow on Instagram"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '50%',
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  color: 'var(--color-sand)',
+                  textDecoration: 'none'
+                }}
+              >
+                <InstagramIcon size={16} />
+              </a>
             </div>
           </div>
         </div>
@@ -563,12 +549,10 @@ export default function Navbar() {
             padding: 0.65rem 1.25rem !important;
           }
           .nav-logo-img {
-            height: 54px !important;
-            max-width: 180px !important;
+            height: 44px !important;
           }
           .header-scrolled .nav-logo-img {
-            height: 42px !important;
-            max-width: 150px !important;
+            height: 36px !important;
           }
         }
       `}</style>

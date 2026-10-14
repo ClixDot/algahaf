@@ -13,6 +13,7 @@ import ProductPenta from './pages/ProductPenta';
 import ProductEntra from './pages/ProductEntra';
 import Process from './pages/Process';
 import Applications from './pages/Applications';
+import ApplicationDetail from './pages/ApplicationDetail';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
@@ -37,6 +38,7 @@ function App() {
           <Route path="/products/entra" element={<ProductEntra />} />
           <Route path="/process" element={<Process />} />
           <Route path="/applications" element={<Applications />} />
+          <Route path="/applications/:id" element={<ApplicationDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />

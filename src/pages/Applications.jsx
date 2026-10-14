@@ -183,7 +183,12 @@ export default function Applications() {
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    {app.title}
+                    <Link
+                      to={`/applications/${app.id}`}
+                      style={{ textDecoration: 'none', color: 'inherit' }}
+                    >
+                      {app.title}
+                    </Link>
                   </h3>
                   <p style={{ fontStyle: 'italic', color: 'var(--color-sand-dark)', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.65rem' }}>
                     “{app.tagline}”
@@ -233,13 +238,22 @@ export default function Applications() {
                       ))}
                     </div>
 
-                    <button
-                      onClick={() => handleEnquiry(app.title)}
-                      className="btn btn-primary btn-sm"
-                      style={{ padding: '0.45rem 0.9rem', fontSize: '0.8125rem', whiteSpace: 'nowrap' }}
-                    >
-                      Enquire For This Use <ArrowRight size={13} />
-                    </button>
+                    <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                      <Link
+                        to={`/applications/${app.id}`}
+                        className="btn btn-outline-dark btn-sm"
+                        style={{ padding: '0.45rem 0.75rem', fontSize: '0.8125rem', whiteSpace: 'nowrap' }}
+                      >
+                        Overview
+                      </Link>
+                      <button
+                        onClick={() => handleEnquiry(app.title)}
+                        className="btn btn-primary btn-sm"
+                        style={{ padding: '0.45rem 0.85rem', fontSize: '0.8125rem', whiteSpace: 'nowrap' }}
+                      >
+                        Enquire <ArrowRight size={13} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

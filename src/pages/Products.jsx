@@ -76,10 +76,10 @@ export default function Products() {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%), url('/assets/images/image_bg_more_alghafcefdev.jpg')`,
+            backgroundImage: `linear-gradient(to bottom, rgba(14, 16, 14, 0.55) 0%, rgba(14, 16, 14, 0.38) 45%, rgba(14, 16, 14, 0.88) 100%), url('/assets/images/image_bg_alghafxa.jpg')`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            opacity: 0.85
+            backgroundPosition: 'center 40%',
+            opacity: 1
           }}
         />
 

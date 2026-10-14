@@ -17,32 +17,8 @@ import Lightbox from '../components/common/Lightbox';
 import { products } from '../data/productsData';
 import { companyInfo } from '../data/companyData';
 import { applicationsData } from '../data/applicationsData';
-import FromProjectToProduct from '../components/home/FromProjectToProduct';
+import HowWeBuildSection from '../components/home/HowWeBuildSection';
 
-// Four process cards matching the architectural editorial layout
-const howWeBuildCards = [
-  {
-    number: "01",
-    title: "Design Smarter.",
-    description: "Architecture, planning and BIM for spaces that are functional, beautiful and future-ready.",
-    image: "/assets/images/imgupscaler-enhanced-7.jpg",
-    link: "/process"
-  },
-  {
-    number: "02",
-    title: "Prefabricate Precisely.",
-    description: "Controlled manufacturing with rigorous quality standards, reducing waste and project time.",
-    image: "/assets/renders/MOVA_EXT_3D_img1.jpg",
-    link: "/process"
-  },
-  {
-    number: "03",
-    title: "Build Modular.",
-    description: "On-site assembly with precision and minimal disruption, delivering spaces that last.",
-    image: "/assets/renders/CINE_EXT_3D_img4.jpg",
-    link: "/process"
-  }
-];
 
 export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -112,56 +88,8 @@ export default function Home() {
         });
       }
 
-      // 2. Pillars staggered reveal
-      const pillarCards = document.querySelectorAll('.home-pillar-card');
-      if (pillarCards.length) {
-        gsap.from(pillarCards, {
-          y: 28,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.home-pillars-grid',
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-          }
-        });
-      }
 
-      // 3. How We Build 3 Stages
-      const stageCards = document.querySelectorAll('.hwb-stage-card');
-      if (stageCards.length) {
-        gsap.from(stageCards, {
-          y: 30,
-          opacity: 0,
-          duration: 0.85,
-          stagger: 0.12,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.hwb-stages-row',
-            start: 'top 78%',
-            toggleActions: 'play none none none'
-          }
-        });
-      }
 
-      // 4. Product Cards reveal
-      const productCards = document.querySelectorAll('.home-product-card');
-      if (productCards.length) {
-        gsap.from(productCards, {
-          y: 32,
-          opacity: 0,
-          duration: 0.9,
-          stagger: 0.14,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.home-products-grid',
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-          }
-        });
-      }
 
       // 5. Applications Bento Cards reveal
       const bentoCards = document.querySelectorAll('.app-bento-card');
@@ -487,21 +415,92 @@ export default function Home() {
       </section>
 
       {/* =========================================================================
-          SECTION 2 — CORE IDEA: FROM PROJECT TO PRODUCT (Editorial & Video Preview)
+          SECTION 2 — CORE IDEA: FROM PROJECT TO PRODUCT & CORE STRENGTHS
           ========================================================================= */}
-      <FromProjectToProduct />
-
-      {/* =========================================================================
-          SECTION 3 — CORE STRENGTHS (Comfort, Quality, Speed, Value)
-          ========================================================================= */}
-      <section className="section-padding bg-ivory-light">
+      <section id="core-idea" className="section-padding bg-ivory-light">
         <div className="container">
-          <SectionHeader
-            title="Built Around What Matters."
-            subtitle="Four unwavering commitments engineered into every modular living system."
-            centered
-          />
+          {/* Section Header: FROM PROJECT TO PRODUCT */}
+          <div 
+            style={{
+              maxWidth: '860px',
+              margin: '0 auto clamp(2.5rem, 4.5vw, 3.75rem) auto',
+              textAlign: 'center'
+            }}
+          >
+            {/* Section Label */}
+            <div 
+              style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                gap: '1rem', 
+                marginBottom: '1.25rem' 
+              }}
+            >
+              <span style={{ height: '1px', width: '48px', backgroundColor: 'rgba(125, 117, 101, 0.35)' }}></span>
+              <span 
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '0.8125rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: '#7D7565'
+                }}
+              >
+                Core Idea
+              </span>
+              <span style={{ height: '1px', width: '48px', backgroundColor: 'rgba(125, 117, 101, 0.35)' }}></span>
+            </div>
 
+            {/* Headline */}
+            <h2 
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 500,
+                fontSize: 'clamp(2.2rem, 3.8vw, 46px)',
+                lineHeight: 1.15,
+                letterSpacing: '-0.015em',
+                color: '#52694B',
+                margin: '0 0 1.25rem 0'
+              }}
+            >
+              FROM PROJECT TO PRODUCT.
+            </h2>
+
+            {/* Main Description */}
+            <p 
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(1.15rem, 1.45vw, 1.35rem)',
+                fontWeight: 400,
+                lineHeight: 1.55,
+                color: '#20231F',
+                maxWidth: '780px',
+                margin: '0 auto 1.15rem auto',
+                letterSpacing: '-0.005em'
+              }}
+            >
+              We are transforming housing from a fragmented project into a designed, engineered, and continuously refined product.
+            </p>
+
+            {/* Supporting Text */}
+            <p 
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 'clamp(0.95rem, 1.1vw, 1.05rem)',
+                fontWeight: 400,
+                lineHeight: 1.65,
+                color: '#4A504B',
+                maxWidth: '680px',
+                margin: '0 auto'
+              }}
+            >
+              Instead of starting from zero every time, we design for manufacturing and assembly from day one.
+            </p>
+          </div>
+
+          {/* Four Pillar Cards */}
           <div className="grid-4 home-pillars-grid">
             {companyInfo.pillars.map((pillar, idx) => {
               const icons = [<Sparkles key="1" size={28} />, <ShieldCheck key="2" size={28} />, <Zap key="3" size={28} />, <Compass key="4" size={28} />];
@@ -509,24 +508,6 @@ export default function Home() {
                 <div
                   key={pillar.title}
                   className="home-pillar-card"
-                  style={{
-                    backgroundColor: '#FFFFFF',
-                    padding: '2.25rem 1.75rem',
-                    borderRadius: '6px',
-                    border: '1px solid rgba(82, 105, 75, 0.14)',
-                    boxShadow: 'var(--shadow-sm)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-6px)';
-                    e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-                  }}
                 >
                   <div style={{
                     width: '56px',
@@ -563,115 +544,7 @@ export default function Home() {
       {/* =========================================================================
           SECTION 4 — HOW WE BUILD / OUR PROCESS (Exact Architectural Reference)
           ========================================================================= */}
-      <section id="process" className="how-we-build-section">
-        <div className="container hwb-container">
-          
-          {/* Top Header: Left Title */}
-          <div className="hwb-header">
-            <div className="hwb-header-left hwb-intro-anim">
-              <h2 className="hwb-heading">How We Build</h2>
-              <p className="hwb-lead">
-                From idea to installation, we follow a precise, integrated process to deliver exceptional spaces — faster, cleaner and better.
-              </p>
-            </div>
-          </div>
-
-          {/* Four Process Stages Across Horizontal Flow */}
-          <div className="hwb-stages-wrapper">
-            
-            {/* Architectural Connecting Graphic Behind Stages */}
-            <div className="hwb-connecting-graphic" aria-hidden="true">
-              <svg 
-                className="hwb-connecting-svg" 
-                viewBox="0 0 1200 400" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="none"
-              >
-                {/* Horizontal Guide across Stage 1 to Stage 2 */}
-                <path 
-                  className="hwb-line-path"
-                  d="M 50 260 L 480 260" 
-                  stroke="#9D9886" 
-                  strokeWidth="1" 
-                  strokeOpacity="0.65" 
-                />
-                
-                {/* Upward Arch from Stage 2 up through Stage 3 */}
-                <path 
-                  className="hwb-line-path"
-                  d="M 480 260 C 530 260 560 190 620 180 L 820 180" 
-                  stroke="#9D9886" 
-                  strokeWidth="1" 
-                  strokeOpacity="0.65" 
-                />
-
-                {/* Circular Nodes & Architectural Reference Points */}
-                {/* Node 1: Between Stage 1 and 2 */}
-                <circle className="hwb-node" cx="280" cy="260" r="5" stroke="#9D9886" strokeWidth="1" fill="#F5EFE3" />
-                <circle className="hwb-node" cx="280" cy="260" r="1.8" fill="#9D9886" />
-
-                {/* Node 2: Stage 2 backdrop intersection */}
-                <circle className="hwb-node" cx="480" cy="260" r="3" fill="#9D9886" fillOpacity="0.8" />
-
-                {/* Node 3: On ascending curve toward Stage 3 */}
-                <circle className="hwb-node" cx="550" cy="220" r="2.2" fill="#9D9886" />
-
-                {/* Node 4: Stage 3 center guide */}
-                <circle className="hwb-node" cx="720" cy="180" r="4.5" stroke="#9D9886" strokeWidth="1" fill="#F5EFE3" />
-                <circle className="hwb-node" cx="720" cy="180" r="1.5" fill="#9D9886" />
-              </svg>
-            </div>
-
-            {/* 4 Process Columns */}
-            <div className="hwb-stages-row">
-              {howWeBuildCards.map((card, idx) => (
-                <article 
-                  key={card.number} 
-                  className={`hwb-stage-col hwb-stage-card hwb-col-${idx + 1}`}
-                >
-                  {/* Media Composition with Overlapping Backdrops */}
-                  <div className="hwb-media-outer">
-                    {/* Backdrop Panels */}
-                    {idx === 0 && <div className="hwb-backdrop-panel panel-olive"></div>}
-                    {idx === 1 && <div className="hwb-backdrop-panel panel-sand-1"></div>}
-                    {idx === 2 && <div className="hwb-backdrop-panel panel-sand-2"></div>}
-
-                    {/* Image Frame */}
-                    <div className="hwb-media-frame">
-                      <div className="hwb-media-inner">
-                        <img
-                          src={card.image}
-                          alt={card.title}
-                          className="hwb-stage-img"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Stage Text & Details */}
-                  <div className="hwb-stage-details">
-                    <span className="hwb-stage-number">{card.number}</span>
-                    
-                    <h3 className="hwb-stage-title">
-                      {card.title}
-                    </h3>
-
-                    <div className="hwb-stage-divider"></div>
-
-                    <p className="hwb-stage-desc">
-                      {card.description}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-          </div>
-
-        </div>
-      </section>
+      <HowWeBuildSection />
 
       {/* =========================================================================
           SECTION 5 — PRODUCTS PREVIEW (MOVA, PENTA, ENTRA)
@@ -691,24 +564,6 @@ export default function Home() {
               <div
                 key={prod.id}
                 className="home-product-card"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(82, 105, 75, 0.14)',
-                  overflow: 'hidden',
-                  boxShadow: 'var(--shadow-sm)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'transform 0.35s ease, box-shadow 0.35s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-6px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-                }}
               >
                 {/* Product Image */}
                 <div style={{ height: '260px', position: 'relative', overflow: 'hidden' }}>
@@ -801,19 +656,11 @@ export default function Home() {
 
           <div className="applications-bento-grid">
             {applicationsData.slice(0, 4).map((app, index) => (
-              <div
+              <Link
                 key={app.id}
-                onClick={() => window.dispatchEvent(new CustomEvent('open-coming-soon'))}
+                to={`/applications/${app.id}`}
                 className={`app-bento-card app-bento-card-${index}`}
                 style={{ cursor: 'pointer' }}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    window.dispatchEvent(new CustomEvent('open-coming-soon'));
-                  }
-                }}
               >
                 <img
                   src={app.image}
@@ -821,104 +668,101 @@ export default function Home() {
                   loading="lazy"
                 />
                 <div className="app-bento-overlay">
-                  <span className="app-bento-category">
-                    {app.category}
-                  </span>
-                  <h3 
-                    className="app-bento-title"
-                    style={{
-                      fontWeight: 350,
-                      lineHeight: 1.38,
-                      letterSpacing: '0.015em'
-                    }}
-                  >
-                    {app.title}
-                  </h3>
+                  <div className="app-bento-text-group">
+                    <span className="app-bento-category">
+                      {app.category}
+                    </span>
+                    <h3 
+                      className="app-bento-title"
+                      style={{
+                        fontWeight: 350,
+                        lineHeight: 1.38,
+                        letterSpacing: '0.015em'
+                      }}
+                    >
+                      {app.title}
+                    </h3>
+                  </div>
+
+                  <div className="app-bento-btn-wrapper">
+                    <span className="app-bento-explore-btn">
+                      Explore Now
+                      <ArrowRight size={14} className="app-bento-btn-arrow" />
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new CustomEvent('open-coming-soon'))}
+            <Link
+              to="/applications"
               className="btn btn-outline-dark"
               style={{ cursor: 'pointer' }}
             >
               Explore All Typologies & Project Applications <ArrowRight size={16} />
-            </button>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          SECTION 7 — LIVE BETTER CLOSING HERO & CTA
+          SECTION 7 — LIVE BETTER CLOSING HERO & CTA (FULL-WIDTH)
           ========================================================================= */}
       <section 
         className="home-closing-section"
         style={{
-          backgroundColor: '#FAF8F5',
-          paddingTop: '3rem',
-          paddingBottom: '5.5rem',
+          position: 'relative',
+          width: '100%',
+          overflow: 'hidden',
+          padding: 'clamp(5.5rem, 10vw, 8.5rem) 1.5rem',
+          backgroundColor: '#141713',
+          color: '#FAF8F5',
+          textAlign: 'center',
+          borderTop: '1px solid rgba(82, 105, 75, 0.12)'
         }}
       >
-        <div className="container">
-          <div
-            style={{
-              position: 'relative',
-              borderRadius: 'clamp(14px, 2vw, 24px)',
-              overflow: 'hidden',
-              padding: 'clamp(4rem, 7vw, 6.5rem) clamp(1.5rem, 4vw, 3rem)',
-              backgroundColor: '#141713',
-              color: '#FAF8F5',
-              textAlign: 'center',
-              boxShadow: '0 20px 50px rgba(20, 23, 19, 0.12)',
-              border: '1px solid rgba(82, 105, 75, 0.12)'
+        <div 
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `linear-gradient(to bottom, rgba(14, 16, 14, 0.72) 0%, rgba(14, 16, 14, 0.48) 45%, rgba(14, 16, 14, 0.82) 100%), url('/assets/images/imgupscaler-enhanced-4.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 48%',
+            opacity: 1
+          }}
+        />
+
+        <div className="container" style={{ position: 'relative', zIndex: 2, maxWidth: '860px', margin: '0 auto' }}>
+          <span className="eyebrow home-closing-reveal" style={{ color: 'var(--color-sand)', marginBottom: '1rem', display: 'inline-block' }}>
+            Closing Statement
+          </span>
+          <h2 
+            className="home-closing-reveal"
+            style={{ 
+              fontFamily: 'var(--font-display)', 
+              fontSize: 'clamp(2.5rem, 4.5vw, 56px)', 
+              fontWeight: 700, 
+              color: '#FAF8F5', 
+              marginBottom: '1.5rem',
+              letterSpacing: '-0.02em'
             }}
           >
-            <div 
-              style={{
-                position: 'absolute',
-                inset: 0,
-                backgroundImage: `linear-gradient(to bottom, rgba(14, 16, 14, 0.7) 0%, rgba(14, 16, 14, 0.45) 45%, rgba(14, 16, 14, 0.8) 100%), url('/assets/images/imgupscaler-enhanced-4.jpg')`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center 48%',
-                opacity: 1
-              }}
-            />
+            Live Better.
+          </h2>
 
-            <div style={{ position: 'relative', zIndex: 2, maxWidth: '840px', margin: '0 auto' }}>
-              <span className="eyebrow home-closing-reveal" style={{ color: 'var(--color-sand)' }}>
-                Closing Statement
-              </span>
-              <h2 
-                className="home-closing-reveal"
-                style={{ 
-                  fontFamily: 'var(--font-display)', 
-                  fontSize: 'clamp(2.25rem, 4vw, 52px)', 
-                  fontWeight: 700, 
-                  color: '#FAF8F5', 
-                  marginBottom: '1.5rem',
-                  letterSpacing: '-0.02em'
-                }}
-              >
-                Live Better.
-              </h2>
-
-              <p 
-                className="home-closing-reveal"
-                style={{ 
-                  fontSize: 'clamp(1.125rem, 1.8vw, 1.375rem)', 
-                  color: '#E5DFD4', 
-                  lineHeight: '1.7', 
-                  marginBottom: 0 
-                }}
-              >
-                Everything we design and build begins with one purpose — to improve the way people live. We bring architecture, technology, nature, and human experience together to create spaces that are smarter, more comfortable, and more sustainable.
-              </p>
-            </div>
-          </div>
+          <p 
+            className="home-closing-reveal"
+            style={{ 
+              fontSize: 'clamp(1.125rem, 1.8vw, 1.375rem)', 
+              color: '#E5DFD4', 
+              lineHeight: '1.75', 
+              marginBottom: 0 
+            }}
+          >
+            Everything we design and build begins with one purpose — to improve the way people live. We bring architecture, technology, nature, and human experience together to create spaces that are smarter, more comfortable, and more sustainable.
+          </p>
         </div>
       </section>
       </div>
