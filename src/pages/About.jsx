@@ -211,13 +211,6 @@ export default function About() {
                   Factory-controlled prefabrication compresses project timelines compared to conventional site construction.
                 </p>
               </div>
-              <div className="origin-card-media">
-                <img
-                  src="/assets/renders/MOVA_EXT_3D_img1.jpg"
-                  alt="MOVA Modular Architecture"
-                  loading="lazy"
-                />
-              </div>
             </div>
 
             {/* Card 2: 1 Integrated System */}
@@ -229,13 +222,6 @@ export default function About() {
                   Design, engineering, materials, and assembly consolidated under one single accountable team.
                 </p>
               </div>
-              <div className="origin-card-media">
-                <img
-                  src="/assets/images/imgupscaler-enhanced-7.jpg"
-                  alt="Precision Architectural Detailing"
-                  loading="lazy"
-                />
-              </div>
             </div>
 
             {/* Card 3: 30–300 m² Scalable Footprints */}
@@ -246,13 +232,6 @@ export default function About() {
                 <p className="origin-card-desc">
                   Versatile modular footprints engineered for enduring thermal comfort and desert durability.
                 </p>
-              </div>
-              <div className="origin-card-media">
-                <img
-                  src="/assets/images/imgupscaler-enhanced-4.jpg"
-                  alt="Desert Residence Architecture"
-                  loading="lazy"
-                />
               </div>
             </div>
           </div>
@@ -315,8 +294,8 @@ export default function About() {
               <div className="philosophy-visual-wrap">
                 <div className="philosophy-img-main">
                   <img
-                    src="/assets/images/ax.jpg"
-                    alt="AlGhaf Architectural Masterpiece"
+                    src="/assets/images/about us.png"
+                    alt="AlGhaf Modular Architecture and Construction"
                     loading="lazy"
                   />
                 </div>

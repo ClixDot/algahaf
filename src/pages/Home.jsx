@@ -39,10 +39,9 @@ export default function Home() {
   };
 
   const heroScenes = [
-    { id: 'hero1', url: '/assets/images/hero1.jpeg', label: 'Palm Residence' },
-    { id: 'hero2', url: '/assets/images/hero 2.png', label: 'Twilight Villa' },
-    { id: 'dune', url: '/assets/images/imgupscaler-enhanced-4.jpg', label: 'Desert Dune Residence' },
-    { id: 'pool', url: '/assets/renders/MOVA_EXT_3D_img1.jpg', label: 'MOVA Pool Pavilion' },
+    { id: 'hero1', url: '/assets/images/hero1.jpeg', label: 'Palm Residence', position: 'center 42%' },
+    { id: 'hero2', url: '/assets/images/hero 2.png', label: 'Twilight Villa', position: 'center 42%' },
+    { id: 'hero3', url: '/assets/images/hero3.jpeg', label: 'AlGhaf Tree Pavilion', position: '65% 50%' },
   ];
   const [activeHeroScene, setActiveHeroScene] = useState(0);
   const homeRef = useRef(null);
@@ -91,18 +90,19 @@ export default function Home() {
 
 
 
-      // 5. Applications Bento Cards reveal
-      const bentoCards = document.querySelectorAll('.app-bento-card');
-      if (bentoCards.length) {
-        gsap.from(bentoCards, {
+      // 5. Applications Bento Cards reveal (animate outer wrapper to avoid CSS transition conflict on Safari/macOS/iOS)
+      const bentoCardWraps = document.querySelectorAll('.app-bento-card-wrap');
+      if (bentoCardWraps.length) {
+        gsap.from(bentoCardWraps, {
           y: 26,
           opacity: 0,
           duration: 0.8,
           stagger: 0.1,
           ease: 'power2.out',
+          clearProps: 'all',
           scrollTrigger: {
             trigger: '.applications-bento-grid',
-            start: 'top 82%',
+            start: 'top 85%',
             toggleActions: 'play none none none'
           }
         });
@@ -148,7 +148,7 @@ export default function Home() {
                 inset: 0,
                 backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.3) 45%, transparent 75%), linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 35%), url('${scene.url}')`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'center 42%',
+                backgroundPosition: scene.position || 'center 42%',
                 opacity: isActive ? 1 : 0,
                 transform: isActive ? 'scale(1.025)' : 'scale(1.07)',
                 transition: 'opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), transform 3.8s cubic-bezier(0.25, 1, 0.5, 1)',
@@ -160,15 +160,13 @@ export default function Home() {
           );
         })}
 
-        {/* Hero Main Content Area (Positioned lower down towards bottom bar) */}
+        {/* Hero Main Content Area */}
         <div 
-          className="container" 
+          className="container home-hero-main-area" 
           style={{ 
             position: 'relative', 
             zIndex: 3, 
             width: '100%', 
-            marginTop: 'auto', 
-            marginBottom: '1.5rem',
             paddingTop: 0,
             paddingBottom: 0
           }}
@@ -178,61 +176,44 @@ export default function Home() {
             <h1 
               className="home-hero-headline"
             >
-              <span style={{ display: 'block' }}>Where Vision</span>
-              <span style={{ display: 'block' }}>Meets Structure</span>
+              <span style={{ display: 'block' }}>Design Smarter.</span>
+              <span style={{ display: 'block' }}>Build Precisely.</span>
             </h1>
 
-
+            {/* Subtitle / Description directly under the heading matching reference */}
+            <p
+              className="home-hero-statement"
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 'clamp(0.875rem, 1.05vw, 0.95rem)',
+                lineHeight: 1.55,
+                color: '#D8D1C4',
+                maxWidth: '460px',
+                marginTop: '1rem',
+                marginBottom: 0
+              }}
+            >
+              Designing buildings that respond to real needs and real environments, with a focus on the function.
+            </p>
           </div>
         </div>
 
-        {/* Hero Bottom Bar / Architectural Metrics Strip matching reference */}
+        {/* Hero Bottom Bar / SCENE Switcher matching reference */}
         <div 
+          className="home-hero-bottom-bar"
           style={{ 
             position: 'relative', 
             zIndex: 3, 
-            width: '100%', 
-            marginTop: 0,
-            paddingTop: '0.5rem'
+            width: '100%'
           }}
         >
-          <div 
-            className="container"
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'flex-end',
-              flexWrap: 'wrap',
-              gap: '2.5rem',
-              paddingBottom: '0.5rem'
-            }}
-          >
-            {/* Bottom Left Statement */}
-            <div style={{ maxWidth: '440px' }}>
-              <p
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: 'clamp(0.875rem, 1.05vw, 0.95rem)',
-                  lineHeight: 1.55,
-                  color: '#D8D1C4',
-                  margin: 0
-                }}
-              >
-                Designing buildings that respond to real needs and real environments, with a focus on the function.
-              </p>
-            </div>
-          </div>
 
           {/* Interactive Scene Switcher Indicator */}
           <div 
-            className="container"
+            className="container home-hero-scene-bar"
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'flex-end',
-              gap: '0.5rem',
-              marginTop: '1.25rem',
-              paddingTop: '0.75rem',
               borderTop: '1px solid rgba(255, 255, 255, 0.08)'
             }}
           >
@@ -656,42 +637,43 @@ export default function Home() {
 
           <div className="applications-bento-grid">
             {applicationsData.slice(0, 4).map((app, index) => (
-              <Link
-                key={app.id}
-                to={`/applications/${app.id}`}
-                className={`app-bento-card app-bento-card-${index}`}
-                style={{ cursor: 'pointer' }}
-              >
-                <img
-                  src={app.image}
-                  alt={app.title}
-                  loading="lazy"
-                />
-                <div className="app-bento-overlay">
-                  <div className="app-bento-text-group">
-                    <span className="app-bento-category">
-                      {app.category}
-                    </span>
-                    <h3 
-                      className="app-bento-title"
-                      style={{
-                        fontWeight: 350,
-                        lineHeight: 1.38,
-                        letterSpacing: '0.015em'
-                      }}
-                    >
-                      {app.title}
-                    </h3>
-                  </div>
+              <div key={app.id} className="app-bento-card-wrap">
+                <Link
+                  to={`/applications/${app.id}`}
+                  className={`app-bento-card app-bento-card-${index}`}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img
+                    src={app.image}
+                    alt={app.title}
+                    loading="lazy"
+                  />
+                  <div className="app-bento-overlay">
+                    <div className="app-bento-text-group">
+                      <span className="app-bento-category">
+                        {app.category}
+                      </span>
+                      <h3 
+                        className="app-bento-title"
+                        style={{
+                          fontWeight: 350,
+                          lineHeight: 1.38,
+                          letterSpacing: '0.015em'
+                        }}
+                      >
+                        {app.title}
+                      </h3>
+                    </div>
 
-                  <div className="app-bento-btn-wrapper">
-                    <span className="app-bento-explore-btn">
-                      Explore Now
-                      <ArrowRight size={14} className="app-bento-btn-arrow" />
-                    </span>
+                    <div className="app-bento-btn-wrapper">
+                      <span className="app-bento-explore-btn">
+                        Explore Now
+                        <ArrowRight size={14} className="app-bento-btn-arrow" />
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         </div>

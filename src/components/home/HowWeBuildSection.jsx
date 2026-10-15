@@ -3,11 +3,13 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export default function HowWeBuildSection() {
+  const [hasStarted, setHasStarted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
   const sectionRef = useRef(null);
   const leftColRef = useRef(null);
   const videoCardRef = useRef(null);
+  const isInteractingWithControls = useRef(false);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -50,22 +52,55 @@ export default function HowWeBuildSection() {
     return () => ctx.revert();
   }, []);
 
-  const handleTogglePlay = (e) => {
-    if (e) e.stopPropagation();
+  const handleStartPlay = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (!videoRef.current) return;
 
+    setHasStarted(true);
+    const playPromise = videoRef.current.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch(() => {
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            videoRef.current.play();
+            setIsPlaying(true);
+          }
+        });
+    }
+  };
+
+  const handlePointerDown = (e) => {
+    if (!videoRef.current) return;
+    const rect = videoRef.current.getBoundingClientRect();
+    // Bottom ~60px represents the native video controls bar area
+    if (rect.bottom - e.clientY <= 60) {
+      isInteractingWithControls.current = true;
+    } else {
+      isInteractingWithControls.current = false;
+    }
+  };
+
+  const handleVideoClick = (e) => {
+    if (!hasStarted) return;
+    if (isInteractingWithControls.current) {
+      isInteractingWithControls.current = false;
+      return;
+    }
+    if (!videoRef.current) return;
+    const rect = videoRef.current.getBoundingClientRect();
+    if (rect.bottom - e.clientY <= 60) return;
+
     if (videoRef.current.paused) {
-      videoRef.current.muted = false;
-      videoRef.current.play().catch(() => {
-        if (videoRef.current) {
-          videoRef.current.muted = true;
-          videoRef.current.play();
-        }
-      });
-      setIsPlaying(true);
+      videoRef.current.play().catch(() => {});
     } else {
       videoRef.current.pause();
-      setIsPlaying(false);
     }
   };
 
@@ -184,19 +219,19 @@ export default function HowWeBuildSection() {
             <div className="hwb-ref-video-col">
               <div 
                 ref={videoCardRef}
-                className={`hwb-ref-video-card ${isPlaying ? 'is-playing' : ''}`}
-                onClick={handleTogglePlay}
-                role="button"
-                tabIndex={0}
-                aria-label="Play video: How We Build"
+                className={`hwb-ref-video-card ${hasStarted ? 'has-started' : ''} ${isPlaying ? 'is-playing' : ''}`}
+                onClick={!hasStarted ? handleStartPlay : undefined}
+                role={!hasStarted ? "button" : undefined}
+                tabIndex={!hasStarted ? 0 : undefined}
+                aria-label={!hasStarted ? "Play video: How We Build" : undefined}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
+                  if (!hasStarted && (e.key === 'Enter' || e.key === ' ')) {
                     e.preventDefault();
-                    handleTogglePlay(e);
+                    handleStartPlay(e);
                   }
                 }}
               >
-                {/* Reference Video Poster Image */}
+                {/* Reference Video Poster Image (only visible before first playback) */}
                 <img
                   src="/assets/images/how_we_build_video_poster.jpg"
                   alt="How We Build — Modern Sustainable Prefabricated Living"
@@ -204,24 +239,26 @@ export default function HowWeBuildSection() {
                   loading="lazy"
                 />
 
-                {/* Embedded Video Element */}
+                {/* Embedded Video Element with continuous smooth controls once activated */}
                 <video
                   ref={videoRef}
                   src="/assets/videos/core%20idea.mp4"
                   playsInline
                   preload="metadata"
-                  controls={isPlaying}
+                  controls={hasStarted}
                   onPlay={() => setIsPlaying(true)}
                   onPause={() => setIsPlaying(false)}
                   onEnded={() => setIsPlaying(false)}
+                  onPointerDown={handlePointerDown}
+                  onClick={handleVideoClick}
                   className="hwb-ref-video-tag"
                 >
                   <source src="/assets/videos/core%20idea.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
 
-                {/* Centered Translucent Glass Play Button */}
-                {!isPlaying && (
+                {/* Centered Translucent Glass Play Button - only shown before starting */}
+                {!hasStarted && (
                   <div className="hwb-ref-play-btn" aria-hidden="true">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="#202A1E" style={{ marginLeft: '4px' }}>
                       <polygon points="5 3 19 12 5 21 5 3" />
@@ -404,14 +441,22 @@ export default function HowWeBuildSection() {
           background-color: #1B221A;
           border: 3.5px solid #182017;
           box-shadow: 0 24px 60px -12px rgba(24, 34, 22, 0.25);
-          cursor: pointer;
           outline: none;
           transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
 
-        .hwb-ref-video-card:not(.is-playing):hover {
+        .hwb-ref-video-card:not(.has-started) {
+          cursor: pointer;
+        }
+
+        .hwb-ref-video-card:not(.has-started):hover {
           transform: translateY(-4px);
           box-shadow: 0 32px 70px -10px rgba(24, 34, 22, 0.32);
+        }
+
+        .hwb-ref-video-card.has-started {
+          cursor: default;
+          transform: none;
         }
 
         .hwb-ref-poster {
@@ -423,15 +468,16 @@ export default function HowWeBuildSection() {
           display: block;
           opacity: 1;
           transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-          z-index: 1;
+          z-index: 2;
         }
 
-        .hwb-ref-video-card.is-playing .hwb-ref-poster {
+        .hwb-ref-video-card.has-started .hwb-ref-poster {
           opacity: 0;
           pointer-events: none;
+          display: none;
         }
 
-        .hwb-ref-video-card:not(.is-playing):hover .hwb-ref-poster {
+        .hwb-ref-video-card:not(.has-started):hover .hwb-ref-poster {
           transform: scale(1.025);
         }
 
@@ -441,12 +487,12 @@ export default function HowWeBuildSection() {
           object-fit: cover;
           display: block;
           position: relative;
-          z-index: 0;
+          z-index: 1;
           background-color: #000000;
         }
 
-        .hwb-ref-video-card.is-playing .hwb-ref-video-tag {
-          z-index: 2;
+        .hwb-ref-video-card.has-started .hwb-ref-video-tag {
+          z-index: 3;
         }
 
         /* Circular Play Button */

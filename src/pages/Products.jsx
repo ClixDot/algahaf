@@ -61,12 +61,12 @@ export default function Products() {
       <section
         style={{
           position: 'relative',
-          minHeight: 'clamp(520px, 62vh, 700px)',
+          minHeight: 'clamp(540px, 64vh, 720px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          paddingTop: 'clamp(8rem, 14vh, 10.5rem)',
-          paddingBottom: 'clamp(5rem, 9vh, 7rem)',
+          paddingTop: 'clamp(8rem, 14vh, 11rem)',
+          paddingBottom: 'clamp(5.5rem, 9vh, 7.5rem)',
           backgroundColor: '#141713',
           color: '#FAF8F5',
           overflow: 'hidden'
@@ -76,21 +76,21 @@ export default function Products() {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: `linear-gradient(to bottom, rgba(14, 16, 14, 0.55) 0%, rgba(14, 16, 14, 0.38) 45%, rgba(14, 16, 14, 0.88) 100%), url('/assets/images/image_bg_alghafxa.jpg')`,
+            backgroundImage: `linear-gradient(to bottom, rgba(14, 18, 14, 0.7) 0%, rgba(14, 18, 14, 0.4) 36%, rgba(14, 18, 14, 0.6) 72%, rgba(14, 18, 14, 0.94) 100%), url('/assets/images/products.png')`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center 40%',
+            backgroundPosition: 'center 46%',
             opacity: 1
           }}
         />
 
         <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '880px' }}>
-          <span className="eyebrow" style={{ color: 'var(--color-sand)' }}>
+          <span className="eyebrow" style={{ color: 'var(--color-sand)', textShadow: '0 1px 8px rgba(0, 0, 0, 0.6)' }}>
             Modular Product Systems
           </span>
-          <h1 className="hero-title" style={{ color: '#FAF8F5', marginBottom: '1.5rem' }}>
+          <h1 className="hero-title" style={{ color: '#FAF8F5', marginBottom: '1.5rem', textShadow: '0 2px 20px rgba(0, 0, 0, 0.7)' }}>
             Not Just Modular.<br />Designed as Products.
           </h1>
-          <p className="lead-text" style={{ color: '#E5DFD4', maxWidth: '720px', margin: '0 auto' }}>
+          <p className="lead-text" style={{ color: '#F0ECE1', maxWidth: '720px', margin: '0 auto', textShadow: '0 1px 10px rgba(0, 0, 0, 0.75)' }}>
             A new generation of architectural spaces developed through integrated design, precision engineering, climate-controlled prefabrication, and rapid turnkey installation.
           </p>
         </div>
@@ -212,9 +212,16 @@ export default function Products() {
 
                     {/* Actions */}
                     <div style={{ borderTop: '1px solid rgba(82, 105, 75, 0.1)', paddingTop: '1.5rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem' }}>
-                      <Link to={`/products/${prod.slug}`} className="btn btn-primary">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                        }}
+                        className="btn btn-primary"
+                        style={{ cursor: 'pointer' }}
+                      >
                         View Complete Details & Plans <ArrowRight size={16} />
-                      </Link>
+                      </button>
                       <button
                         onClick={() => openEnquiry(prod.name)}
                         className="btn btn-sand"

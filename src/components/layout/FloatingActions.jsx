@@ -33,6 +33,7 @@ export default function FloatingActions() {
 
   return (
     <div
+      className="floating-actions-container"
       style={{
         position: 'fixed',
         bottom: '1.75rem',
