@@ -334,7 +334,7 @@ export default function Footer() {
           color: '#8A9287'
         }}>
           <div>
-            &copy; {currentYear} {companyInfo.legalName}. All rights reserved. United Arab Emirates.
+            &copy; {currentYear} AlGhaf Collective. All rights reserved. | Powered by Clixdot
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
             <span>Design Smarter. Build Precisely.</span>

@@ -180,11 +180,11 @@ export default function Navbar() {
                 alt="AlGhaf Collective"
                 className="nav-logo-img"
                 style={{
-                  height: scrolled ? '46px' : '62px',
+                  height: '46px',
                   width: 'auto',
                   objectFit: 'contain',
                   display: 'block',
-                  transition: 'height 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s ease'
+                  transition: 'transform 0.25s ease'
                 }}
               />
             </Link>
@@ -548,11 +548,9 @@ export default function Navbar() {
           .navbar-container {
             padding: 0.65rem 1.25rem !important;
           }
-          .nav-logo-img {
-            height: 44px !important;
-          }
+          .nav-logo-img,
           .header-scrolled .nav-logo-img {
-            height: 36px !important;
+            height: 38px !important;
           }
         }
       `}</style>
