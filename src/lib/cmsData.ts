@@ -979,7 +979,7 @@ export const DEFAULT_CONTACT_SECTIONS: CmsSectionItem[] = [
         question: 'Do AlGhaf modular homes comply with UAE municipal building regulations?',
         answer:
           'Yes. All AlGhaf structural frames and building envelopes are engineered in full alignment with UAE building codes, Dubai Municipality regulations, and GCC civil defense fire safety standards.',
-        category: 'Regulations & Approvals',
+        category: '',
         order: 1,
         status: 'published',
         isVisible: true,

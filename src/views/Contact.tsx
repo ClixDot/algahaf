@@ -55,7 +55,7 @@ const DEFAULT_FAQS = [
   {
     q: 'Do AlGhaf modular homes comply with UAE municipal building regulations?',
     a: 'Yes. All AlGhaf structural frames and building envelopes are engineered in full alignment with UAE building codes, Dubai Municipality regulations, and GCC civil defense fire safety standards.',
-    category: 'Regulations & Approvals',
+    category: '',
   },
   {
     q: 'How long does the entire process take from agreement to handover?',
@@ -694,25 +694,7 @@ export default function Contact({ initialSections = [] }: ContactProps) {
                           transition: 'color 0.25s ease, background-color 0.25s ease',
                         }}
                       >
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                          <span>{questionText}</span>
-                          {categoryText && (
-                            <span
-                              style={{
-                                fontSize: '0.72rem',
-                                padding: '0.2rem 0.5rem',
-                                borderRadius: '999px',
-                                backgroundColor: 'rgba(201, 167, 121, 0.14)',
-                                color: 'var(--color-sand-dark)',
-                                fontWeight: 600,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.04em',
-                              }}
-                            >
-                              {categoryText}
-                            </span>
-                          )}
-                        </span>
+                        <span>{questionText}</span>
                         <ChevronDown
                           size={20}
                           style={{

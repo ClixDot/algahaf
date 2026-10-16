@@ -1,5 +1,6 @@
 [
   {
+    "_id": "6ad210fb3aff37a95565d2ac",
     "pageSlug": "contact",
     "sectionId": "contact-hero",
     "sectionName": "Contact Hero",
@@ -10,11 +11,14 @@
     "content": "Whether you are planning a private home, hospitality development, modular project, or looking to collaborate, start the conversation with us.",
     "mediaUrl": "/assets/images/image_bg_more_alghafdfdfd.jpg",
     "mediaType": "image",
-    "displayOrder": 1,
+    "items": [],
     "isVisible": true,
-    "status": "published"
+    "displayOrder": 1,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:56:42.864Z"
   },
   {
+    "_id": "6ad210fb3aff37a95565d2ad",
     "pageSlug": "contact",
     "sectionId": "contact-direct",
     "sectionName": "Direct Contact & Information Cards",
@@ -25,9 +29,6 @@
     "content": "Speak directly with our architectural directors and prefabrication specialists. We welcome consultations for private landowners, hospitality developers, and master planners.",
     "mediaUrl": "/assets/images/ax.jpg",
     "mediaType": "image",
-    "displayOrder": 2,
-    "isVisible": true,
-    "status": "published",
     "items": [
       {
         "id": "headquarters",
@@ -77,9 +78,14 @@
         "icon": "Clock",
         "isVisible": true
       }
-    ]
+    ],
+    "isVisible": true,
+    "displayOrder": 2,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:56:42.959Z"
   },
   {
+    "_id": "6ad210fb3aff37a95565d2ae",
     "pageSlug": "contact",
     "sectionId": "contact-form",
     "sectionName": "Project Enquiry Form Builder",
@@ -88,10 +94,8 @@
     "title": "Start Your Project",
     "subtitle": "Fill out the form below. Our architectural engineers will review your requirements.",
     "content": "Thank you. Your enquiry has been logged. An AlGhaf project coordinator will be in touch within 24 business hours.",
+    "mediaType": "image",
     "ctaText": "Send Enquiry",
-    "displayOrder": 3,
-    "isVisible": true,
-    "status": "published",
     "items": [
       {
         "id": "projectType",
@@ -196,9 +200,14 @@
         "required": true,
         "order": 8
       }
-    ]
+    ],
+    "isVisible": true,
+    "displayOrder": 3,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:56:43.042Z"
   },
   {
+    "_id": "6ad210fb3aff37a95565d2af",
     "pageSlug": "contact",
     "sectionId": "contact-faq",
     "sectionName": "Frequently Asked Questions (FAQ)",
@@ -206,16 +215,14 @@
     "title": "Frequently Asked Questions.",
     "subtitle": "Understand how AlGhaf Collective structures approvals, delivery, and installation.",
     "content": "Understand how AlGhaf Collective structures approvals, delivery, and installation.",
-    "displayOrder": 4,
-    "isVisible": true,
-    "status": "published",
+    "mediaType": "image",
     "items": [
       {
         "id": "faq-1",
         "title": "Do AlGhaf modular homes comply with UAE municipal building regulations?",
         "question": "Do AlGhaf modular homes comply with UAE municipal building regulations?",
         "answer": "Yes. All AlGhaf structural frames and building envelopes are engineered in full alignment with UAE building codes, Dubai Municipality regulations, and GCC civil defense fire safety standards.",
-        "category": "Regulations & Approvals",
+        "category": "",
         "order": 1,
         "status": "published",
         "isVisible": true
@@ -250,6 +257,10 @@
         "status": "published",
         "isVisible": true
       }
-    ]
+    ],
+    "isVisible": true,
+    "displayOrder": 4,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:56:43.126Z"
   }
 ]
