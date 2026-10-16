@@ -38,11 +38,6 @@ export default function AdminLoginPage() {
     }
   };
 
-  const handleQuickFill = () => {
-    setEmail('adminalgahaf@.com');
-    setPassword('algahaf14@admin');
-  };
-
   return (
     <div
       style={{
@@ -195,32 +190,15 @@ export default function AdminLoginPage() {
             borderTop: '1px solid var(--admin-border-light)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             fontSize: '0.78rem',
             color: 'var(--admin-text-subtle)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <ShieldCheck size={15} color="var(--admin-forest)" />
-            <span>Encrypted Session</span>
+            <span>Encrypted Session &bull; Authorized Personnel Only</span>
           </div>
-
-          <button
-            type="button"
-            onClick={handleQuickFill}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: 'var(--admin-forest)',
-              fontSize: '0.78rem',
-              fontWeight: 600,
-              cursor: 'pointer',
-              textDecoration: 'underline',
-              padding: 0,
-            }}
-          >
-            Auto-fill Credentials
-          </button>
         </div>
       </div>
     </div>
