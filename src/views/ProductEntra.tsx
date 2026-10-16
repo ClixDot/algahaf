@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   ArrowRight, 
   Check, 
@@ -16,21 +18,52 @@ import QuickEnquiryModal from '../components/common/QuickEnquiryModal';
 import Lightbox from '../components/common/Lightbox';
 import { products } from '../data/productsData';
 
-export default function ProductEntra() {
-  const entra = products.find(p => p.id === 'entra');
+interface ProductEntraProps {
+  initialProduct?: any;
+}
+
+export default function ProductEntra({ initialProduct }: ProductEntraProps) {
+  const entra = initialProduct || products.find(p => p.id === 'entra');
   const [activeTab, setActiveTab] = useState('interior');
   const [modalOpen, setModalOpen] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxImages, setLightboxImages] = useState([]);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const openLightbox = (imgs, idx = 0) => {
+  const openLightbox = (imgs: string[], idx = 0) => {
     setLightboxImages(imgs);
     setLightboxIndex(idx);
     setLightboxOpen(true);
   };
 
-  const related = products.filter(p => p.id !== 'entra');
+  const related = entra?.relatedProducts && Array.isArray(entra.relatedProducts) && entra.relatedProducts.length > 0
+    ? entra.relatedProducts.map((relId: string) => products.find((p) => p.id.toLowerCase() === relId.toLowerCase())).filter(Boolean)
+    : products.filter(p => p.id !== 'entra');
+
+  const technicalProfileRows = (entra?.technicalProfile && Array.isArray(entra.technicalProfile) && entra.technicalProfile.length > 0)
+    ? entra.technicalProfile
+    : [
+        { label: 'Available Sizes', val: '3 Configurations (Compact, Standard, Grand)' },
+        { label: 'Acoustic Rating', val: 'STC 60+ Sound Isolation Envelope' },
+        { label: 'Audio Conduits', val: 'Dolby Atmos 7.2.4 / 9.4.6 Spatial Pre-Wiring' },
+        { label: 'Visual Support', val: '4K Laser Projector or 120"–150" MicroLED' },
+        { label: 'Optional Modules', val: 'Integrated Cocktail Bar & Luxury Washroom' },
+        { label: 'Air & Ventilation', val: 'Silent NC-25 VRV Fresh Air Climate System' }
+      ];
+
+  const paragraphs = (entra?.overviewParagraphs && Array.isArray(entra.overviewParagraphs) && entra.overviewParagraphs.length > 0)
+    ? entra.overviewParagraphs
+    : [
+        "ENTRA is an immersive audio-visual entertainment space, designed for private cinema, esports gaming, and social experiences — all within your own standalone private environment.",
+        "Built to rigorous acoustic isolation specifications (STC 60+), ENTRA decouples high-output sound from the rest of your estate, providing reference-level acoustics without disturbing household members or neighbors.",
+        "Available in three distinct sizes, ENTRA can be configured with an optional integrated social cocktail bar and private luxury restroom module for an entirely self-contained leisure retreat."
+      ];
+
+  const exteriorImages = entra?.gallery?.exterior || [];
+  const interiorImages = entra?.gallery?.interior || [];
+  const totalRenders = exteriorImages.length + interiorImages.length;
+  const floorplans = entra?.floorplans || [];
+  const specifications = Array.isArray(entra?.specifications) ? entra.specifications : [];
 
   return (
     <main>
@@ -54,9 +87,9 @@ export default function ProductEntra() {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.5) 100%), url('${entra.heroImage}')`,
+            backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.5) 100%), url('${entra?.heroImage || '/assets/renders/ENTRA_EXT_3D_img1.jpg'}')`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: entra?.heroImagePosition || 'center',
             opacity: 1
           }}
         />
@@ -65,30 +98,32 @@ export default function ProductEntra() {
           <div style={{ maxWidth: '840px' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', padding: '0.35rem 0.85rem', backgroundColor: 'rgba(201, 167, 121, 0.2)', border: '1px solid rgba(201, 167, 121, 0.4)', borderRadius: '4px' }}>
               <span style={{ fontSize: '0.8125rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-sand)' }}>
-                {entra.sizeRange} &bull; Optional Bar & Restroom
+                {entra?.heroEyebrow || `${entra?.sizeRange || '40–120 m²'} • Optional Bar & Restroom`}
               </span>
             </div>
 
             <h1 className="hero-title" style={{ color: '#FAF8F5', marginBottom: '0.5rem' }}>
-              {entra.name}
+              {entra?.name || 'ENTRA'}
             </h1>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 600, color: 'var(--color-sand)', marginBottom: '1.25rem' }}>
-              {entra.fullName}
+              {entra?.fullName || 'Private Entertainment & Wellness Modular Architecture'}
             </div>
 
-            <p style={{ fontSize: 'clamp(1.125rem, 1.8vw, 1.35rem)', fontStyle: 'italic', color: '#E5DFD4', marginBottom: '2rem', lineHeight: '1.6' }}>
-              “{entra.tagline}”
-            </p>
+            {entra?.tagline && (
+              <p style={{ fontSize: 'clamp(1.125rem, 1.8vw, 1.35rem)', fontStyle: 'italic', color: '#E5DFD4', marginBottom: '2rem', lineHeight: '1.6' }}>
+                “{entra.tagline}”
+              </p>
+            )}
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
               <button onClick={() => setModalOpen(true)} className="btn btn-sand btn-lg">
-                Enquire About ENTRA <ArrowRight size={18} />
+                {entra?.heroCtaPrimaryText || 'Enquire About ENTRA'} <ArrowRight size={18} />
               </button>
               <button 
-                onClick={() => openLightbox(entra.gallery.interior)} 
+                onClick={() => openLightbox(interiorImages.length > 0 ? interiorImages : exteriorImages)} 
                 className="btn btn-outline-light btn-lg"
               >
-                View Cinema & Bar Renders ({entra.gallery.interior.length})
+                {entra?.heroCtaSecondaryText || `View Cinema & Bar Renders (${interiorImages.length || totalRenders})`}
               </button>
             </div>
           </div>
@@ -102,43 +137,39 @@ export default function ProductEntra() {
         <div className="container">
           <div className="grid-2" style={{ alignItems: 'start', gap: 'clamp(2rem, 5vw, 5rem)' }}>
             <div>
-              <span className="eyebrow eyebrow-forest">Private Sanctuary</span>
+              <span className="eyebrow eyebrow-forest">{entra?.overviewEyebrow || 'Private Sanctuary'}</span>
               <h2 className="section-title" style={{ marginBottom: '1.5rem', color: 'var(--color-forest-dark)' }}>
-                Your Private Immersive World.
+                {entra?.overviewTitle || 'Your Private Immersive World.'}
               </h2>
               <div style={{ fontSize: '1.0625rem', lineHeight: '1.75', color: 'var(--color-charcoal)', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <p>
-                  ENTRA is an immersive audio-visual entertainment space, designed for private cinema, esports gaming, and social experiences — all within your own standalone private environment.
-                </p>
-                <p>
-                  Built to rigorous acoustic isolation specifications (STC 60+), ENTRA decouples high-output sound from the rest of your estate, providing reference-level acoustics without disturbing household members or neighbors.
-                </p>
-                <p>
-                  Available in <strong>three distinct sizes</strong>, ENTRA can be configured with an optional integrated social cocktail bar and private luxury restroom module for an entirely self-contained leisure retreat.
-                </p>
+                {paragraphs.map((p: string, idx: number) => (
+                  <p key={idx}>{p}</p>
+                ))}
               </div>
 
               {/* Supported Entertainment Typologies */}
-              <div style={{ marginTop: '2.5rem' }}>
-                <h4 style={{ fontSize: '0.8125rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--color-forest-dark)', marginBottom: '1rem', fontWeight: 700 }}>
-                  Tailored Applications:
-                </h4>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {entra.applications.map((app) => (
-                    <span key={app} style={{
-                      padding: '0.4rem 0.85rem',
-                      backgroundColor: '#FFFFFF',
-                      border: '1px solid rgba(82, 105, 75, 0.15)',
-                      borderRadius: '4px',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: 'var(--color-forest)'
-                    }}>
-                      {app}
-                    </span>
-                  ))}
+              {entra?.applications && entra.applications.length > 0 && (
+                <div style={{ marginTop: '2.5rem' }}>
+                  <h4 style={{ fontSize: '0.8125rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--color-forest-dark)', marginBottom: '1rem', fontWeight: 700 }}>
+                    Tailored Applications:
+                  </h4>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {entra.applications.map((app: string) => (
+                      <span key={app} style={{
+                        padding: '0.4rem 0.85rem',
+                        backgroundColor: '#FFFFFF',
+                        border: '1px solid rgba(82, 105, 75, 0.15)',
+                        borderRadius: '4px',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: 'var(--color-forest)'
+                      }}>
+                        {app}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Quick Stats Panel */}
@@ -150,28 +181,21 @@ export default function ProductEntra() {
               boxShadow: 'var(--shadow-md)'
             }}>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.35rem', color: 'var(--color-forest-dark)', marginBottom: '1.5rem', borderBottom: '1px solid rgba(82, 105, 75, 0.1)', paddingBottom: '0.75rem' }}>
-                ENTRA Acoustic Specifications
+                {entra?.techProfileTitle || 'ENTRA Acoustic Specifications'}
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                {[
-                  { label: 'Available Sizes', val: '3 Configurations (Compact, Standard, Grand)' },
-                  { label: 'Acoustic Rating', val: 'STC 60+ Sound Isolation Envelope' },
-                  { label: 'Audio Conduits', val: 'Dolby Atmos 7.2.4 / 9.4.6 Spatial Pre-Wiring' },
-                  { label: 'Visual Support', val: '4K Laser Projector or 120"–150" MicroLED' },
-                  { label: 'Optional Modules', val: 'Integrated Cocktail Bar & Luxury Washroom' },
-                  { label: 'Air & Ventilation', val: 'Silent NC-25 VRV Fresh Air Climate System' }
-                ].map((item, idx) => (
+                {technicalProfileRows.map((item: any, idx: number) => (
                   <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(82, 105, 75, 0.08)', paddingBottom: '0.75rem' }}>
                     <span style={{ fontSize: '0.875rem', color: 'var(--color-charcoal-muted)' }}>{item.label}</span>
-                    <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--color-forest)' }}>{item.val}</span>
+                    <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--color-forest)' }}>{item.val || item.value}</span>
                   </div>
                 ))}
               </div>
 
               <div style={{ marginTop: '2rem' }}>
                 <button onClick={() => setModalOpen(true)} className="btn btn-primary" style={{ width: '100%' }}>
-                  Enquire About ENTRA Options
+                  {entra?.techProfileBtnText || 'Enquire About ENTRA Options'}
                 </button>
               </div>
             </div>
@@ -180,15 +204,15 @@ export default function ProductEntra() {
       </section>
 
       {/* =========================================================================
-          GALLERY — CINEMA & INTERIOR RENDERS (Extracted)
+          GALLERY — CINEMA & INTERIOR RENDERS
           ========================================================================= */}
       <section className="section-padding bg-ivory-light">
         <div className="container">
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '2.5rem', gap: '1rem' }}>
             <div>
-              <span className="eyebrow eyebrow-forest">Immersive Visuals</span>
+              <span className="eyebrow eyebrow-forest">{entra?.galleryEyebrow || 'Immersive Visuals'}</span>
               <h2 className="section-title" style={{ color: 'var(--color-forest-dark)', margin: 0 }}>
-                ENTRA Architectural & Interior Views
+                {entra?.galleryTitle || 'ENTRA Architectural & Interior Views'}
               </h2>
             </div>
 
@@ -205,7 +229,7 @@ export default function ProductEntra() {
                   color: activeTab === 'interior' ? '#FAF8F5' : 'var(--color-charcoal)'
                 }}
               >
-                Cinema, Bar & Restroom ({entra.gallery.interior.length})
+                Cinema, Bar & Restroom ({interiorImages.length})
               </button>
               <button
                 onClick={() => setActiveTab('exterior')}
@@ -218,14 +242,14 @@ export default function ProductEntra() {
                   color: activeTab === 'exterior' ? '#FAF8F5' : 'var(--color-charcoal)'
                 }}
               >
-                Exterior Renders ({entra.gallery.exterior.length})
+                Exterior Renders ({exteriorImages.length})
               </button>
             </div>
           </div>
 
           {/* Grid of Renders */}
           <div className="grid-3" style={{ gap: '1.5rem' }}>
-            {(activeTab === 'interior' ? entra.gallery.interior : entra.gallery.exterior).map((img, idx) => (
+            {(activeTab === 'interior' ? interiorImages : exteriorImages).map((img: string, idx: number) => (
               <div
                 key={idx}
                 className="img-zoom-wrapper"
@@ -235,8 +259,9 @@ export default function ProductEntra() {
                   boxShadow: 'var(--shadow-sm)',
                   cursor: 'pointer'
                 }}
-                onClick={() => openLightbox(activeTab === 'interior' ? entra.gallery.interior : entra.gallery.exterior, idx)}
+                onClick={() => openLightbox(activeTab === 'interior' ? interiorImages : exteriorImages, idx)}
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={img} alt={`ENTRA View ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 <div style={{
                   position: 'absolute',
@@ -267,20 +292,20 @@ export default function ProductEntra() {
       <section className="section-padding bg-ivory">
         <div className="container">
           <SectionHeader
-            eyebrow="Configuration & Engineering"
-            title="ENTRA Configurations & Technical Matrix."
-            subtitle="Customizable around your seating capacity, acoustic gear, and social preferences."
+            eyebrow={entra?.specEyebrow || 'Configuration & Engineering'}
+            title={entra?.specTitle || 'ENTRA Configurations & Technical Matrix.'}
+            subtitle={entra?.specSubtitle || 'Customizable around your seating capacity, acoustic gear, and social preferences.'}
           />
 
           <div className="grid-2" style={{ gap: '3.5rem', alignItems: 'start' }}>
             {/* Size Configurations */}
             <div>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: 'var(--color-forest-dark)', marginBottom: '1.25rem' }}>
-                3 Size Configurations
+                {floorplans.length} Size Configurations
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                {entra.floorplans.map((plan, i) => (
+                {floorplans.map((plan: any, i: number) => (
                   <div key={i} style={{
                     backgroundColor: '#FFFFFF',
                     padding: '1.5rem',
@@ -313,7 +338,7 @@ export default function ProductEntra() {
               <div style={{ backgroundColor: '#FFFFFF', padding: '1.75rem', borderRadius: '6px', border: '1px solid rgba(82, 105, 75, 0.12)', boxShadow: 'var(--shadow-sm)' }}>
                 <table className="spec-table">
                   <tbody>
-                    {entra.specifications.map((spec, i) => (
+                    {specifications.map((spec: any, i: number) => (
                       <tr key={i}>
                         <td>{spec.label}</td>
                         <td>{spec.value}</td>
@@ -330,45 +355,48 @@ export default function ProductEntra() {
       {/* =========================================================================
           RELATED PRODUCTS
           ========================================================================= */}
-      <section className="section-padding bg-ivory-light">
-        <div className="container">
-          <SectionHeader
-            eyebrow="Explore Other Systems"
-            title="Explore Living Systems."
-            centered
-          />
+      {related.length > 0 && (
+        <section className="section-padding bg-ivory-light">
+          <div className="container">
+            <SectionHeader
+              eyebrow={entra?.relatedEyebrow || 'Explore Other Systems'}
+              title={entra?.relatedTitle || 'Explore Living Systems.'}
+              centered
+            />
 
-          <div className="grid-2" style={{ maxWidth: '960px', margin: '0 auto', gap: '2rem' }}>
-            {related.map(prod => (
-              <div key={prod.id} style={{
-                backgroundColor: '#FFFFFF',
-                borderRadius: '6px',
-                overflow: 'hidden',
-                border: '1px solid rgba(82, 105, 75, 0.12)',
-                boxShadow: 'var(--shadow-sm)'
-              }}>
-                <div style={{ height: '220px' }}>
-                  <img src={prod.heroImage} alt={prod.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <div className="grid-2" style={{ maxWidth: '960px', margin: '0 auto', gap: '2rem' }}>
+              {related.map((prod: any) => (
+                <div key={prod.id} style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '6px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(82, 105, 75, 0.12)',
+                  boxShadow: 'var(--shadow-sm)'
+                }}>
+                  <div style={{ height: '220px' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={prod.heroImage} alt={prod.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <div style={{ padding: '1.75rem' }}>
+                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 500, color: 'var(--color-forest-dark)', marginBottom: '0.25rem' }}>
+                      {prod.name}
+                    </h3>
+                    <p style={{ color: 'var(--color-sand-dark)', fontSize: '0.875rem', fontWeight: 600, marginBottom: '0.75rem' }}>
+                      {prod.fullName} ({prod.sizeRange})
+                    </p>
+                    <p style={{ color: 'var(--color-charcoal-muted)', fontSize: '0.9375rem', marginBottom: '1.25rem', lineHeight: '1.6' }}>
+                      {prod.shortDescription}
+                    </p>
+                    <Link href={`/products/${prod.slug}`} className="btn btn-outline-dark btn-sm">
+                      View {prod.name} Details <ArrowRight size={14} />
+                    </Link>
+                  </div>
                 </div>
-                <div style={{ padding: '1.75rem' }}>
-                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 500, color: 'var(--color-forest-dark)', marginBottom: '0.25rem' }}>
-                    {prod.name}
-                  </h3>
-                  <p style={{ color: 'var(--color-sand-dark)', fontSize: '0.875rem', fontWeight: 600, marginBottom: '0.75rem' }}>
-                    {prod.fullName} ({prod.sizeRange})
-                  </p>
-                  <p style={{ color: 'var(--color-charcoal-muted)', fontSize: '0.9375rem', marginBottom: '1.25rem', lineHeight: '1.6' }}>
-                    {prod.shortDescription}
-                  </p>
-                  <Link to={`/products/${prod.slug}`} className="btn btn-outline-dark btn-sm">
-                    View {prod.name} Details <ArrowRight size={14} />
-                  </Link>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Lightbox Modal */}
       <Lightbox
@@ -383,7 +411,7 @@ export default function ProductEntra() {
       <QuickEnquiryModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        initialProduct="ENTRA"
+        initialProduct={entra?.name || 'ENTRA'}
       />
     </main>
   );

@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowRight, CheckCircle2, Clock, Check, ChevronRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -276,7 +278,7 @@ export default function Process() {
             <button onClick={() => setModalOpen(true)} className="btn btn-primary btn-lg">
               Start Project Consultation <ArrowRight size={18} />
             </button>
-            <Link to="/products" className="btn btn-outline-dark btn-lg">
+            <Link href="/products" className="btn btn-outline-dark btn-lg">
               Explore Our Modular Homes
             </Link>
           </div>

@@ -1,9 +1,21 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function Lightbox({ images = [], currentIndex = 0, isOpen, onClose, onNavigate }) {
+export type LightboxImage = string | { src?: string; title?: string; [key: string]: any };
+
+export interface LightboxProps {
+  images?: any[];
+  currentIndex?: number;
+  isOpen: boolean;
+  onClose: () => void;
+  onNavigate: (index: number) => void;
+}
+
+export default function Lightbox({ images = [], currentIndex = 0, isOpen, onClose, onNavigate }: LightboxProps) {
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return;
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowLeft' && images.length > 1) onNavigate((currentIndex - 1 + images.length) % images.length);
@@ -17,14 +29,14 @@ export default function Lightbox({ images = [], currentIndex = 0, isOpen, onClos
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      window.lenis?.stop();
+      (window as any).lenis?.stop();
     } else {
       document.body.style.overflow = 'unset';
-      window.lenis?.start();
+      (window as any).lenis?.start();
     }
     return () => {
       document.body.style.overflow = 'unset';
-      window.lenis?.start();
+      (window as any).lenis?.start();
     };
   }, [isOpen]);
 

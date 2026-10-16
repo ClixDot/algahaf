@@ -1,0 +1,450 @@
+/* ==========================================================================
+   ALGHAF COLLECTIVE — ADMIN DASHBOARD ARCHITECTURAL LIGHT MODE SYSTEM
+   Harmonized with website luxury identity: Ivory, Forest Green, Sand, Charcoal
+   ========================================================================== */
+
+:root {
+  /* AlGhaf Light Architectural Palette */
+  --admin-bg: #FAF8F5;            /* Website Ivory Light */
+  --admin-surface: #FFFFFF;       /* Pure Clean Surface */
+  --admin-surface-card: #FFFFFF;  /* Card Surface */
+  --admin-surface-muted: #F2EEE5; /* Website Warm Ivory */
+  --admin-surface-hover: #F5F1E8; /* Muted Warm Hover */
+  
+  /* Borders & Dividers */
+  --admin-border: #E5DFD4;        /* Soft website ivory-muted divider */
+  --admin-border-light: #ECE7DD;  /* Subtle divider */
+  --admin-border-focus: #52694B;  /* Signature forest focus */
+  --admin-border-sand: rgba(201, 167, 121, 0.35);
+
+  /* Typography Colors */
+  --admin-text-main: #20231F;     /* Deep rich slate charcoal */
+  --admin-text-muted: #6B726A;    /* Balanced slate muted */
+  --admin-text-subtle: #8C928B;   /* Subtle labels */
+
+  /* AlGhaf Signature Brand Accents */
+  --admin-forest: #52694B;        /* AlGhaf signature botanical green */
+  --admin-forest-hover: #3E5238;  /* Deep forest hover */
+  --admin-forest-tint: rgba(82, 105, 75, 0.08);
+  --admin-forest-border: rgba(82, 105, 75, 0.2);
+
+  --admin-accent-gold: #B89258;   /* Sand gold tuned for high contrast light mode */
+  --admin-accent-gold-hover: #A07B43;
+  --admin-accent-gold-tint: rgba(184, 146, 88, 0.12);
+
+  /* Status Colors (Light Mode Harmonic) */
+  --admin-danger: #C0392B;        /* Architectural crimson */
+  --admin-danger-tint: rgba(192, 57, 43, 0.08);
+  --admin-danger-border: rgba(192, 57, 43, 0.25);
+
+  --admin-success: #3E7E4E;       /* Natural botanical sage */
+  --admin-success-tint: rgba(62, 126, 78, 0.10);
+  --admin-success-border: rgba(62, 126, 78, 0.25);
+
+  --admin-info: #2B6699;          /* Architectural slate blue */
+  --admin-info-tint: rgba(43, 102, 153, 0.08);
+  --admin-info-border: rgba(43, 102, 153, 0.25);
+
+  /* Typography Families matching Public Website (Aftika for headings) */
+  --admin-font: 'Anek Malayalam', 'Aftika', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --admin-font-display: 'Aftika', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Shadows matching AlGhaf luxury depth */
+  --admin-shadow-sm: 0 1px 3px rgba(32, 35, 31, 0.04), 0 1px 2px rgba(32, 35, 31, 0.02);
+  --admin-shadow-md: 0 4px 16px rgba(32, 35, 31, 0.06);
+  --admin-shadow-lg: 0 12px 36px rgba(32, 35, 31, 0.09);
+}
+
+/* Base Body */
+.admin-body {
+  background-color: var(--admin-bg);
+  color: var(--admin-text-main);
+  font-family: var(--admin-font);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Sidebar styling */
+.admin-sidebar {
+  width: 275px;
+  background-color: var(--admin-surface);
+  border-right: 1px solid var(--admin-border);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+  z-index: 100;
+  box-shadow: 2px 0 16px rgba(32, 35, 31, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-sidebar-header {
+  padding: 1.5rem 1.4rem;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1.25rem;
+  margin: 0.25rem 0.75rem;
+  border-radius: 8px;
+  color: var(--admin-text-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-nav-item:hover {
+  background-color: var(--admin-surface-hover);
+  color: var(--admin-text-main);
+  transform: translateX(2px);
+}
+
+.admin-nav-item.active {
+  background-color: var(--admin-forest-tint);
+  color: var(--admin-forest);
+  font-weight: 600;
+  border-left: 3px solid var(--admin-forest);
+}
+
+/* Top Header Bar */
+.admin-header {
+  height: 72px;
+  background-color: var(--admin-surface);
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  box-shadow: 0 1px 8px rgba(32, 35, 31, 0.03);
+}
+
+/* Card Components */
+.admin-card {
+  background-color: var(--admin-surface-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 1.75rem;
+  box-shadow: var(--admin-shadow-sm);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-card:hover {
+  border-color: #D6CEBE;
+  box-shadow: var(--admin-shadow-md);
+}
+
+/* Buttons */
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--admin-font);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  text-decoration: none;
+}
+
+.admin-btn-primary {
+  background-color: var(--admin-forest);
+  color: #FAF8F5;
+  box-shadow: 0 2px 8px rgba(82, 105, 75, 0.25);
+}
+
+.admin-btn-primary:hover {
+  background-color: var(--admin-forest-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(82, 105, 75, 0.35);
+  color: #FFFFFF;
+}
+
+.admin-btn-secondary {
+  background-color: #FFFFFF;
+  color: var(--admin-text-main);
+  border: 1px solid var(--admin-border);
+  box-shadow: var(--admin-shadow-sm);
+}
+
+.admin-btn-secondary:hover {
+  background-color: var(--admin-surface-hover);
+  border-color: #D0C8B8;
+  color: var(--admin-forest);
+}
+
+.admin-btn-gold {
+  background-color: var(--admin-accent-gold);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(184, 146, 88, 0.25);
+}
+
+.admin-btn-gold:hover {
+  background-color: var(--admin-accent-gold-hover);
+  color: #FFFFFF;
+}
+
+.admin-btn-danger {
+  background-color: var(--admin-danger-tint);
+  color: var(--admin-danger);
+  border: 1px solid var(--admin-danger-border);
+}
+
+.admin-btn-danger:hover {
+  background-color: rgba(192, 57, 43, 0.14);
+}
+
+/* Form Inputs */
+.admin-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--admin-text-muted);
+  margin-bottom: 0.45rem;
+}
+
+.admin-input,
+.admin-textarea,
+.admin-select {
+  width: 100%;
+  background-color: #FFFFFF;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--admin-text-main);
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.admin-input:focus,
+.admin-textarea:focus,
+.admin-select:focus {
+  border-color: var(--admin-forest);
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(82, 105, 75, 0.12);
+}
+
+.admin-input::placeholder,
+.admin-textarea::placeholder {
+  color: #A3ACA0;
+}
+
+/* Status Badges */
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-badge-published {
+  background-color: var(--admin-success-tint);
+  color: var(--admin-success);
+  border: 1px solid var(--admin-success-border);
+}
+
+.admin-badge-draft {
+  background-color: var(--admin-accent-gold-tint);
+  color: var(--admin-accent-gold);
+  border: 1px solid var(--admin-border-sand);
+}
+
+.admin-badge-new {
+  background-color: var(--admin-info-tint);
+  color: var(--admin-info);
+  border: 1px solid var(--admin-info-border);
+}
+
+.admin-badge-archived {
+  background-color: #ECE7DD;
+  color: var(--admin-text-muted);
+  border: 1px solid #DFD8CB;
+}
+
+/* Tables */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  padding: 0.95rem 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--admin-text-muted);
+  border-bottom: 1px solid var(--admin-border);
+  background-color: var(--admin-surface-muted);
+}
+
+.admin-table td {
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--admin-border-light);
+  font-size: 0.88rem;
+  color: var(--admin-text-main);
+}
+
+.admin-table tr:hover td {
+  background-color: #F8F5EE;
+}
+
+/* Modal */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(32, 35, 31, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.5rem;
+}
+
+.admin-modal-content {
+  background-color: #FFFFFF;
+  border: 1px solid var(--admin-border);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--admin-shadow-lg);
+  padding: 2.25rem;
+}
+
+/* Search and Filters */
+.admin-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #FFFFFF;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.admin-search-bar:focus-within {
+  border-color: var(--admin-forest);
+  box-shadow: 0 0 0 3px rgba(82, 105, 75, 0.12);
+}
+
+.admin-search-bar input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--admin-text-main);
+  font-family: inherit;
+  font-size: 0.88rem;
+  width: 100%;
+}
+
+.admin-search-bar input::placeholder {
+  color: var(--admin-text-subtle);
+}
+
+/* Tabs */
+.admin-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--admin-border);
+  margin-bottom: 1.75rem;
+}
+
+.admin-tab-btn {
+  background: none;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  color: var(--admin-text-muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.admin-tab-btn:hover {
+  color: var(--admin-text-main);
+}
+
+.admin-tab-btn.active {
+  color: var(--admin-forest);
+  border-bottom-color: var(--admin-forest);
+  font-weight: 600;
+}
+
+/* Alert Notification */
+.admin-alert {
+  padding: 0.95rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.admin-alert-success {
+  background-color: var(--admin-success-tint);
+  border: 1px solid var(--admin-success-border);
+  color: var(--admin-success);
+}
+
+.admin-alert-error {
+  background-color: var(--admin-danger-tint);
+  border: 1px solid var(--admin-danger-border);
+  color: var(--admin-danger);
+}
+
+/* Custom Scrollbars */
+.admin-sidebar nav::-webkit-scrollbar,
+main::-webkit-scrollbar,
+.admin-modal-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.admin-sidebar nav::-webkit-scrollbar-thumb,
+main::-webkit-scrollbar-thumb,
+.admin-modal-content::-webkit-scrollbar-thumb {
+  background: #D8D2C4;
+  border-radius: 4px;
+}
+
+.admin-sidebar nav::-webkit-scrollbar-thumb:hover,
+main::-webkit-scrollbar-thumb:hover,
+.admin-modal-content::-webkit-scrollbar-thumb:hover {
+  background: #C4BCAC;
+}

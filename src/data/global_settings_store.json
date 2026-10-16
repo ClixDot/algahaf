@@ -1,0 +1,103 @@
+{
+  "siteName": "ALGHAF COLLECTIVE",
+  "tagline": "Design Smarter. Build Precisely.",
+  "companyName": "ALGHAF COLLECTIVE",
+  "legalName": "AlGhaf Collective Modular Living FZ-LLC",
+  "phone": "+971 4 288 9412",
+  "email": "info@alghafcollective.ae",
+  "address": "Dubai Design District (d3), Building 7, Dubai, United Arab Emirates",
+  "city": "Dubai",
+  "country": "United Arab Emirates",
+  "whatsapp": "+971 50 892 4110",
+  "instagram": "https://www.instagram.com/alghafcollective",
+  "linkedin": "https://www.linkedin.com/company/alghafcollective",
+  "facebook": "https://www.facebook.com/alghafcollective",
+  "headerLogo": "/assets/logos/AlGhaf_logo_-10.png",
+  "footerLogo": "/assets/logos/AlGhaf_logo_-08.png",
+  "favicon": "/assets/logos/AlGhaf_logo_-10.png",
+  "headerCtaText": "ENQUIRY",
+  "headerCtaUrl": "#enquiry",
+  "footerDescription": "Transforming housing from a fragmented project into a designed, engineered, and continuously refined product.",
+  "footerTagline": "Rooted in Nature. Built for Tomorrow.",
+  "copyrightText": "AlGhaf Collective. All rights reserved. | Powered by Clixdot",
+  "showApplicationsNav": false,
+  "applicationsComingSoon": false,
+  "productDetailsAccess": false,
+  "headerNav": [
+    {
+      "label": "Home",
+      "path": "/",
+      "isComingSoon": false,
+      "order": 1,
+      "_id": "6ad0accbb710aa13e5a863e0"
+    },
+    {
+      "label": "About",
+      "path": "/about",
+      "isComingSoon": false,
+      "order": 2,
+      "_id": "6ad0accbb710aa13e5a863e1"
+    },
+    {
+      "label": "Products",
+      "path": "/products",
+      "isComingSoon": false,
+      "order": 3,
+      "_id": "6ad0accbb710aa13e5a863e2"
+    },
+    {
+      "label": "Applications",
+      "path": "/applications",
+      "isComingSoon": true,
+      "order": 4,
+      "_id": "6ad0accbb710aa13e5a863e3"
+    },
+    {
+      "label": "Contact",
+      "path": "/contact",
+      "isComingSoon": false,
+      "order": 5,
+      "_id": "6ad0accbb710aa13e5a863e4"
+    }
+  ],
+  "_id": "6ad0accbb710aa13e5a863df",
+  "footerLinks": [
+    {
+      "category": "Company",
+      "label": "About AlGhaf & The Ghaf Tree",
+      "url": "/about",
+      "_id": "6ad0accbb710aa13e5a863e5"
+    },
+    {
+      "category": "Company",
+      "label": "Our Process: Design · Prefab · Build",
+      "url": "/process",
+      "_id": "6ad0accbb710aa13e5a863e6"
+    },
+    {
+      "category": "Company",
+      "label": "Project Enquiry & Consultations",
+      "url": "/contact",
+      "_id": "6ad0accbb710aa13e5a863e7"
+    },
+    {
+      "category": "Legal",
+      "label": "Privacy Policy",
+      "url": "/privacy",
+      "_id": "6ad0accbb710aa13e5a863e8"
+    },
+    {
+      "category": "Legal",
+      "label": "Terms of Service",
+      "url": "/terms",
+      "_id": "6ad0accbb710aa13e5a863e9"
+    }
+  ],
+  "defaultSeoTitle": "AlGhaf Collective — Design Smarter. Build Precisely.",
+  "defaultSeoDescription": "UAE-based integrated design, prefabrication, and modular construction company creating smarter, more sustainable homes through one integrated system.",
+  "defaultKeywords": "AlGhaf Collective, modular homes UAE, prefabrication Dubai, luxury modular architecture, MOVA, PENTA, ENTRA",
+  "defaultOgImage": "/assets/images/ax.jpg",
+  "createdAt": "2026-10-15T10:36:59.889Z",
+  "updatedAt": "2026-10-16T11:45:16.845Z",
+  "__v": 0
+}

@@ -1,13 +1,15 @@
+'use client';
+
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export default function ScrollToTop() {
-  const { pathname } = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (window.lenis) {
-      window.lenis.scrollTo(0, { immediate: true });
+    if ((window as any).lenis) {
+      (window as any).lenis.scrollTo(0, { immediate: true });
     }
     window.scrollTo({
       top: 0,

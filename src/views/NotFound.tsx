@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Home, Compass, ArrowRight } from 'lucide-react';
 
 export default function NotFound() {
@@ -18,10 +18,10 @@ export default function NotFound() {
         </p>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
-          <Link to="/" className="btn btn-primary btn-lg">
+          <Link href="/" className="btn btn-primary btn-lg">
             <Home size={18} /> Return to Homepage
           </Link>
-          <Link to="/products" className="btn btn-outline-dark btn-lg">
+          <Link href="/products" className="btn btn-outline-dark btn-lg">
             <Compass size={18} /> Explore Products <ArrowRight size={16} />
           </Link>
         </div>

@@ -1,5 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
 import { companyInfo } from '../../data/companyData';
 
@@ -66,6 +68,18 @@ function FacebookIcon({ size = 18, color = 'currentColor', ...props }) {
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const [settings, setSettings] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.settings) {
+          setSettings(data.settings);
+        }
+      })
+      .catch((err) => console.warn('Footer settings sync notice:', err));
+  }, []);
 
   return (
     <footer style={{ backgroundColor: '#52694B', color: '#FAF8F5', paddingTop: '5rem', paddingBottom: '2.5rem' }}>
@@ -76,19 +90,20 @@ export default function Footer() {
           <div>
             <div style={{ marginBottom: '1.5rem' }}>
               <img
-                src="/assets/logos/AlGhaf_logo_-08.png"
-                alt="AlGhaf Collective"
+                src={settings?.footerLogo || '/assets/logos/AlGhaf_logo_-08.png'}
+                alt={settings?.companyName || 'AlGhaf Collective'}
                 style={{ height: '80px', width: 'auto', maxWidth: '260px', objectFit: 'contain' }}
               />
             </div>
 
             <p style={{ color: '#C5BCAC', fontSize: '0.9375rem', lineHeight: '1.7', marginBottom: '1.5rem', maxWidth: '340px' }}>
-              Transforming housing from a fragmented project into a designed, engineered, and continuously refined product.
+              {settings?.footerDescription ||
+                'Transforming housing from a fragmented project into a designed, engineered, and continuously refined product.'}
             </p>
 
             <div style={{ display: 'inline-block', padding: '0.5rem 0.875rem', backgroundColor: 'rgba(201, 167, 121, 0.12)', borderRadius: '4px', border: '1px solid rgba(201, 167, 121, 0.25)' }}>
               <span style={{ color: 'var(--color-sand)', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                Rooted in Nature. Built for Tomorrow.
+                {settings?.footerTagline || 'Rooted in Nature. Built for Tomorrow.'}
               </span>
             </div>
           </div>
@@ -108,49 +123,52 @@ export default function Footer() {
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
               <li>
-                <Link to="/about" style={{ color: '#E5DFD4', fontSize: '0.9375rem' }}>
+                <Link href="/about" style={{ color: '#E5DFD4', fontSize: '0.9375rem' }}>
                   About AlGhaf & The Ghaf Tree
                 </Link>
               </li>
+              {settings?.showApplicationsNav === true && (
+                <li>
+                  {settings?.applicationsComingSoon ? (
+                    <button
+                      type="button"
+                      onClick={() => window.dispatchEvent(new CustomEvent('open-coming-soon'))}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        padding: 0,
+                        margin: 0,
+                        color: '#E5DFD4',
+                        fontSize: '0.9375rem',
+                        fontFamily: 'inherit',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-sand)'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = '#E5DFD4'}
+                    >
+                      Applications & Typologies
+                    </button>
+                  ) : (
+                    <Link href="/applications" style={{ color: '#E5DFD4', fontSize: '0.9375rem' }}>
+                      Applications & Typologies
+                    </Link>
+                  )}
+                </li>
+              )}
               <li>
-                <Link to="/process" style={{ color: '#E5DFD4', fontSize: '0.9375rem' }}>
-                  Our Process: Design · Prefab · Build
-                </Link>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={() => window.dispatchEvent(new CustomEvent('open-coming-soon'))}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    padding: 0,
-                    margin: 0,
-                    color: '#E5DFD4',
-                    fontSize: '0.9375rem',
-                    fontFamily: 'inherit',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    transition: 'color 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-sand)'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#E5DFD4'}
-                >
-                  Applications & Typologies
-                </button>
-              </li>
-              <li>
-                <Link to="/contact" style={{ color: '#E5DFD4', fontSize: '0.9375rem' }}>
+                <Link href="/contact" style={{ color: '#E5DFD4', fontSize: '0.9375rem' }}>
                   Project Enquiry & Consultations
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" style={{ color: '#9DA39B', fontSize: '0.875rem' }}>
+                <Link href="/privacy" style={{ color: '#9DA39B', fontSize: '0.875rem' }}>
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" style={{ color: '#9DA39B', fontSize: '0.875rem' }}>
+                <Link href="/terms" style={{ color: '#9DA39B', fontSize: '0.875rem' }}>
                   Terms of Service
                 </Link>
               </li>
@@ -172,18 +190,18 @@ export default function Footer() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: '#E5DFD4', fontSize: '0.9375rem' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
                 <MapPin size={18} color="var(--color-sand)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <span>{companyInfo.contact.address}</span>
+                <span>{settings?.address || companyInfo.contact.address}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 <Phone size={18} color="var(--color-sand)" style={{ flexShrink: 0 }} />
-                <a href={`tel:${companyInfo.contact.phone}`} style={{ color: '#FAF8F5' }}>
-                  {companyInfo.contact.phone}
+                <a href={`tel:${settings?.phone || companyInfo.contact.phone}`} style={{ color: '#FAF8F5' }}>
+                  {settings?.phone || companyInfo.contact.phone}
                 </a>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 <Mail size={18} color="var(--color-sand)" style={{ flexShrink: 0 }} />
-                <a href={`mailto:${companyInfo.contact.email}`} style={{ color: '#FAF8F5' }}>
-                  {companyInfo.contact.email}
+                <a href={`mailto:${settings?.email || companyInfo.contact.email}`} style={{ color: '#FAF8F5' }}>
+                  {settings?.email || companyInfo.contact.email}
                 </a>
               </div>
               {/* Social Media Channels */}
@@ -314,7 +332,7 @@ export default function Footer() {
                 </div>
               </div>
               <div style={{ marginTop: '0.5rem' }}>
-                <Link to="/contact" className="btn btn-sand btn-sm" style={{ width: '100%' }}>
+                <Link href="/contact" className="btn btn-sand btn-sm" style={{ width: '100%' }}>
                   Start Your Project
                 </Link>
               </div>
@@ -334,13 +352,13 @@ export default function Footer() {
           color: '#8A9287'
         }}>
           <div>
-            &copy; {currentYear} AlGhaf Collective. All rights reserved. | Powered by Clixdot
+            &copy; {currentYear} {settings?.copyrightText || 'AlGhaf Collective. All rights reserved. | Powered by Clixdot'}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
             <span>Design Smarter. Build Precisely.</span>
             <span>&bull;</span>
-            <Link to="/privacy" style={{ color: '#8A9287' }}>Privacy</Link>
-            <Link to="/terms" style={{ color: '#8A9287' }}>Terms</Link>
+            <Link href="/privacy" style={{ color: '#8A9287' }}>Privacy</Link>
+            <Link href="/terms" style={{ color: '#8A9287' }}>Terms</Link>
           </div>
         </div>
       </div>

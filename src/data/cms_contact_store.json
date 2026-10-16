@@ -1,0 +1,255 @@
+[
+  {
+    "pageSlug": "contact",
+    "sectionId": "contact-hero",
+    "sectionName": "Contact Hero",
+    "thumbnailUrl": "/assets/images/image_bg_more_alghafdfdfd.jpg",
+    "eyebrow": "Start Your Project",
+    "title": "Let's Build\nSomething Better.",
+    "subtitle": "Whether you are planning a private home, hospitality development, modular project, or looking to collaborate, start the conversation with us.",
+    "content": "Whether you are planning a private home, hospitality development, modular project, or looking to collaborate, start the conversation with us.",
+    "mediaUrl": "/assets/images/image_bg_more_alghafdfdfd.jpg",
+    "mediaType": "image",
+    "displayOrder": 1,
+    "isVisible": true,
+    "status": "published"
+  },
+  {
+    "pageSlug": "contact",
+    "sectionId": "contact-direct",
+    "sectionName": "Direct Contact & Information Cards",
+    "thumbnailUrl": "/assets/images/ax.jpg",
+    "eyebrow": "Direct Contact",
+    "title": "Connect With Our Team.",
+    "subtitle": "Speak directly with our architectural directors and prefabrication specialists. We welcome consultations for private landowners, hospitality developers, and master planners.",
+    "content": "Speak directly with our architectural directors and prefabrication specialists. We welcome consultations for private landowners, hospitality developers, and master planners.",
+    "mediaUrl": "/assets/images/ax.jpg",
+    "mediaType": "image",
+    "displayOrder": 2,
+    "isVisible": true,
+    "status": "published",
+    "items": [
+      {
+        "id": "headquarters",
+        "type": "headquarters",
+        "title": "Headquarters",
+        "name": "Headquarters",
+        "address": "Dubai Design District (d3), Building 7, Dubai, United Arab Emirates",
+        "description": "Dubai Design District (d3), Building 7, Dubai, United Arab Emirates",
+        "icon": "MapPin",
+        "link": "https://maps.google.com",
+        "isVisible": true
+      },
+      {
+        "id": "phone-whatsapp",
+        "type": "phone",
+        "title": "Telephone & WhatsApp",
+        "name": "Telephone & WhatsApp",
+        "phone": "+971 4 288 9412",
+        "whatsapp": "+971 50 892 4110",
+        "phoneLabel": "Main: +971 4 288 9412",
+        "whatsappLabel": "WhatsApp: +971 50 892 4110",
+        "description": "Main: +971 4 288 9412 | WhatsApp: +971 50 892 4110",
+        "icon": "Phone",
+        "link": "tel:+97142889412",
+        "isVisible": true
+      },
+      {
+        "id": "email",
+        "type": "email",
+        "title": "Inquiries Email",
+        "name": "Inquiries Email",
+        "email": "info@alghafcollective.ae",
+        "description": "info@alghafcollective.ae",
+        "icon": "Mail",
+        "link": "mailto:info@alghafcollective.ae",
+        "isVisible": true
+      },
+      {
+        "id": "working-hours",
+        "type": "hours",
+        "title": "Working Hours",
+        "name": "Working Hours",
+        "workingDays": "Monday – Friday",
+        "workingHours": "9:00 AM – 6:00 PM",
+        "timeZone": "GST",
+        "description": "Monday – Friday: 9:00 AM – 6:00 PM GST",
+        "icon": "Clock",
+        "isVisible": true
+      }
+    ]
+  },
+  {
+    "pageSlug": "contact",
+    "sectionId": "contact-form",
+    "sectionName": "Project Enquiry Form Builder",
+    "thumbnailUrl": "/assets/images/hero1.jpeg",
+    "eyebrow": "Direct Consultation",
+    "title": "Start Your Project",
+    "subtitle": "Fill out the form below. Our architectural engineers will review your requirements.",
+    "content": "Thank you. Your enquiry has been logged. An AlGhaf project coordinator will be in touch within 24 business hours.",
+    "ctaText": "Send Enquiry",
+    "displayOrder": 3,
+    "isVisible": true,
+    "status": "published",
+    "items": [
+      {
+        "id": "projectType",
+        "fieldKey": "projectType",
+        "title": "What are you interested in?",
+        "label": "What are you interested in? *",
+        "type": "select",
+        "required": true,
+        "order": 1,
+        "options": [
+          "MOVA — Modular Optimized Versatile Architecture (30–75 m²)",
+          "PENTA — Elevated Modular Living (50–300 m²)",
+          "ENTRA — Private Entertainment. Reimagined",
+          "Hospitality & Resort Key Development",
+          "Commercial / Creative Office Suite",
+          "Architectural / Developer Collaboration",
+          "Other Bespoke Requirement"
+        ]
+      },
+      {
+        "id": "name",
+        "fieldKey": "name",
+        "title": "Full Name",
+        "label": "Full Name *",
+        "placeholder": "Your full name",
+        "type": "text",
+        "required": true,
+        "order": 2
+      },
+      {
+        "id": "company",
+        "fieldKey": "company",
+        "title": "Company",
+        "label": "Company (Optional)",
+        "placeholder": "Company or Family Office",
+        "type": "text",
+        "required": false,
+        "order": 3
+      },
+      {
+        "id": "email",
+        "fieldKey": "email",
+        "title": "Email Address",
+        "label": "Email Address *",
+        "placeholder": "name@domain.com",
+        "type": "email",
+        "required": true,
+        "order": 4
+      },
+      {
+        "id": "phone",
+        "fieldKey": "phone",
+        "title": "Phone / WhatsApp",
+        "label": "Phone / WhatsApp *",
+        "placeholder": "+971 50 000 0000",
+        "type": "tel",
+        "required": true,
+        "order": 5
+      },
+      {
+        "id": "location",
+        "fieldKey": "location",
+        "title": "Project Location",
+        "label": "Project Location",
+        "type": "select",
+        "required": false,
+        "order": 6,
+        "options": [
+          "Dubai, UAE",
+          "Abu Dhabi, UAE",
+          "Sharjah, UAE",
+          "Ras Al Khaimah, UAE",
+          "Al Ain, UAE",
+          "Other UAE Emirates",
+          "Saudi Arabia (KSA)",
+          "Other GCC Country"
+        ]
+      },
+      {
+        "id": "approximateSize",
+        "fieldKey": "approximateSize",
+        "title": "Approximate Size",
+        "label": "Approximate Size",
+        "type": "select",
+        "required": false,
+        "order": 7,
+        "options": [
+          "30–50 m² (Studio / Suite)",
+          "50–100 m² (1–2 Bedroom)",
+          "100–200 m² (Villa Residence)",
+          "200–300+ m² (Estate Compound)",
+          "Multi-Unit Hospitality Keys"
+        ]
+      },
+      {
+        "id": "description",
+        "fieldKey": "description",
+        "title": "Tell Us About Your Project",
+        "label": "Tell Us About Your Project *",
+        "placeholder": "Plot status, intended purpose, timeline, or specific architectural questions...",
+        "type": "textarea",
+        "required": true,
+        "order": 8
+      }
+    ]
+  },
+  {
+    "pageSlug": "contact",
+    "sectionId": "contact-faq",
+    "sectionName": "Frequently Asked Questions (FAQ)",
+    "eyebrow": "Questions & Clarity",
+    "title": "Frequently Asked Questions.",
+    "subtitle": "Understand how AlGhaf Collective structures approvals, delivery, and installation.",
+    "content": "Understand how AlGhaf Collective structures approvals, delivery, and installation.",
+    "displayOrder": 4,
+    "isVisible": true,
+    "status": "published",
+    "items": [
+      {
+        "id": "faq-1",
+        "title": "Do AlGhaf modular homes comply with UAE municipal building regulations?",
+        "question": "Do AlGhaf modular homes comply with UAE municipal building regulations?",
+        "answer": "Yes. All AlGhaf structural frames and building envelopes are engineered in full alignment with UAE building codes, Dubai Municipality regulations, and GCC civil defense fire safety standards.",
+        "category": "Regulations & Approvals",
+        "order": 1,
+        "status": "published",
+        "isVisible": true
+      },
+      {
+        "id": "faq-2",
+        "title": "How long does the entire process take from agreement to handover?",
+        "question": "How long does the entire process take from agreement to handover?",
+        "answer": "Standard modular delivery ranges from 6 to 14 weeks depending on the selected collection (MOVA: 6–10 weeks, PENTA: 8–14 weeks, ENTRA: 6–8 weeks). Because ground preparation and factory prefabrication run in parallel, on-site installation takes only 1 to 3 days.",
+        "category": "Process & Timelines",
+        "order": 2,
+        "status": "published",
+        "isVisible": true
+      },
+      {
+        "id": "faq-3",
+        "title": "Can the interior layouts and finishes be customized?",
+        "question": "Can the interior layouts and finishes be customized?",
+        "answer": "Yes. While structural chassis dimensions are standardized for optimal factory engineering and transport, all interior millwork, kitchen joinery, flooring materials, sanitary ware, and smart home controls can be personalized.",
+        "category": "Design & Customization",
+        "order": 3,
+        "status": "published",
+        "isVisible": true
+      },
+      {
+        "id": "faq-4",
+        "title": "What site foundations are required for installation?",
+        "question": "What site foundations are required for installation?",
+        "answer": "Our modular units can be installed on reinforced concrete strip footings, low-impact steel helical screw piles, or grade beams. Our engineering team conducts a thorough site evaluation before foundation works commence.",
+        "category": "Engineering & Site Work",
+        "order": 4,
+        "status": "published",
+        "isVisible": true
+      }
+    ]
+  }
+]

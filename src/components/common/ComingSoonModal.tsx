@@ -1,5 +1,15 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import { X, Sparkles, ArrowRight, Building2, Trees, Compass } from 'lucide-react';
+
+export interface ComingSoonModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onOpenEnquiry?: () => void;
+  title?: string;
+  subtitle?: string;
+}
 
 export default function ComingSoonModal({ 
   isOpen, 
@@ -7,11 +17,11 @@ export default function ComingSoonModal({
   onOpenEnquiry,
   title = "APPLICATIONS & TYPOLOGIES",
   subtitle = "Curated Architectural Portfolio"
-}) {
+}: ComingSoonModalProps) {
   // Close on ESC key
   useEffect(() => {
     if (!isOpen) return;
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -22,14 +32,14 @@ export default function ComingSoonModal({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      window.lenis?.stop();
+      (window as any).lenis?.stop();
     } else {
       document.body.style.overflow = 'unset';
-      window.lenis?.start();
+      (window as any).lenis?.start();
     }
     return () => {
       document.body.style.overflow = 'unset';
-      window.lenis?.start();
+      (window as any).lenis?.start();
     };
   }, [isOpen]);
 

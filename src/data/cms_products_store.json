@@ -1,0 +1,238 @@
+[
+  {
+    "_id": "6ad20eeb3aff37a95565d270",
+    "pageSlug": "products",
+    "sectionId": "products-hero",
+    "sectionName": "Products Hero Cinematic Banner",
+    "thumbnailUrl": "/assets/images/products.png",
+    "eyebrow": "MODULAR PRODUCT SYSTEMS",
+    "title": "Not Just Modular.\nDesigned as Products.",
+    "subtitle": "A new generation of architectural spaces developed through integrated design, precision engineering, climate-controlled prefabrication, and rapid turnkey installation.",
+    "mediaUrl": "/assets/images/products.png",
+    "mediaType": "image",
+    "items": [],
+    "isVisible": true,
+    "displayOrder": 1,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:54.733Z"
+  },
+  {
+    "_id": "6ad20eeb3aff37a95565d271",
+    "pageSlug": "products",
+    "sectionId": "products-catalog",
+    "sectionName": "Architectural Catalog Overview",
+    "thumbnailUrl": "/assets/images/ax.jpg",
+    "eyebrow": "Architectural Catalog",
+    "title": "Three Distinct Collections.",
+    "subtitle": "Engineered around human experience, structural permanence, and climate resilience.",
+    "mediaType": "image",
+    "items": [],
+    "isVisible": true,
+    "displayOrder": 2,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:54.814Z"
+  },
+  {
+    "_id": "6ad20eeb3aff37a95565d272",
+    "pageSlug": "products",
+    "sectionId": "products-mova",
+    "sectionName": "MOVA Product Showcase Card",
+    "thumbnailUrl": "/assets/renders/MOVA_EXT_3D_img1.jpg",
+    "eyebrow": "MODULAR LIVING",
+    "title": "MOVA",
+    "subtitle": "Modular Optimized Versatile Architecture",
+    "content": "A versatile modular building system engineered to create adaptable, high-quality architectural spaces with greater speed, efficiency, and climate control.",
+    "mediaUrl": "/assets/renders/MOVA_EXT_3D_img1.jpg",
+    "mediaType": "image",
+    "mediaAlt": "MOVA Modular Living System",
+    "ctaText": "View Complete Details & Plans",
+    "ctaUrl": "/products/mova",
+    "items": [
+      {
+        "id": "lead",
+        "title": "Lead Time",
+        "subtitle": "6–10 Weeks"
+      },
+      {
+        "id": "tagline",
+        "title": "Tagline",
+        "subtitle": "One System. Endless Possibilities."
+      },
+      {
+        "id": "h1",
+        "title": "Thermal Performance"
+      },
+      {
+        "id": "h2",
+        "title": "Acoustic Comfort"
+      },
+      {
+        "id": "h3",
+        "title": "Desert Durability"
+      },
+      {
+        "id": "h4",
+        "title": "Factory Precision"
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 3,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:54.894Z"
+  },
+  {
+    "_id": "6ad20eeb3aff37a95565d273",
+    "pageSlug": "products",
+    "sectionId": "products-penta",
+    "sectionName": "PENTA Product Showcase Card",
+    "thumbnailUrl": "/assets/images/imgupscaler-enhanced-7.jpg",
+    "eyebrow": "LUXURY ARCHITECTURAL LIVING",
+    "title": "PENTA",
+    "subtitle": "Elevated Modular Living",
+    "content": "AlGhaf Collective’s signature premium collection featuring double-height living spaces, mezzanine architecture, and bespoke craftsmanship.",
+    "mediaUrl": "/assets/images/imgupscaler-enhanced-7.jpg",
+    "mediaType": "image",
+    "mediaAlt": "PENTA Elevated Modular Living",
+    "ctaText": "View Complete Details & Plans",
+    "ctaUrl": "/products/penta",
+    "items": [
+      {
+        "id": "lead",
+        "title": "Lead Time",
+        "subtitle": "8–14 Weeks"
+      },
+      {
+        "id": "tagline",
+        "title": "Tagline",
+        "subtitle": "Designed to Stand Apart. Built to Perform."
+      },
+      {
+        "id": "h1",
+        "title": "Double-Height Volume"
+      },
+      {
+        "id": "h2",
+        "title": "Mezzanine Sanctuary"
+      },
+      {
+        "id": "h3",
+        "title": "Architectural Glazing"
+      },
+      {
+        "id": "h4",
+        "title": "Integrated Culinary Suite"
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 4,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:54.973Z"
+  },
+  {
+    "_id": "6ad20eeb3aff37a95565d274",
+    "pageSlug": "products",
+    "sectionId": "products-entra",
+    "sectionName": "ENTRA Product Showcase Card",
+    "thumbnailUrl": "/assets/renders/ENTRA_EXT_3D_img1.jpg",
+    "eyebrow": "PRIVATE ENTERTAINMENT",
+    "title": "ENTRA",
+    "subtitle": "Private Entertainment. Reimagined.",
+    "content": "An immersive, acoustically engineered entertainment space designed for private cinema, gaming, social hospitality, and luxury events.",
+    "mediaUrl": "/assets/renders/ENTRA_EXT_3D_img1.jpg",
+    "mediaType": "image",
+    "mediaAlt": "ENTRA Private Entertainment",
+    "ctaText": "View Complete Details & Plans",
+    "ctaUrl": "/products/entra",
+    "items": [
+      {
+        "id": "lead",
+        "title": "Lead Time",
+        "subtitle": "6–10 Weeks"
+      },
+      {
+        "id": "tagline",
+        "title": "Tagline",
+        "subtitle": "Your Space. Your Experience."
+      },
+      {
+        "id": "h1",
+        "title": "Acoustic Art Wallcover"
+      },
+      {
+        "id": "h2",
+        "title": "Cinema-Grade Visuals"
+      },
+      {
+        "id": "h3",
+        "title": "Dolby Atmos Integration"
+      },
+      {
+        "id": "h4",
+        "title": "Bespoke Lighting Scenes"
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 5,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:55.055Z"
+  },
+  {
+    "_id": "6ad20eeb3aff37a95565d275",
+    "pageSlug": "products",
+    "sectionId": "products-comparison",
+    "sectionName": "System Specifications Comparison Matrix",
+    "thumbnailUrl": "/assets/images/ax.jpg",
+    "eyebrow": "SYSTEM COMPARISON",
+    "title": "Compare AlGhaf Collections.",
+    "subtitle": "Understand dimensions, ceiling volumes, and structural attributes side by side.",
+    "mediaType": "image",
+    "items": [
+      {
+        "id": "c1",
+        "attr": "Footprint Range",
+        "mova": "30 m² to 75 m²",
+        "penta": "50 m² to 300 m²",
+        "entra": "3 Standard Sizes"
+      },
+      {
+        "id": "c2",
+        "attr": "Architectural Typology",
+        "mova": "Single-Level Modular Studio / Villa",
+        "penta": "Signature Double-Height & Mezzanine",
+        "entra": "Private Immersive Acoustic Suite"
+      },
+      {
+        "id": "c3",
+        "attr": "Clear Ceiling Height",
+        "mova": "2.8m – 3.2m",
+        "penta": "Up to 5.6m Void / 2.7m Mezzanine",
+        "entra": "3.0m Acoustic Ceiling"
+      },
+      {
+        "id": "c4",
+        "attr": "Primary Purpose",
+        "mova": "Homes, Studios, Majlis, Offices",
+        "penta": "Luxury Residences, Retreats, Villas",
+        "entra": "Cinema, Gaming, Social, Bar"
+      },
+      {
+        "id": "c5",
+        "attr": "Acoustic Insulation",
+        "mova": "Desert Climate Acoustic Barrier",
+        "penta": "STC 55+ Envelope Rating",
+        "entra": "Laboratory-Tuned STC 60+"
+      },
+      {
+        "id": "c6",
+        "attr": "Turnkey Lead Time",
+        "mova": "6–10 Weeks",
+        "penta": "8–14 Weeks",
+        "entra": "6–8 Weeks"
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 6,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:55.160Z"
+  }
+]

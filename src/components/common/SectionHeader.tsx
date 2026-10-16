@@ -1,14 +1,25 @@
 import React from 'react';
 
-export default function SectionHeader({
-  eyebrow,
-  title,
-  subtitle,
-  centered = false,
-  theme = 'light',
-  className = '',
-  style = {}
-}) {
+export interface SectionHeaderProps {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  centered?: boolean;
+  theme?: 'light' | 'dark' | string;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export default function SectionHeader(props: SectionHeaderProps) {
+  const {
+    eyebrow,
+    title,
+    subtitle,
+    centered = false,
+    theme = 'light',
+    className = '',
+    style = {}
+  } = props;
   const isDark = theme === 'dark';
 
   return (

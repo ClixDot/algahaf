@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { companyInfo } from '../data/companyData';
 
@@ -7,7 +7,7 @@ export default function Privacy() {
   return (
     <main style={{ paddingTop: '7rem', paddingBottom: '6rem' }} className="bg-ivory">
       <div className="container-narrow">
-        <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-forest)', fontSize: '0.875rem', fontWeight: 600, marginBottom: '2rem' }}>
+        <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-forest)', fontSize: '0.875rem', fontWeight: 600, marginBottom: '2rem' }}>
           <ArrowLeft size={16} /> Back to Homepage
         </Link>
 

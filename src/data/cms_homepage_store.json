@@ -1,0 +1,238 @@
+[
+  {
+    "_id": "6ad0acce3aff37a955649566",
+    "pageSlug": "home",
+    "sectionId": "home-hero",
+    "sectionName": "Hero Cinematic Banner",
+    "eyebrow": "MODULAR LIVING SYSTEMS — UAE",
+    "title": "Design Smarter.\nBuild Precisely.",
+    "subtitle": "Smarter, more sustainable homes designed, engineered, prefabricated, and delivered through one integrated system.",
+    "mediaUrl": "/assets/images/hero1.jpeg",
+    "mediaType": "image",
+    "ctaText": "EXPLORE COLLECTIONS",
+    "ctaUrl": "/products",
+    "items": [],
+    "isVisible": true,
+    "displayOrder": 1,
+    "status": "published",
+    "updatedAt": "2026-10-15T10:37:00.909Z"
+  },
+  {
+    "_id": "6ad0acce3aff37a955649568",
+    "pageSlug": "home",
+    "sectionId": "home-origin",
+    "sectionName": "Origin & Philosophy Story",
+    "thumbnailUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792149454/alghaf_website/wbihu6kxlls4m9j3oo6g.jpg",
+    "eyebrow": "THE ALGHAF PHILOSOPHY",
+    "title": "Rooted\nin the UAE.",
+    "subtitle": "The Ghaf tree is the national tree of the United Arab Emirates — an enduring symbol of resilience, drought resistance, and sustained life.",
+    "content": "Inspired by this botanical icon, AlGhaf Collective reimagines residential living: precision-engineered homes that withstand desert conditions while providing extraordinary thermal comfort, architectural refinement, and energy harmony.",
+    "mediaUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792149454/alghaf_website/wbihu6kxlls4m9j3oo6g.jpg",
+    "mediaType": "image",
+    "ctaText": "READ OUR STORY",
+    "ctaUrl": "/about",
+    "items": [],
+    "isVisible": true,
+    "displayOrder": 2,
+    "status": "published",
+    "draftContent": null,
+    "publishedAt": "2026-10-16T11:46:52.495Z",
+    "updatedAt": "2026-10-16T11:46:52.495Z"
+  },
+  {
+    "_id": "6ad20ecf5bf84f45ecc7211a",
+    "pageSlug": "home",
+    "sectionId": "home-philosophy",
+    "sectionName": "Core Idea & 4 Pillars",
+    "thumbnailUrl": "/assets/images/ax.jpg",
+    "eyebrow": "Core Idea",
+    "title": "FROM PROJECT TO PRODUCT.",
+    "subtitle": "We are transforming housing from a fragmented project into a designed, engineered, and continuously refined product.",
+    "content": "Instead of starting from zero every time, we design for manufacturing and assembly from day one.",
+    "items": [
+      {
+        "number": "01",
+        "title": "Comfort",
+        "subtitle": "Responsive to living",
+        "description": "Thermal insulation, acoustic privacy, natural airflow, and daylight optimization engineered into every module.",
+        "icon": "Sparkles"
+      },
+      {
+        "number": "02",
+        "title": "Quality",
+        "subtitle": "Engineered with precision",
+        "description": "Precision manufacturing in quality-controlled factory conditions ensures consistency that on-site building simply cannot match.",
+        "icon": "ShieldCheck"
+      },
+      {
+        "number": "03",
+        "title": "Speed",
+        "subtitle": "Delivered months faster",
+        "description": "Parallel site preparation and off-site manufacturing cut overall project delivery timelines by up to 50% compared to traditional builds.",
+        "icon": "Zap"
+      },
+      {
+        "number": "04",
+        "title": "Value",
+        "subtitle": "Cost & lifecycle smart",
+        "description": "Minimized construction waste, predictable costs, fixed timelines, and high energy efficiency deliver higher lifetime value for your property.",
+        "icon": "Compass"
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 3,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:27.091Z"
+  },
+  {
+    "_id": "6ad20ecf5bf84f45ecc7211b",
+    "pageSlug": "home",
+    "sectionId": "home-process",
+    "sectionName": "How We Build (Process & Video)",
+    "thumbnailUrl": "/assets/images/hero 2.png",
+    "eyebrow": "How We Build: Step by Step",
+    "title": "How We Build",
+    "subtitle": "Smarter by design, off-site by manufacture, integrated on-site.",
+    "mediaUrl": "/assets/images/hero 2.png",
+    "mediaType": "video",
+    "videoUrl": "/assets/videos/WhatsApp Video 2026-03-31 at 12.39.29 AM.mp4",
+    "ctaText": "Discover Our Full Process",
+    "ctaUrl": "/process",
+    "items": [
+      {
+        "number": "01",
+        "title": "Design Smarter.",
+        "description": "Architecture, planning and BIM for spaces that are functional, beautiful and future-ready.",
+        "icon": "blueprint"
+      },
+      {
+        "number": "02",
+        "title": "Prefabricate Precisely.",
+        "description": "Controlled manufacturing with rigorous quality standards, reducing waste and project time.",
+        "icon": "factory"
+      },
+      {
+        "number": "03",
+        "title": "Build Modular.",
+        "description": "On-site assembly with precision and minimal disruption, delivering spaces that last.",
+        "icon": "crane"
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 4,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:27.287Z"
+  },
+  {
+    "_id": "6ad20ecf5bf84f45ecc7211c",
+    "pageSlug": "home",
+    "sectionId": "home-products",
+    "sectionName": "Products Showcase (MOVA, PENTA, ENTRA)",
+    "thumbnailUrl": "/assets/renders/MOVA_EXT_3D_img1.jpg",
+    "eyebrow": "OUR PRODUCTS",
+    "title": "DESIGNED AS A PRODUCT. BUILT FOR LIVING.",
+    "subtitle": "Not just a better way to build. A new way to think about housing.",
+    "ctaText": "View All Product Specifications",
+    "ctaUrl": "/products",
+    "items": [
+      {
+        "id": "mova",
+        "name": "MOVA",
+        "category": "Modular Living",
+        "tagline": "One System. Endless Possibilities.",
+        "shortDescription": "A versatile modular building system engineered to create adaptable, high-quality architectural spaces with greater speed, efficiency, and climate control.",
+        "heroImage": "/assets/renders/MOVA_EXT_3D_img1.jpg",
+        "slug": "mova"
+      },
+      {
+        "id": "penta",
+        "name": "PENTA",
+        "category": "Luxury Architectural Living",
+        "tagline": "Designed to Stand Apart. Built to Perform.",
+        "shortDescription": "AlGhaf Collective’s signature premium collection featuring double-height living spaces, mezzanine architecture, and bespoke craftsmanship.",
+        "heroImage": "/assets/images/imgupscaler-enhanced-7.jpg",
+        "slug": "penta"
+      },
+      {
+        "id": "entra",
+        "name": "ENTRA",
+        "category": "Private Entertainment",
+        "tagline": "Your Space. Your Experience.",
+        "shortDescription": "An immersive, acoustically engineered entertainment space designed for private cinema, gaming, social hospitality, and luxury events.",
+        "heroImage": "/assets/renders/CINE_EXT_3D_img1.jpg",
+        "slug": "entra"
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 5,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:27.464Z"
+  },
+  {
+    "_id": "6ad20ecf5bf84f45ecc7211d",
+    "pageSlug": "home",
+    "sectionId": "home-applications",
+    "sectionName": "Applications Overview (Bento)",
+    "thumbnailUrl": "/assets/images/built_more_than_homes_01_web.jpg",
+    "eyebrow": "TYPOLOGIES & SCENARIOS",
+    "title": "Built For More Than Homes.",
+    "subtitle": "Engineered for private residences, luxury eco-resorts, farm estates, and wellness pavilions.",
+    "items": [
+      {
+        "id": "modular-homes",
+        "title": "Modular Homes & Private Residences",
+        "category": "Residential",
+        "image": "/assets/images/built_more_than_homes_01_web.jpg",
+        "link": "/applications/modular-homes",
+        "url": "/assets/images/built_more_than_homes_01_web.jpg"
+      },
+      {
+        "id": "hospitality-resorts",
+        "title": "Hospitality & Boutique Resorts",
+        "category": "Hospitality",
+        "image": "/assets/images/built_more_than_homes_02_web.jpg",
+        "link": "/applications/hospitality",
+        "url": "/assets/images/built_more_than_homes_02_web.jpg"
+      },
+      {
+        "id": "farm-living-estates",
+        "title": "Farm Living & Desert Ranches",
+        "category": "Residential & Agriculture",
+        "image": "/assets/images/built_more_than_homes_03_web.jpg",
+        "link": "/applications/farm-living",
+        "url": "/assets/images/built_more_than_homes_03_web.jpg"
+      },
+      {
+        "id": "eco-developments",
+        "title": "Eco Retreats & Nature Escapes",
+        "category": "Hospitality & Wellness",
+        "image": "/assets/images/built_more_than_homes_04_web.jpg",
+        "link": "/applications/eco-retreats",
+        "url": "/assets/images/built_more_than_homes_04_web.jpg"
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 6,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:27.618Z"
+  },
+  {
+    "_id": "6ad20ecf5bf84f45ecc7211e",
+    "pageSlug": "home",
+    "sectionId": "home-closing",
+    "sectionName": "Closing Hero & Statement",
+    "thumbnailUrl": "/assets/images/imgupscaler-enhanced-4.jpg",
+    "eyebrow": "Closing Statement",
+    "title": "Live Better.",
+    "subtitle": "",
+    "content": "Everything we design and build begins with one purpose — to improve the way people live. We bring architecture, technology, nature, and human experience together to create spaces that are smarter, more comfortable, and more sustainable.",
+    "mediaUrl": "/assets/images/imgupscaler-enhanced-4.jpg",
+    "mediaType": "image",
+    "ctaText": "Enquire Now",
+    "ctaUrl": "#enquiry",
+    "isVisible": true,
+    "displayOrder": 7,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:27.794Z"
+  }
+]

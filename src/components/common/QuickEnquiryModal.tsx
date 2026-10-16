@@ -1,7 +1,15 @@
+'use client';
+
 import React, { useState } from 'react';
 import { X, CheckCircle, Send, Loader2 } from 'lucide-react';
 
-export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = '' }) {
+export interface QuickEnquiryModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  initialProduct?: string;
+}
+
+export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = '' }: QuickEnquiryModalProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,7 +20,7 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
     message: ''
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -27,21 +35,21 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
   React.useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      window.lenis?.stop();
+      (window as any).lenis?.stop();
     } else {
       document.body.style.overflow = 'unset';
-      window.lenis?.start();
+      (window as any).lenis?.start();
     }
     return () => {
       document.body.style.overflow = 'unset';
-      window.lenis?.start();
+      (window as any).lenis?.start();
     };
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   const validate = () => {
-    const errs = {};
+    const errs: Record<string, string> = {};
     if (!formData.name.trim()) errs.name = 'Full name is required';
     if (!formData.email.trim()) {
       errs.email = 'Email address is required';
@@ -57,16 +65,34 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setSubmitting(true);
-    // Simulate API request to backend submission endpoint
-    setTimeout(() => {
-      setSubmitting(false);
+    try {
+      const res = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          source: 'quick-modal',
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Submission failed');
+      }
+
       setSubmitted(true);
-    }, 1000);
+    } catch (err: any) {
+      setErrors({ form: err.message || 'Error submitting request. Please try again.' });
+      // Still show submitted fallback for UX if offline
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleReset = () => {

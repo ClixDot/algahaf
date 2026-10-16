@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight, MapPin } from 'lucide-react';
 import { companyInfo } from '../../data/companyData';
 import QuickEnquiryModal from '../common/QuickEnquiryModal';
@@ -31,14 +34,35 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
-  const location = useLocation();
+  const [applicationsComingSoon, setApplicationsComingSoon] = useState(false);
+  const [showApplicationsNav, setShowApplicationsNav] = useState(false);
+  const pathname = usePathname();
+
+  // Sync settings for Applications Navlink toggle & Coming Soon
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.settings) {
+          if (typeof data.settings.showApplicationsNav === 'boolean') {
+            setShowApplicationsNav(data.settings.showApplicationsNav);
+          }
+          setApplicationsComingSoon(Boolean(data.settings.applicationsComingSoon));
+        }
+      })
+      .catch((err) => console.warn('Navbar settings sync notice:', err));
+  }, []);
 
   // Listen for global open-coming-soon events from Footer or other pages
   useEffect(() => {
-    const handleOpenComingSoon = () => setIsComingSoonOpen(true);
+    const handleOpenComingSoon = () => {
+      if (applicationsComingSoon) {
+        setIsComingSoonOpen(true);
+      }
+    };
     window.addEventListener('open-coming-soon', handleOpenComingSoon);
     return () => window.removeEventListener('open-coming-soon', handleOpenComingSoon);
-  }, []);
+  }, [applicationsComingSoon]);
 
   // Always sticky navbar: transparent over hero section, solid green only when scrolled past hero
   useEffect(() => {
@@ -46,7 +70,7 @@ export default function Navbar() {
 
     const checkScrolledState = () => {
       const currentScrollY = window.scrollY;
-      const isPlainLightPage = ['/privacy', '/terms'].some(path => location.pathname.startsWith(path));
+      const isPlainLightPage = ['/privacy', '/terms'].some(path => pathname?.startsWith(path));
 
       if (isPlainLightPage) {
         setScrolled(true);
@@ -73,36 +97,36 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', checkScrolledState, { passive: true });
 
-    if (window.lenis) {
-      window.lenis.on('scroll', handleScroll);
+    if ((window as any).lenis) {
+      (window as any).lenis.on('scroll', handleScroll);
     }
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', checkScrolledState);
-      if (window.lenis) {
-        window.lenis.off('scroll', handleScroll);
+      if ((window as any).lenis) {
+        (window as any).lenis.off('scroll', handleScroll);
       }
     };
-  }, [location.pathname]);
+  }, [pathname]);
 
   // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
 
   // Prevent background scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
-      window.lenis?.stop();
+      (window as any).lenis?.stop();
     } else {
       document.body.style.overflow = 'unset';
-      window.lenis?.start();
+      (window as any).lenis?.start();
     }
     return () => {
       document.body.style.overflow = 'unset';
-      window.lenis?.start();
+      (window as any).lenis?.start();
     };
   }, [mobileMenuOpen]);
 
@@ -122,11 +146,13 @@ export default function Navbar() {
     { label: 'About', path: '/about' },
     { label: 'Products', path: '/products' },
     // { label: 'Our Process', path: '/process' },
-    { label: 'Applications', path: '/applications', isComingSoon: true },
+    ...(showApplicationsNav
+      ? [{ label: 'Applications', path: '/applications', isComingSoon: applicationsComingSoon }]
+      : []),
     { label: 'Contact', path: '/contact' }
   ];
 
-  const isDarkHeroPage = !['/privacy', '/terms'].some(path => location.pathname.startsWith(path));
+  const isDarkHeroPage = !['/privacy', '/terms'].some(path => pathname?.startsWith(path));
 
   return (
     <>
@@ -166,7 +192,7 @@ export default function Navbar() {
         >
             {/* Logo */}
             <Link 
-              to="/" 
+              href="/" 
               aria-label="AlGhaf Collective Home"
               style={{ 
                 display: 'flex', 
@@ -198,55 +224,47 @@ export default function Navbar() {
               }}
               className="desktop-nav"
             >
-              {navLinks.map((item) => (
-                <NavLink
-                  key={item.label}
-                  to={item.path}
-                  end={true}
-                  onClick={(e) => {
-                    if (item.isComingSoon) {
-                      e.preventDefault();
-                      setIsComingSoonOpen(true);
-                    }
-                  }}
-                  style={({ isActive }) => {
-                    const active = !item.isComingSoon && isActive;
-                    return {
+              {navLinks.map((item) => {
+                const isActive = !item.isComingSoon && (item.path === '/' ? pathname === '/' : pathname?.startsWith(item.path));
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.path}
+                    onClick={(e) => {
+                      if (item.isComingSoon) {
+                        e.preventDefault();
+                        setIsComingSoonOpen(true);
+                      }
+                    }}
+                    style={{
                       fontFamily: 'var(--font-body)',
                       fontSize: '0.875rem',
                       fontWeight: 600,
                       letterSpacing: '0.02em',
                       position: 'relative',
-                      color: active ? '#C9A779' : '#FAF8F5',
+                      color: isActive ? '#C9A779' : '#FAF8F5',
                       padding: '0.5rem 0',
                       transition: 'color 0.2s ease',
                       cursor: 'pointer'
-                    };
-                  }}
-                >
-                  {({ isActive }) => {
-                    const active = !item.isComingSoon && isActive;
-                    return (
-                      <>
-                        {item.label}
-                        {active && (
-                          <span 
-                            style={{
-                              position: 'absolute',
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              height: '2px',
-                              backgroundColor: '#C9A779',
-                              borderRadius: '1px'
-                            }} 
-                          />
-                        )}
-                      </>
-                    );
-                  }}
-                </NavLink>
-              ))}
+                    }}
+                  >
+                    {item.label}
+                    {isActive && (
+                      <span 
+                        style={{
+                          position: 'absolute',
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          height: '2px',
+                          backgroundColor: '#C9A779',
+                          borderRadius: '1px'
+                        }} 
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Right Action Buttons */}
@@ -388,7 +406,7 @@ export default function Navbar() {
             }}
           >
             <Link 
-              to="/" 
+              href="/" 
               onClick={() => setMobileMenuOpen(false)}
               aria-label="AlGhaf Collective Home"
               style={{ display: 'flex', alignItems: 'center' }}
@@ -442,8 +460,8 @@ export default function Navbar() {
             <nav style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1.25rem' }}>
               {navLinks.map((item) => (
                 <div key={item.label}>
-                  <NavLink
-                    to={item.path}
+                  <Link
+                    href={item.path}
                     onClick={(e) => {
                       if (item.isComingSoon) {
                         e.preventDefault();
@@ -466,7 +484,7 @@ export default function Navbar() {
                   >
                     {item.label}
                     <ArrowRight size={20} color="var(--color-sand)" />
-                  </NavLink>
+                  </Link>
                 </div>
               ))}
             </nav>

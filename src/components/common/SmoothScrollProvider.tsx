@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
@@ -12,8 +14,8 @@ export function useSmoothScroll() {
   return useContext(SmoothScrollContext);
 }
 
-export default function SmoothScrollProvider({ children }) {
-  const lenisRef = useRef(null);
+export default function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     // Check user preference for reduced motion
@@ -38,13 +40,13 @@ export default function SmoothScrollProvider({ children }) {
     });
 
     lenisRef.current = lenis;
-    window.lenis = lenis;
+    (window as any).lenis = lenis;
 
     // Synchronize Lenis scroll position with GSAP ScrollTrigger updates
     lenis.on('scroll', ScrollTrigger.update);
 
     // Drive Lenis frames via GSAP ticker to eliminate frame race conditions
-    const tickerCallback = (time) => {
+    const tickerCallback = (time: number) => {
       lenis.raf(time * 1000);
     };
 
@@ -86,7 +88,7 @@ export default function SmoothScrollProvider({ children }) {
       gsap.ticker.remove(tickerCallback);
       lenis.destroy();
       lenisRef.current = null;
-      delete window.lenis;
+      delete (window as any).lenis;
     };
   }, []);
 

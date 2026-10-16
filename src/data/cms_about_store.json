@@ -1,0 +1,153 @@
+[
+  {
+    "_id": "6ad1fba23aff37a95565bac1",
+    "pageSlug": "about",
+    "sectionId": "about-hero",
+    "sectionName": "About Hero Cinematic Banner",
+    "thumbnailUrl": "/assets/images/about_bg.png",
+    "eyebrow": "ABOUT ALGHAF COLLECTIVE",
+    "title": "Rooted in Nature.\nBuilt for Tomorrow.",
+    "subtitle": "A UAE-rooted modular architecture and construction company reimagining residential living through precision engineering and sustainable design.",
+    "mediaUrl": "/assets/images/about_bg.png",
+    "mediaType": "image",
+    "items": [],
+    "isVisible": true,
+    "displayOrder": 1,
+    "status": "published",
+    "draftContent": null,
+    "publishedAt": "2026-10-16T10:30:45.281Z",
+    "updatedAt": "2026-10-16T10:30:45.281Z"
+  },
+  {
+    "_id": "6ad20eed3aff37a95565d276",
+    "pageSlug": "about",
+    "sectionId": "about-origin",
+    "sectionName": "Our Origin Story",
+    "thumbnailUrl": "/assets/images/story-botanical.png",
+    "eyebrow": "OUR ORIGIN",
+    "title": "Rooted in the UAE.",
+    "content": "The Ghaf tree has thrived in the UAE’s desert for generations — deeply rooted, resilient, and sustaining life in the harshest conditions.\n\nInspired by that spirit, two Emirati women came together with a vision to rethink the way we build and create smarter, more sustainable homes.\n\nBringing this vision together with the design, prefabrication, and modular construction expertise of CK Living Concepts, AlGhaf Collective was born.",
+    "mediaType": "image",
+    "items": [],
+    "isVisible": true,
+    "displayOrder": 2,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:56.873Z"
+  },
+  {
+    "_id": "6ad20eed3aff37a95565d277",
+    "pageSlug": "about",
+    "sectionId": "about-stats",
+    "sectionName": "Origin Metrics & Statistics",
+    "thumbnailUrl": "/assets/images/ax.jpg",
+    "eyebrow": "PERFORMANCE BENCHMARKS",
+    "title": "Precision by the Numbers",
+    "subtitle": "3 Metric Showcase Cards",
+    "mediaType": "image",
+    "items": [
+      {
+        "id": "stat-1",
+        "number": "50%",
+        "title": "Faster Delivery",
+        "description": "Factory-controlled prefabrication compresses project timelines compared to conventional site construction."
+      },
+      {
+        "id": "stat-2",
+        "number": "1",
+        "title": "Integrated System",
+        "description": "Design, engineering, materials, and assembly consolidated under one single accountable team."
+      },
+      {
+        "id": "stat-3",
+        "number": "30–300 m²",
+        "title": "Scalable Architecture",
+        "description": "Versatile modular footprints engineered for enduring thermal comfort and desert durability."
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 3,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:56.961Z"
+  },
+  {
+    "_id": "6ad20eed3aff37a95565d278",
+    "pageSlug": "about",
+    "sectionId": "about-philosophy",
+    "sectionName": "Our Philosophy & Integrated Values",
+    "thumbnailUrl": "/assets/images/about us.png",
+    "eyebrow": "OUR PHILOSOPHY",
+    "title": "One Vision. One System.\nOne Accountable Team.",
+    "subtitle": "Traditional construction is fragmented. Between architects, engineers, contractors, suppliers and labour, designs change, costs shift, timelines move and the original vision can get lost.",
+    "content": "AlGhaf Collective brings design, engineering, materials, prefabrication, construction and installation together under one integrated system.",
+    "mediaUrl": "/assets/images/about us.png",
+    "mediaType": "image",
+    "items": [
+      {
+        "id": "phil-1",
+        "title": "Unified Accountability",
+        "description": "Single-source ownership from initial sketch through turnkey handover eliminates client disputes."
+      },
+      {
+        "id": "phil-2",
+        "title": "Millimeter-Level Precision",
+        "description": "Industrial prefabrication in controlled factory conditions ensures flawless joinery and finishes."
+      },
+      {
+        "id": "phil-3",
+        "title": "Schedule & Cost Certainty",
+        "description": "Fixed contracts and systematic engineering protect budgets against unpredictable site variations."
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 4,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:57.037Z"
+  },
+  {
+    "_id": "6ad20eed3aff37a95565d279",
+    "pageSlug": "about",
+    "sectionId": "about-office",
+    "sectionName": "Main Office & Interactive Map",
+    "thumbnailUrl": "/assets/images/imgupscaler-enhanced-7.jpg",
+    "eyebrow": "Main office",
+    "title": "Come visit our office",
+    "subtitle": "Dubai Design District (d3)",
+    "content": "Stop by our office to meet the team, discuss your plans, and explore the best modular architecture solutions. We'll be happy to answer your questions and help you find the right place to call home.",
+    "mediaUrl": "/assets/images/imgupscaler-enhanced-7.jpg",
+    "mediaType": "image",
+    "videoUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14441.428489814526!2d55.2954752!3d25.1861054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f68307d896173%3A0xe54d924192b6a555!2sDubai%20Design%20District!5e0!3m2!1sen!2sae!4v1710000000000!5m2!1sen!2sae",
+    "ctaText": "Contacts",
+    "ctaUrl": "/contact",
+    "items": [
+      {
+        "id": "office-card",
+        "title": "Dubai Design District (d3)",
+        "subtitle": "Building 7, Dubai\nUnited Arab Emirates",
+        "image": "/assets/images/imgupscaler-enhanced-7.jpg",
+        "link": "/contact"
+      }
+    ],
+    "isVisible": true,
+    "displayOrder": 5,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:57.126Z"
+  },
+  {
+    "_id": "6ad20eed3aff37a95565d27a",
+    "pageSlug": "about",
+    "sectionId": "about-closing",
+    "sectionName": "Closing CTA (Start a Conversation)",
+    "thumbnailUrl": "/assets/images/about_bg.png",
+    "eyebrow": "LET'S BUILD SOMETHING BETTER.",
+    "title": "Start a Conversation.",
+    "content": "Whether you are planning a private home, hospitality development, modular project, or looking to collaborate, start the conversation with us.",
+    "mediaType": "image",
+    "ctaText": "START YOUR PROJECT",
+    "ctaUrl": "/contact",
+    "items": [],
+    "isVisible": true,
+    "displayOrder": 6,
+    "status": "published",
+    "updatedAt": "2026-10-16T11:47:57.208Z"
+  }
+]

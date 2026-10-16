@@ -1,8 +1,31 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-export default function HowWeBuildSection() {
+interface StepItem {
+  number?: string;
+  title?: string;
+  description?: string;
+  icon?: any;
+}
+
+interface HowWeBuildSectionProps {
+  title?: string;
+  subtitle?: string;
+  videoUrl?: string;
+  posterUrl?: string;
+  steps?: StepItem[];
+}
+
+export default function HowWeBuildSection({
+  title,
+  subtitle,
+  videoUrl,
+  posterUrl,
+  steps: customSteps,
+}: HowWeBuildSectionProps = {}) {
   const [hasStarted, setHasStarted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
@@ -104,64 +127,80 @@ export default function HowWeBuildSection() {
     }
   };
 
-  const steps = [
+  const defaultStepIcons = [
+    (
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#253823" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="5" width="26" height="24" rx="2" />
+        <path d="M11 20V15.5L17 11L23 15.5V20H11Z" />
+        <line x1="8" y1="9" x2="10" y2="9" />
+        <line x1="8" y1="12" x2="9" y2="12" />
+        <line x1="8" y1="15" x2="9" y2="15" />
+        <line x1="8" y1="25" x2="26" y2="25" />
+        <line x1="15" y1="20" x2="15" y2="17" />
+        <line x1="19" y1="20" x2="19" y2="17" />
+      </svg>
+    ),
+    (
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#253823" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M5 24V14L11 18V14L17 18V10L27 10V24H5Z" />
+        <line x1="3" y1="27" x2="31" y2="27" />
+        <circle cx="9" cy="24" r="1.5" />
+        <circle cx="15" cy="24" r="1.5" />
+        <circle cx="21" cy="24" r="1.5" />
+        <rect x="20" y="14" width="4" height="4" />
+      </svg>
+    ),
+    (
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#253823" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="7" y1="5" x2="7" y2="28" />
+        <line x1="4" y1="28" x2="10" y2="28" />
+        <line x1="5" y1="9" x2="9" y2="13" />
+        <line x1="9" y1="9" x2="5" y2="13" />
+        <line x1="5" y1="17" x2="9" y2="21" />
+        <line x1="9" y1="17" x2="5" y2="21" />
+        <line x1="4" y1="5" x2="28" y2="5" />
+        <line x1="22" y1="5" x2="22" y2="13" />
+        <rect x="16" y="13" width="12" height="12" rx="1.5" />
+        <line x1="22" y1="13" x2="22" y2="25" />
+        <line x1="16" y1="19" x2="28" y2="19" />
+      </svg>
+    ),
+  ];
+
+  const defaultSteps = [
     {
       number: '01',
       title: 'Design Smarter.',
       description: 'Architecture, planning and BIM for spaces that are functional, beautiful and future-ready.',
-      icon: (
-        /* Blueprint / Architectural house drafting plan */
-        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#253823" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="4" y="5" width="26" height="24" rx="2" />
-          <path d="M11 20V15.5L17 11L23 15.5V20H11Z" />
-          <line x1="8" y1="9" x2="10" y2="9" />
-          <line x1="8" y1="12" x2="9" y2="12" />
-          <line x1="8" y1="15" x2="9" y2="15" />
-          <line x1="8" y1="25" x2="26" y2="25" />
-          <line x1="15" y1="20" x2="15" y2="17" />
-          <line x1="19" y1="20" x2="19" y2="17" />
-        </svg>
-      )
+      icon: defaultStepIcons[0],
     },
     {
       number: '02',
       title: 'Prefabricate Precisely.',
       description: 'Controlled manufacturing with rigorous quality standards, reducing waste and project time.',
-      icon: (
-        /* Modern factory with conveyor rollers & precision production */
-        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#253823" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M5 24V14L11 18V14L17 18V10L27 10V24H5Z" />
-          <line x1="3" y1="27" x2="31" y2="27" />
-          <circle cx="9" cy="24" r="1.5" />
-          <circle cx="15" cy="24" r="1.5" />
-          <circle cx="21" cy="24" r="1.5" />
-          <rect x="20" y="14" width="4" height="4" />
-        </svg>
-      )
+      icon: defaultStepIcons[1],
     },
     {
       number: '03',
       title: 'Build Modular.',
       description: 'On-site assembly with precision and minimal disruption, delivering spaces that last.',
-      icon: (
-        /* Construction tower crane hoisting a modular house block */
-        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#253823" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="7" y1="5" x2="7" y2="28" />
-          <line x1="4" y1="28" x2="10" y2="28" />
-          <line x1="5" y1="9" x2="9" y2="13" />
-          <line x1="9" y1="9" x2="5" y2="13" />
-          <line x1="5" y1="17" x2="9" y2="21" />
-          <line x1="9" y1="17" x2="5" y2="21" />
-          <line x1="4" y1="5" x2="28" y2="5" />
-          <line x1="22" y1="5" x2="22" y2="13" />
-          <rect x="16" y="13" width="12" height="12" rx="1.5" />
-          <line x1="22" y1="13" x2="22" y2="25" />
-          <line x1="16" y1="19" x2="28" y2="19" />
-        </svg>
-      )
-    }
+      icon: defaultStepIcons[2],
+    },
   ];
 
+  const steps = customSteps && customSteps.length > 0
+    ? customSteps.map((step, idx) => ({
+        number: step.number || `0${idx + 1}`,
+        title: step.title || '',
+        description: step.description || '',
+        icon: step.icon && typeof step.icon === 'object' ? step.icon : defaultStepIcons[idx % defaultStepIcons.length],
+      }))
+    : defaultSteps;
+
+  const currentVideo = videoUrl || '/assets/videos/core%20idea.mp4';
+  const currentPoster = posterUrl || '/assets/images/how_we_build_video_poster.jpg';
+  const displayTitle = title || 'How We Build';
+  const displayLead = subtitle || 'From ideas to installation, we follow a precise, integrated process to deliver exceptional spaces — faster, cleaner and better.';
 
   return (
     <>
@@ -176,10 +215,16 @@ export default function HowWeBuildSection() {
           {/* Top Heading & Introductory Subtitle */}
           <div className="hwb-ref-header">
             <h2 className="hwb-ref-title">
-              How We <span className="hwb-ref-accent">Build</span>
+              {displayTitle.includes('Build') ? (
+                <>
+                  {displayTitle.replace('Build', '')} <span className="hwb-ref-accent">Build</span>
+                </>
+              ) : (
+                displayTitle
+              )}
             </h2>
             <p className="hwb-ref-lead">
-              From ideas to installation, we follow a precise, integrated process to deliver exceptional spaces — faster, cleaner and better.
+              {displayLead}
             </p>
           </div>
 
@@ -223,7 +268,7 @@ export default function HowWeBuildSection() {
                 onClick={!hasStarted ? handleStartPlay : undefined}
                 role={!hasStarted ? "button" : undefined}
                 tabIndex={!hasStarted ? 0 : undefined}
-                aria-label={!hasStarted ? "Play video: How We Build" : undefined}
+                aria-label={!hasStarted ? `Play video: ${displayTitle}` : undefined}
                 onKeyDown={(e) => {
                   if (!hasStarted && (e.key === 'Enter' || e.key === ' ')) {
                     e.preventDefault();
@@ -233,8 +278,8 @@ export default function HowWeBuildSection() {
               >
                 {/* Reference Video Poster Image (only visible before first playback) */}
                 <img
-                  src="/assets/images/how_we_build_video_poster.jpg"
-                  alt="How We Build — Modern Sustainable Prefabricated Living"
+                  src={currentPoster}
+                  alt={displayTitle}
                   className="hwb-ref-poster"
                   loading="lazy"
                 />
@@ -242,7 +287,7 @@ export default function HowWeBuildSection() {
                 {/* Embedded Video Element with continuous smooth controls once activated */}
                 <video
                   ref={videoRef}
-                  src="/assets/videos/core%20idea.mp4"
+                  src={currentVideo}
                   playsInline
                   preload="metadata"
                   controls={hasStarted}
@@ -253,7 +298,7 @@ export default function HowWeBuildSection() {
                   onClick={handleVideoClick}
                   className="hwb-ref-video-tag"
                 >
-                  <source src="/assets/videos/core%20idea.mp4" type="video/mp4" />
+                  <source src={currentVideo} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
 

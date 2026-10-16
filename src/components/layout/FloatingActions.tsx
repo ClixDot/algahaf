@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Phone, MessageCircle, ArrowUp } from 'lucide-react';
 import { companyInfo } from '../../data/companyData';
@@ -22,8 +24,8 @@ export default function FloatingActions() {
   }, []);
 
   const scrollToTop = () => {
-    if (window.lenis) {
-      window.lenis.scrollTo(0, { duration: 1.2 });
+    if ((window as any).lenis) {
+      (window as any).lenis.scrollTo(0, { duration: 1.2 });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
