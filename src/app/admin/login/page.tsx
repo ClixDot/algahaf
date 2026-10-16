@@ -130,7 +130,7 @@ export default function AdminLoginPage() {
                 type="text"
                 required
                 className="admin-input"
-                placeholder="adminalgahaf@.com or adminalgahaf"
+                placeholder="Enter email or username"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ paddingLeft: '2.6rem' }}
