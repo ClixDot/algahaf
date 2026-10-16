@@ -3822,7 +3822,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                                     newItems[idx] = { ...newItems[idx], category: e.target.value };
                                     setEditingSection({ ...editingSection, items: newItems });
                                   }}
-                                  placeholder="e.g. Regulations & Approvals"
+                                  placeholder="e.g. General"
                                 />
                               </div>
                             </div>
