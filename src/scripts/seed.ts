@@ -17,9 +17,11 @@ export async function seedDatabase() {
   console.log('✅ Connected to MongoDB.');
 
   // 1. Seed Default Admin User
-  const adminEmail = process.env.DEFAULT_ADMIN_EMAIL || 'admin@alghaf.ae';
-  const adminPassword = process.env.DEFAULT_ADMIN_PASSWORD || 'AlGhaf@2027!';
-  const existingAdmin = await AdminUser.findOne({ email: adminEmail.toLowerCase() });
+  const adminEmail = process.env.DEFAULT_ADMIN_EMAIL || 'adminalgahaf@.com';
+  const adminPassword = process.env.DEFAULT_ADMIN_PASSWORD || 'algahaf14@admin';
+  const existingAdmin = await AdminUser.findOne({
+    $or: [{ email: adminEmail.toLowerCase() }, { username: 'adminalgahaf' }]
+  });
 
   if (!existingAdmin) {
     const salt = await bcrypt.genSalt(10);
@@ -27,6 +29,7 @@ export async function seedDatabase() {
     await AdminUser.create({
       name: 'AlGhaf Super Admin',
       email: adminEmail.toLowerCase(),
+      username: 'adminalgahaf',
       passwordHash,
       role: 'superadmin',
     });

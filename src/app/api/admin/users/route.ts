@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     {
       _id: 'default-admin',
       name: 'AlGhaf Super Admin',
-      email: process.env.DEFAULT_ADMIN_EMAIL || 'admin@alghaf.ae',
+      email: process.env.DEFAULT_ADMIN_EMAIL || 'adminalgahaf@.com',
       role: 'superadmin',
       createdAt: new Date(),
     },

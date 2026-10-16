@@ -39,8 +39,8 @@ export default function AdminLoginPage() {
   };
 
   const handleQuickFill = () => {
-    setEmail('admin@alghaf.ae');
-    setPassword('AlGhaf@2027!');
+    setEmail('adminalgahaf@.com');
+    setPassword('algahaf14@admin');
   };
 
   return (
@@ -129,16 +129,18 @@ export default function AdminLoginPage() {
 
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.35rem' }}>
           <div>
-            <label className="admin-label">Admin Email</label>
+            <label className="admin-label">Admin Email or Username</label>
             <div style={{ position: 'relative' }}>
               <input
-                type="email"
+                type="text"
                 required
                 className="admin-input"
-                placeholder="admin@alghaf.ae"
+                placeholder="adminalgahaf@.com or adminalgahaf"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ paddingLeft: '2.6rem' }}
+                autoCapitalize="none"
+                autoCorrect="off"
               />
               <Mail
                 size={16}
