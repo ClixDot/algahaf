@@ -1,7 +1,5 @@
 import { notFound } from 'next/navigation';
 import ProductMova from '../../../views/ProductMova';
-import ProductPenta from '../../../views/ProductPenta';
-import ProductEntra from '../../../views/ProductEntra';
 import ProductComingSoon from '../../../components/common/ProductComingSoon';
 import { getLiveProduct } from '../../../lib/productsHelper';
 import { getGlobalSettings } from '../../../lib/settingsData';
@@ -54,11 +52,5 @@ export default async function DynamicProductPage({ params, searchParams }: PageP
     );
   }
 
-  if (slug.toLowerCase() === 'penta') {
-    return <ProductPenta initialProduct={product} />;
-  }
-  if (slug.toLowerCase() === 'entra') {
-    return <ProductEntra initialProduct={product} />;
-  }
   return <ProductMova initialProduct={product} />;
 }

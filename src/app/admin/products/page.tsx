@@ -796,11 +796,11 @@ export default function AdminProductsDashboard() {
                     </Link>
 
                     <Link
-                      href={`/products/${p.slug}?preview=true`}
+                      href={`/products/${p.slug}`}
                       target="_blank"
                       className="admin-btn admin-btn-secondary"
                       style={{ padding: '0.55rem 0.65rem' }}
-                      title="Preview live product page"
+                      title="Preview live public page"
                     >
                       <ExternalLink size={14} />
                     </Link>
