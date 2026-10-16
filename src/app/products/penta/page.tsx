@@ -1,9 +1,12 @@
+import { redirect } from 'next/navigation';
 import ProductPenta from '../../../views/ProductPenta';
-import ProductComingSoon from '../../../components/common/ProductComingSoon';
 import { getLiveProduct } from '../../../lib/productsHelper';
 import { getGlobalSettings } from '../../../lib/settingsData';
 import { cookies } from 'next/headers';
 import { AUTH_COOKIE_NAME, verifyToken } from '../../../lib/auth';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 interface PentaPageProps {
   searchParams?: Promise<{ preview?: string }>;
@@ -27,18 +30,10 @@ export default async function PentaPage({ searchParams }: PentaPageProps) {
   const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
   const isAdmin = token ? Boolean(verifyToken(token)) : false;
 
-  const isPublicAllowed = settings?.productDetailsAccess !== false && product?.status === 'published';
+  const isDetailsOpen = Boolean(settings?.productDetailsAccess);
 
-  if (!isPublicAllowed && !isAdmin && sp?.preview !== 'true') {
-    return (
-      <ProductComingSoon
-        productName={product?.name || 'PENTA'}
-        category={product?.category || 'Luxury Architectural Living'}
-        tagline={product?.tagline || product?.shortDescription || 'Designed to Stand Apart. Built to Perform.'}
-        bgImage={product?.heroImage || '/assets/images/imgupscaler-enhanced-7.jpg'}
-        sizeRange={product?.sizeRange || '50–300 m²'}
-      />
-    );
+  if (!isDetailsOpen && !isAdmin && sp?.preview !== 'true') {
+    redirect('/products');
   }
 
   return <ProductPenta initialProduct={product} />;

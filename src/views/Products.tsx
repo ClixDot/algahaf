@@ -12,6 +12,7 @@ import { products as fallbackProducts } from '../data/productsData';
 
 interface ProductsProps {
   initialSections?: any[];
+  initialDetailsOpen?: boolean;
 }
 
 function renderLineBreaks(text: string) {
@@ -56,12 +57,13 @@ function getProductItemField(sec: any, fieldKey: string, defaultValue: string) {
   return defaultValue;
 }
 
-export default function Products({ initialSections = [] }: ProductsProps) {
+export default function Products({ initialSections = [], initialDetailsOpen = false }: ProductsProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalProduct, setModalProduct] = useState('');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [detailsOpen, setDetailsOpen] = useState(initialDetailsOpen);
   const productsRef = useRef(null);
 
   // Dynamic CMS sections state
@@ -76,6 +78,15 @@ export default function Products({ initialSections = [] }: ProductsProps) {
         }
       })
       .catch((err) => console.warn('Products sections sync notice:', err));
+
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.settings && typeof data.settings.productDetailsAccess === 'boolean') {
+          setDetailsOpen(data.settings.productDetailsAccess);
+        }
+      })
+      .catch((err) => console.warn('Products settings sync notice:', err));
   }, []);
 
   const getSec = (id: string) => sections.find((s) => s.sectionId === id);
@@ -292,6 +303,12 @@ export default function Products({ initialSections = [] }: ProductsProps) {
                         src={prodHeroImage}
                         alt={sec?.mediaAlt || prodName}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        onError={(e) => {
+                          const fallbackSrc = fallback?.heroImage || (id === 'entra' ? '/assets/renders/CINE_EXT_3D_img1.jpg' : '/assets/renders/MOVA_EXT_3D_img1.jpg');
+                          if (fallbackSrc && !e.currentTarget.src.includes(fallbackSrc)) {
+                            e.currentTarget.src = fallbackSrc;
+                          }
+                        }}
                       />
 
                       <button
@@ -444,13 +461,27 @@ export default function Products({ initialSections = [] }: ProductsProps) {
                           gap: '1rem',
                         }}
                       >
-                        <Link
-                          href={ctaUrl}
-                          className="btn btn-primary"
-                          style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
-                        >
-                          {ctaText} <ArrowRight size={16} />
-                        </Link>
+                        {detailsOpen ? (
+                          <Link
+                            href={ctaUrl}
+                            className="btn btn-primary"
+                            style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
+                          >
+                            {ctaText} <ArrowRight size={16} />
+                          </Link>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                            }}
+                            className="btn btn-primary"
+                            style={{ cursor: 'default', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
+                          >
+                            {ctaText} <ArrowRight size={16} />
+                          </button>
+                        )}
                         <button
                           type="button"
                           onClick={() => openEnquiry(prodName)}

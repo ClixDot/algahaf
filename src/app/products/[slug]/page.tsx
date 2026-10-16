@@ -1,10 +1,14 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import ProductMova from '../../../views/ProductMova';
-import ProductComingSoon from '../../../components/common/ProductComingSoon';
+import ProductPenta from '../../../views/ProductPenta';
+import ProductEntra from '../../../views/ProductEntra';
 import { getLiveProduct } from '../../../lib/productsHelper';
 import { getGlobalSettings } from '../../../lib/settingsData';
 import { cookies } from 'next/headers';
 import { AUTH_COOKIE_NAME, verifyToken } from '../../../lib/auth';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -38,19 +42,14 @@ export default async function DynamicProductPage({ params, searchParams }: PageP
   const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
   const isAdmin = token ? Boolean(verifyToken(token)) : false;
 
-  const isPublicAllowed = settings?.productDetailsAccess !== false && product?.status === 'published';
+  const isDetailsOpen = Boolean(settings?.productDetailsAccess);
 
-  if (!isPublicAllowed && !isAdmin && sp?.preview !== 'true') {
-    return (
-      <ProductComingSoon
-        productName={product?.name || slug.toUpperCase()}
-        category={product?.category || 'Modular Living'}
-        tagline={product?.tagline || product?.shortDescription || 'Design Smarter. Build Precisely.'}
-        bgImage={product?.heroImage || '/assets/renders/MOVA_EXT_3D_img1.jpg'}
-        sizeRange={product?.sizeRange || ''}
-      />
-    );
+  // Disable public product details navigation if toggled off; preserve admin preview
+  if (!isDetailsOpen && !isAdmin && sp?.preview !== 'true') {
+    redirect('/products');
   }
 
+  if (slug === 'penta') return <ProductPenta initialProduct={product} />;
+  if (slug === 'entra') return <ProductEntra initialProduct={product} />;
   return <ProductMova initialProduct={product} />;
 }

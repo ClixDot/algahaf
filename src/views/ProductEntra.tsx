@@ -87,7 +87,7 @@ export default function ProductEntra({ initialProduct }: ProductEntraProps) {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.5) 100%), url('${entra?.heroImage || '/assets/renders/ENTRA_EXT_3D_img1.jpg'}')`,
+            backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.5) 100%), url('${entra?.heroImage || '/assets/renders/CINE_EXT_3D_img1.jpg'}')`,
             backgroundSize: 'cover',
             backgroundPosition: entra?.heroImagePosition || 'center',
             opacity: 1
@@ -387,9 +387,17 @@ export default function ProductEntra({ initialProduct }: ProductEntraProps) {
                     <p style={{ color: 'var(--color-charcoal-muted)', fontSize: '0.9375rem', marginBottom: '1.25rem', lineHeight: '1.6' }}>
                       {prod.shortDescription}
                     </p>
-                    <Link href={`/products/${prod.slug}`} className="btn btn-outline-dark btn-sm">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }}
+                      className="btn btn-outline-dark btn-sm"
+                      style={{ cursor: 'default' }}
+                    >
                       View {prod.name} Details <ArrowRight size={14} />
-                    </Link>
+                    </button>
                   </div>
                 </div>
               ))}

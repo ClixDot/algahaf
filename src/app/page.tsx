@@ -1,5 +1,6 @@
 import Home from '../views/Home';
 import { getCmsSections } from '../lib/cmsData';
+import { getGlobalSettings } from '../lib/settingsData';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,5 +12,11 @@ export const metadata = {
 
 export default async function Page() {
   const initialSections = await getCmsSections('home', 'live');
-  return <Home initialSections={initialSections} />;
+  const settings = await getGlobalSettings();
+  return (
+    <Home
+      initialSections={initialSections}
+      initialDetailsOpen={Boolean(settings?.productDetailsAccess)}
+    />
+  );
 }

@@ -358,9 +358,8 @@ export default function Applications() {
                           <span style={{ fontSize: '0.72rem', color: 'var(--color-charcoal-muted)' }}>Compatible:</span>
                         )}
                         {compatibleList.map((p: string) => (
-                          <Link
+                          <span
                             key={p}
-                            href={`/products/${p.toLowerCase()}`}
                             style={{
                               fontSize: '0.7rem',
                               fontWeight: 700,
@@ -368,11 +367,11 @@ export default function Applications() {
                               backgroundColor: 'rgba(82, 105, 75, 0.08)',
                               color: 'var(--color-forest)',
                               borderRadius: '3px',
-                              textDecoration: 'none',
+                              cursor: 'default',
                             }}
                           >
                             {p}
-                          </Link>
+                          </span>
                         ))}
                       </div>
 

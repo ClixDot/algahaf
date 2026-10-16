@@ -12,7 +12,6 @@ import {
   Trash2,
   CheckCircle,
   Eye,
-  EyeOff,
   Sparkles,
   Layers,
   ArrowRight,
@@ -101,9 +100,8 @@ export default function AdminProductsDashboard() {
   const [sortBy, setSortBy] = useState<'order' | 'name' | 'updated'>('order');
   const [alert, setAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
-  // Product Details Public Access Toggle
-  const [productDetailsAccess, setProductDetailsAccess] = useState(false);
-  const [togglingAccess, setTogglingAccess] = useState(false);
+  const [productDetailsOpen, setProductDetailsOpen] = useState(false);
+  const [isTogglingDetails, setIsTogglingDetails] = useState(false);
 
   // Add Product Modal
   const [showAddModal, setShowAddModal] = useState(false);
@@ -142,11 +140,11 @@ export default function AdminProductsDashboard() {
       if (res.ok) {
         const data = await res.json();
         if (data?.settings && typeof data.settings.productDetailsAccess === 'boolean') {
-          setProductDetailsAccess(data.settings.productDetailsAccess);
+          setProductDetailsOpen(data.settings.productDetailsAccess);
         }
       }
     } catch (e) {
-      console.warn('Failed to sync settings:', e);
+      console.warn('Failed to load settings:', e);
     }
   };
 
@@ -155,33 +153,32 @@ export default function AdminProductsDashboard() {
     fetchSettings();
   }, []);
 
-  const handleToggleDetailsAccess = async () => {
-    const nextVal = !productDetailsAccess;
-    setTogglingAccess(true);
-    setProductDetailsAccess(nextVal);
+  const handleToggleProductDetails = async (nextVal?: boolean) => {
+    const val = typeof nextVal === 'boolean' ? nextVal : !productDetailsOpen;
+    setIsTogglingDetails(true);
+    setProductDetailsOpen(val);
     try {
       const res = await fetch('/api/admin/settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productDetailsAccess: nextVal }),
+        body: JSON.stringify({ productDetailsAccess: val }),
       });
       if (res.ok) {
         setAlert({
           type: 'success',
-          message: nextVal
-            ? 'Product details pages are now LIVE for published products.'
-            : 'Product details pages are now LOCKED (Coming Soon active for public visitors).',
+          message: val
+            ? 'Product details pages are now OPEN (LIVE). Visitors can open and view full product details.'
+            : 'Product details pages are now OFF (DISABLED). Public navigation to details is disabled.',
         });
       } else {
-        setProductDetailsAccess(!nextVal);
-        const err = await res.json();
-        setAlert({ type: 'error', message: err.error || 'Failed to update access toggle.' });
+        setProductDetailsOpen(!val);
+        setAlert({ type: 'error', message: 'Failed to update toggle setting.' });
       }
     } catch (e: any) {
-      setProductDetailsAccess(!nextVal);
-      setAlert({ type: 'error', message: e.message || 'Error updating access toggle.' });
+      setProductDetailsOpen(!val);
+      setAlert({ type: 'error', message: e.message || 'Error updating toggle setting.' });
     } finally {
-      setTogglingAccess(false);
+      setIsTogglingDetails(false);
     }
   };
 
@@ -402,104 +399,159 @@ export default function AdminProductsDashboard() {
         </div>
       </div>
 
-      {/* Product Details Public Access Control Banner */}
+      {/* Product Details Open / Off Toggle Bar */}
       <div
         className="admin-card"
         style={{
           marginBottom: '1.75rem',
-          padding: '1.2rem 1.5rem',
-          border: productDetailsAccess
-            ? '1px solid rgba(62, 126, 78, 0.35)'
-            : '1px solid rgba(192, 57, 43, 0.35)',
-          backgroundColor: productDetailsAccess
-            ? 'rgba(62, 126, 78, 0.04)'
-            : 'rgba(192, 57, 43, 0.04)',
-          borderRadius: '8px',
+          padding: '1.1rem 1.4rem',
+          borderRadius: '10px',
+          border: productDetailsOpen
+            ? '1px solid rgba(82, 105, 75, 0.35)'
+            : '1px solid var(--admin-border-light)',
+          backgroundColor: productDetailsOpen
+            ? 'rgba(82, 105, 75, 0.05)'
+            : '#FFFFFF',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '1rem',
+          boxShadow: 'var(--admin-shadow-sm)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <div
             style={{
-              width: '42px',
-              height: '42px',
+              width: '40px',
+              height: '40px',
               borderRadius: '8px',
-              backgroundColor: productDetailsAccess ? 'rgba(62, 126, 78, 0.12)' : 'rgba(192, 57, 43, 0.12)',
-              color: productDetailsAccess ? 'var(--admin-forest)' : '#C0392B',
+              backgroundColor: productDetailsOpen ? 'rgba(82, 105, 75, 0.15)' : 'rgba(100, 116, 139, 0.12)',
+              color: productDetailsOpen ? 'var(--admin-forest)' : '#64748b',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
             }}
           >
-            {productDetailsAccess ? <Eye size={22} /> : <EyeOff size={22} />}
+            <Layers size={20} />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <span style={{ fontWeight: 700, fontSize: '0.98rem', color: 'var(--admin-forest-dark)' }}>
-                Product Details Page Public Access:
+              <span style={{ fontWeight: 700, fontSize: '0.96rem', color: 'var(--admin-text-main)' }}>
+                Product Details Page:
               </span>
               <span
                 style={{
-                  fontSize: '0.78rem',
+                  fontSize: '0.76rem',
                   fontWeight: 700,
                   letterSpacing: '0.04em',
-                  padding: '0.2rem 0.6rem',
+                  padding: '0.2rem 0.65rem',
                   borderRadius: '999px',
-                  backgroundColor: productDetailsAccess ? 'rgba(62, 126, 78, 0.15)' : 'rgba(192, 57, 43, 0.15)',
-                  color: productDetailsAccess ? '#2E6E3E' : '#C0392B',
-                  border: productDetailsAccess ? '1px solid rgba(62, 126, 78, 0.3)' : '1px solid rgba(192, 57, 43, 0.3)',
+                  backgroundColor: productDetailsOpen ? 'rgba(82, 105, 75, 0.15)' : 'rgba(100, 116, 139, 0.15)',
+                  color: productDetailsOpen ? 'var(--admin-forest)' : '#64748b',
+                  border: productDetailsOpen ? '1px solid rgba(82, 105, 75, 0.3)' : '1px solid rgba(100, 116, 139, 0.25)',
                 }}
               >
-                {productDetailsAccess ? 'PUBLIC ACCESS LIVE' : 'LOCKED (COMING SOON / DRAFT MODE)'}
+                {productDetailsOpen ? '● OPEN' : '○ OFF'}
               </span>
             </div>
-            <div style={{ fontSize: '0.84rem', color: 'var(--admin-text-muted)', marginTop: '0.25rem' }}>
-              {productDetailsAccess
-                ? "Published product details pages (/products/mova, /products/penta, /products/entra) are visible to public visitors."
-                : "Product details pages are strictly LOCKED. Visitors cannot open them and will see the curated Coming Soon screen with private brochure enquiry access."}
-            </div>
+            <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.84rem', color: 'var(--admin-text-muted)' }}>
+              {productDetailsOpen
+                ? 'Public product details pages (/products/mova, /products/penta, /products/entra) are OPEN and accessible to visitors.'
+                : 'Public product details pages are OFF. Clicking product cards or details buttons is disabled for visitors.'}
+            </p>
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <button
-            type="button"
-            disabled={togglingAccess}
-            onClick={handleToggleDetailsAccess}
-            className="admin-btn"
+        {/* Toggle Switch Bar Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem' }}>
+          <div
             style={{
-              backgroundColor: productDetailsAccess ? '#C0392B' : 'var(--admin-forest)',
-              color: '#FFFFFF',
-              border: 'none',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              padding: '0.55rem 1.15rem',
-              cursor: togglingAccess ? 'not-allowed' : 'pointer',
-              opacity: togglingAccess ? 0.7 : 1,
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.45rem',
+              backgroundColor: 'rgba(0, 0, 0, 0.05)',
+              padding: '3px',
+              borderRadius: '999px',
+              border: '1px solid var(--admin-border-light)',
             }}
           >
-            {togglingAccess ? (
-              <span>Updating Access...</span>
-            ) : productDetailsAccess ? (
-              <>
-                <EyeOff size={15} /> Lock Details Pages (Coming Soon)
-              </>
-            ) : (
-              <>
-                <Eye size={15} /> Enable Public Access
-              </>
-            )}
-          </button>
+            <button
+              type="button"
+              disabled={isTogglingDetails}
+              onClick={() => handleToggleProductDetails(false)}
+              style={{
+                border: 'none',
+                background: !productDetailsOpen ? '#FFFFFF' : 'transparent',
+                color: !productDetailsOpen ? '#0f172a' : 'var(--admin-text-muted)',
+                fontWeight: !productDetailsOpen ? 700 : 500,
+                fontSize: '0.82rem',
+                padding: '0.35rem 0.9rem',
+                borderRadius: '999px',
+                cursor: isTogglingDetails ? 'not-allowed' : 'pointer',
+                boxShadow: !productDetailsOpen ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              OFF
+            </button>
+            <button
+              type="button"
+              disabled={isTogglingDetails}
+              onClick={() => handleToggleProductDetails(true)}
+              style={{
+                border: 'none',
+                background: productDetailsOpen ? 'var(--admin-forest)' : 'transparent',
+                color: productDetailsOpen ? '#FFFFFF' : 'var(--admin-text-muted)',
+                fontWeight: productDetailsOpen ? 700 : 500,
+                fontSize: '0.82rem',
+                padding: '0.35rem 0.9rem',
+                borderRadius: '999px',
+                cursor: isTogglingDetails ? 'not-allowed' : 'pointer',
+                boxShadow: productDetailsOpen ? '0 1px 3px rgba(0,0,0,0.15)' : 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              OPEN
+            </button>
+          </div>
+
+          {/* Interactive Sliding Toggle Bar Switch */}
+          <div
+            role="switch"
+            aria-checked={productDetailsOpen}
+            onClick={() => !isTogglingDetails && handleToggleProductDetails()}
+            style={{
+              width: '50px',
+              height: '26px',
+              borderRadius: '999px',
+              backgroundColor: productDetailsOpen ? 'var(--admin-forest)' : '#cbd5e1',
+              cursor: isTogglingDetails ? 'not-allowed' : 'pointer',
+              position: 'relative',
+              transition: 'background-color 0.25s ease',
+              padding: '2px',
+              display: 'flex',
+              alignItems: 'center',
+              opacity: isTogglingDetails ? 0.6 : 1,
+            }}
+            title={productDetailsOpen ? 'Click to turn OFF product details' : 'Click to turn OPEN product details'}
+          >
+            <div
+              style={{
+                width: '22px',
+                height: '22px',
+                borderRadius: '50%',
+                backgroundColor: '#FFFFFF',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.25)',
+                transform: productDetailsOpen ? 'translateX(24px)' : 'translateX(0px)',
+                transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+              }}
+            />
+          </div>
         </div>
       </div>
+
+
 
       {/* Alert banner */}
       {alert && (

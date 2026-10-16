@@ -395,9 +395,17 @@ export default function ProductPenta({ initialProduct }: ProductPentaProps) {
                     <p style={{ color: 'var(--color-charcoal-muted)', fontSize: '0.9375rem', marginBottom: '1.25rem', lineHeight: '1.6' }}>
                       {prod.shortDescription}
                     </p>
-                    <Link href={`/products/${prod.slug}`} className="btn btn-outline-dark btn-sm">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }}
+                      className="btn btn-outline-dark btn-sm"
+                      style={{ cursor: 'default' }}
+                    >
                       View {prod.name} Details <ArrowRight size={14} />
-                    </Link>
+                    </button>
                   </div>
                 </div>
               ))}

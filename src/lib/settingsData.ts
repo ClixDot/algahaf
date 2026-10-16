@@ -81,7 +81,13 @@ export async function getGlobalSettings(): Promise<any> {
     await Promise.race([connectToDatabase(), timeoutPromise]);
     const doc = await GlobalSettings.findOne().lean();
     if (doc) {
-      const merged = { ...DEFAULT_SETTINGS, ...(doc as any) };
+      const local = ensureLocalSettings();
+      const merged = { ...DEFAULT_SETTINGS, ...local, ...(doc as any) };
+      if (typeof (doc as any).productDetailsAccess === 'boolean') {
+        merged.productDetailsAccess = (doc as any).productDetailsAccess;
+      } else if (typeof local.productDetailsAccess === 'boolean') {
+        merged.productDetailsAccess = local.productDetailsAccess;
+      }
       saveLocalSettings(merged);
       return merged;
     }
@@ -116,7 +122,10 @@ export async function updateGlobalSettings(data: any): Promise<any> {
       }
     ).lean();
     if (updated) {
-      const res = { ...DEFAULT_SETTINGS, ...(updated as any) };
+      const res = { ...DEFAULT_SETTINGS, ...merged, ...(updated as any) };
+      if (typeof data.productDetailsAccess === 'boolean') {
+        res.productDetailsAccess = data.productDetailsAccess;
+      }
       saveLocalSettings(res);
       return res;
     }

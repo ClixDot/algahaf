@@ -1,9 +1,12 @@
+import { redirect } from 'next/navigation';
 import ProductEntra from '../../../views/ProductEntra';
-import ProductComingSoon from '../../../components/common/ProductComingSoon';
 import { getLiveProduct } from '../../../lib/productsHelper';
 import { getGlobalSettings } from '../../../lib/settingsData';
 import { cookies } from 'next/headers';
 import { AUTH_COOKIE_NAME, verifyToken } from '../../../lib/auth';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 interface EntraPageProps {
   searchParams?: Promise<{ preview?: string }>;
@@ -27,18 +30,10 @@ export default async function EntraPage({ searchParams }: EntraPageProps) {
   const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
   const isAdmin = token ? Boolean(verifyToken(token)) : false;
 
-  const isPublicAllowed = settings?.productDetailsAccess !== false && product?.status === 'published';
+  const isDetailsOpen = Boolean(settings?.productDetailsAccess);
 
-  if (!isPublicAllowed && !isAdmin && sp?.preview !== 'true') {
-    return (
-      <ProductComingSoon
-        productName={product?.name || 'ENTRA'}
-        category={product?.category || 'Private Entertainment'}
-        tagline={product?.tagline || product?.shortDescription || 'Your Space. Your Experience.'}
-        bgImage={product?.heroImage || '/assets/renders/ENTRA_EXT_3D_img1.jpg'}
-        sizeRange={product?.sizeRange || '3 Available Sizes'}
-      />
-    );
+  if (!isDetailsOpen && !isAdmin && sp?.preview !== 'true') {
+    redirect('/products');
   }
 
   return <ProductEntra initialProduct={product} />;

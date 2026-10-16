@@ -102,10 +102,14 @@ const GlobalSettingsSchema = new Schema<IGlobalSettings>(
     },
     defaultOgImage: { type: String, default: '/assets/images/ax.jpg' },
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
+if (mongoose.models && (mongoose.models as any).GlobalSettings) {
+  delete (mongoose.models as any).GlobalSettings;
+}
+
 export const GlobalSettings: Model<IGlobalSettings> =
-  mongoose.models.GlobalSettings || mongoose.model<IGlobalSettings>('GlobalSettings', GlobalSettingsSchema);
+  mongoose.model<IGlobalSettings>('GlobalSettings', GlobalSettingsSchema);
 
 export default GlobalSettings;

@@ -23,14 +23,16 @@ import HowWeBuildSection from '../components/home/HowWeBuildSection';
 
 interface HomeProps {
   initialSections?: any[];
+  initialDetailsOpen?: boolean;
 }
 
-export default function Home({ initialSections = [] }: HomeProps) {
+export default function Home({ initialSections = [], initialDetailsOpen = false }: HomeProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalProduct, setModalProduct] = useState('');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [detailsOpen, setDetailsOpen] = useState(initialDetailsOpen);
 
   // Dynamic CMS sections state
   const [sections, setSections] = useState<any[]>(initialSections);
@@ -44,6 +46,15 @@ export default function Home({ initialSections = [] }: HomeProps) {
         }
       })
       .catch((err) => console.warn('Live sections check notice:', err));
+
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.settings && typeof data.settings.productDetailsAccess === 'boolean') {
+          setDetailsOpen(data.settings.productDetailsAccess);
+        }
+      })
+      .catch((err) => console.warn('Home settings sync notice:', err));
   }, []);
 
   const getSec = (id: string) => sections.find((s) => s.sectionId === id);
@@ -674,20 +685,46 @@ export default function Home({ initialSections = [] }: HomeProps) {
                         {/* Highlights */}
                         <div style={{ marginTop: 'auto', borderTop: '1px solid rgba(82, 105, 75, 0.1)', paddingTop: '1.25rem' }}>
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Link
-                              href={`/products/${pSlug}`}
-                              style={{
-                                fontFamily: 'var(--font-body)',
-                                fontWeight: 600,
-                                fontSize: '0.9375rem',
-                                color: 'var(--color-forest)',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '0.35rem'
-                              }}
-                            >
-                              Explore {pName} <ArrowRight size={16} />
-                            </Link>
+                            {detailsOpen ? (
+                              <Link
+                                href={`/products/${pSlug}`}
+                                style={{
+                                  fontFamily: 'var(--font-body)',
+                                  fontWeight: 600,
+                                  fontSize: '0.9375rem',
+                                  color: 'var(--color-forest)',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '0.35rem',
+                                  textDecoration: 'none'
+                                }}
+                              >
+                                Explore {pName} <ArrowRight size={16} />
+                              </Link>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                }}
+                                style={{
+                                  background: 'none',
+                                  border: 'none',
+                                  padding: 0,
+                                  fontFamily: 'var(--font-body)',
+                                  fontWeight: 600,
+                                  fontSize: '0.9375rem',
+                                  color: 'var(--color-forest)',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '0.35rem',
+                                  cursor: 'default'
+                                }}
+                              >
+                                Explore {pName} <ArrowRight size={16} />
+                              </button>
+                            )}
                           </div>
                         </div>
                       </div>
