@@ -69,29 +69,36 @@ export async function GET(req: NextRequest) {
   if ('errorResponse' in auth) return auth.errorResponse;
 
   try {
-    await connectToDatabase();
-    try {
-      await Page.deleteOne({ slug: 'process' });
-    } catch {}
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('DB Timeout')), 2500)
+    );
+    await Promise.race([connectToDatabase(), timeoutPromise]);
 
-    const pages = await Page.find({ slug: { $ne: 'process' } }).sort({ title: 1 }).lean();
+    const [pages, sectionCountsAgg] = await Promise.all([
+      Page.find({ slug: { $ne: 'process' } }).sort({ title: 1 }).lean(),
+      Section.aggregate([
+        { $match: { pageSlug: { $ne: 'process' } } },
+        { $group: { _id: '$pageSlug', count: { $sum: 1 } } },
+      ]),
+    ]);
+
+    const countMap: Record<string, number> = {};
+    if (Array.isArray(sectionCountsAgg)) {
+      for (const item of sectionCountsAgg) {
+        if (item._id) countMap[item._id] = item.count;
+      }
+    }
 
     if (pages && pages.length > 0) {
-      const pagesWithCount = await Promise.all(
-        pages.map(async (page) => {
-          const cleanTitle = cleanTitleMap[page.slug] || (page.title ? page.title.split(/ [—–-] /)[0].trim() : page.title);
-          try {
-            const sectionCount = await Section.countDocuments({ pageSlug: page.slug });
-            return {
-              ...page,
-              title: cleanTitle,
-              sectionCount: sectionCount || (page.slug === 'home' ? 7 : 3),
-            };
-          } catch {
-            return { ...page, title: cleanTitle, sectionCount: page.slug === 'home' ? 7 : 3 };
-          }
-        })
-      );
+      const pagesWithCount = pages.map((page) => {
+        const cleanTitle = cleanTitleMap[page.slug] || (page.title ? page.title.split(/ [—–-] /)[0].trim() : page.title);
+        const sectionCount = countMap[page.slug] ?? (page.slug === 'home' ? 7 : 3);
+        return {
+          ...page,
+          title: cleanTitle,
+          sectionCount,
+        };
+      });
       return NextResponse.json({ pages: pagesWithCount });
     }
   } catch (error: any) {

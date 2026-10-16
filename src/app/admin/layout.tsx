@@ -44,6 +44,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       return;
     }
 
+    // If session is already verified, do not re-fetch and freeze UI on every route change
+    if (currentUser) {
+      setLoading(false);
+      return;
+    }
+
     async function checkAuth() {
       try {
         const res = await fetch('/api/auth/me');
@@ -65,7 +71,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     }
 
     checkAuth();
-  }, [pathname, isLoginPage, router]);
+  }, [isLoginPage, currentUser, router]);
 
   const handleLogout = async () => {
     try {

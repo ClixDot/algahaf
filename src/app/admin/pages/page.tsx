@@ -113,8 +113,11 @@ export const getCleanPageTitle = (page: { slug?: string; title?: string }) => {
 };
 
 export default function AdminPagesList() {
-  const [pages, setPages] = useState<PageItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [pages, setPages] = useState<PageItem[]>(() =>
+    DEFAULT_PAGES.filter((p: PageItem) => p.slug !== 'process')
+  );
+  const [loading, setLoading] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(true);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -122,22 +125,18 @@ export default function AdminPagesList() {
 
   const fetchPages = async () => {
     try {
-      setLoading(true);
+      setIsSyncing(true);
       const res = await fetch('/api/admin/pages');
       if (res.ok) {
         const data = await res.json();
         if (data.pages && data.pages.length > 0) {
           setPages(data.pages.filter((p: PageItem) => p.slug !== 'process'));
-        } else {
-          // Initialize defaults
-          setPages(DEFAULT_PAGES.filter((p: PageItem) => p.slug !== 'process'));
         }
-      } else {
-        setPages(DEFAULT_PAGES.filter((p: PageItem) => p.slug !== 'process'));
       }
     } catch {
-      setPages(DEFAULT_PAGES.filter((p: PageItem) => p.slug !== 'process'));
+      // Retain instant default pages
     } finally {
+      setIsSyncing(false);
       setLoading(false);
     }
   };
@@ -209,7 +208,26 @@ export default function AdminPagesList() {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          {isSyncing && (
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                fontSize: '0.78rem',
+                color: 'var(--admin-forest)',
+                backgroundColor: 'var(--admin-forest-tint)',
+                padding: '0.35rem 0.75rem',
+                borderRadius: '20px',
+                fontWeight: 600,
+                border: '1px solid var(--admin-forest-border)',
+              }}
+            >
+              <Sparkles size={13} className="animate-spin" />
+              Live Sync
+            </span>
+          )}
           <Link
             href="/admin/sections"
             className="admin-btn admin-btn-secondary"
@@ -332,7 +350,7 @@ export default function AdminPagesList() {
       </div>
 
       {/* Pages Container: Individual Separate Cards */}
-      {loading ? (
+      {loading && pages.length === 0 ? (
         <div className="admin-card" style={{ padding: '3.5rem', textAlign: 'center', color: 'var(--admin-text-muted)' }}>
           <Sparkles size={26} color="var(--admin-forest)" style={{ animation: 'spin 1.2s infinite', margin: '0 auto 1rem auto' }} />
           <p style={{ margin: 0, fontSize: '0.92rem' }}>Synchronizing website pages with database...</p>

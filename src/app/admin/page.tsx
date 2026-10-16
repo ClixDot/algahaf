@@ -33,28 +33,25 @@ export default function AdminOverviewPage() {
     recentEnquiries: [],
   });
   const [showApplicationsNav, setShowApplicationsNav] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isTogglingNav, setIsTogglingNav] = useState(false);
   const [navAlert, setNavAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   const fetchStats = async () => {
-    setLoading(true);
+    setIsRefreshing(true);
     try {
-      const res = await fetch('/api/admin/overview');
-      if (res.ok) {
+      const [res, sRes] = await Promise.all([
+        fetch('/api/admin/overview').catch(() => null),
+        fetch('/api/settings').catch(() => null),
+      ]);
+
+      if (res && res.ok) {
         const data = await res.json();
         setStats(data);
       }
-    } catch (e) {
-      console.error('Error fetching stats:', e);
-    } finally {
-      setLoading(false);
-    }
 
-    // Sync settings
-    try {
-      const sRes = await fetch('/api/settings');
-      if (sRes.ok) {
+      if (sRes && sRes.ok) {
         const sData = await sRes.json();
         if (sData?.settings && typeof sData.settings.showApplicationsNav === 'boolean') {
           setShowApplicationsNav(sData.settings.showApplicationsNav);
@@ -63,7 +60,10 @@ export default function AdminOverviewPage() {
         }
       }
     } catch (e) {
-      console.error('Error fetching settings in overview:', e);
+      console.error('Error fetching stats:', e);
+    } finally {
+      setIsRefreshing(false);
+      setLoading(false);
     }
   };
 

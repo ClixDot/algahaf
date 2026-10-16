@@ -28,6 +28,10 @@ if (!cached) {
 }
 
 export async function connectToDatabase(): Promise<typeof mongoose> {
+  if (mongoose.connection.readyState === 1) {
+    return mongoose;
+  }
+
   if (cached!.conn) {
     return cached!.conn;
   }
@@ -36,8 +40,9 @@ export async function connectToDatabase(): Promise<typeof mongoose> {
     const opts: mongoose.ConnectOptions = {
       bufferCommands: false,
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 10000,
-      socketTimeoutMS: 15000,
+      minPoolSize: 2,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 10000,
       tls: true,
       tlsAllowInvalidCertificates: true,
     };

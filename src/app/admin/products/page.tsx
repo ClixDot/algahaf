@@ -46,9 +46,55 @@ interface ProductItem {
   specifications?: any[];
 }
 
+const DEFAULT_INITIAL_PRODUCTS: ProductItem[] = [
+  {
+    id: 'mova',
+    slug: 'mova',
+    name: 'MOVA',
+    fullName: 'MOVA Modular Living System',
+    category: 'Modular Living',
+    tagline: 'Compact luxury living redefined.',
+    sizeRange: '35 m²',
+    leadTime: '6–8 Weeks',
+    heroImage: '/assets/renders/MOVA_EXT_3D_img1.jpg',
+    previewImage: '/assets/renders/MOVA_EXT_3D_img1.jpg',
+    shortDescription: 'Flexible and elegant single-module architectural living solution.',
+    status: 'published',
+  },
+  {
+    id: 'penta',
+    slug: 'penta',
+    name: 'PENTA',
+    fullName: 'PENTA Multi-Module Villa',
+    category: 'Residential Villa',
+    tagline: 'Expansive multi-module family residence.',
+    sizeRange: '120–240 m²',
+    leadTime: '10–14 Weeks',
+    heroImage: '/assets/renders/CINE_EXT_3D_img1.jpg',
+    previewImage: '/assets/renders/CINE_EXT_3D_img1.jpg',
+    shortDescription: 'A sophisticated multi-module luxury villa designed for contemporary family living.',
+    status: 'published',
+  },
+  {
+    id: 'entra',
+    slug: 'entra',
+    name: 'ENTRA',
+    fullName: 'ENTRA Commercial & Hospitality Suite',
+    category: 'Commercial Suite',
+    tagline: 'Adaptive hospitality and workspace module.',
+    sizeRange: '55 m²',
+    leadTime: '8–10 Weeks',
+    heroImage: '/assets/images/entra.png',
+    previewImage: '/assets/images/entra.png',
+    shortDescription: 'Designed for boutique resorts, executive studios, and creative commercial spaces.',
+    status: 'published',
+  },
+];
+
 export default function AdminProductsDashboard() {
-  const [products, setProducts] = useState<ProductItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<ProductItem[]>(DEFAULT_INITIAL_PRODUCTS);
+  const [loading, setLoading] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(true);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
@@ -74,15 +120,18 @@ export default function AdminProductsDashboard() {
 
   const fetchProducts = async () => {
     try {
-      setLoading(true);
+      setIsSyncing(true);
       const res = await fetch('/api/admin/products');
       if (res.ok) {
         const data = await res.json();
-        setProducts(data.products || []);
+        if (data.products && data.products.length > 0) {
+          setProducts(data.products);
+        }
       }
     } catch (e: any) {
-      setAlert({ type: 'error', message: 'Failed to load products from database.' });
+      console.warn('Could not sync products with DB, using cached default products.');
     } finally {
+      setIsSyncing(false);
       setLoading(false);
     }
   };
@@ -567,7 +616,7 @@ export default function AdminProductsDashboard() {
       </div>
 
       {/* Loading state */}
-      {loading && (
+      {loading && products.length === 0 && (
         <div style={{ textAlign: 'center', padding: '4rem 2rem', color: 'var(--admin-forest)' }}>
           <RefreshCw size={28} className="animate-spin" style={{ margin: '0 auto 1rem auto' }} />
           <p style={{ fontWeight: 600 }}>Loading AlGhaf Products from MongoDB Atlas...</p>
