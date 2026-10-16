@@ -32,7 +32,7 @@ export const DEFAULT_SETTINGS = {
   showApplicationsNav: false,
   applicationsComingSoon: false,
   // Toggle for Individual Product Details Pages (/products/mova, etc.) access
-  productDetailsAccess: false,
+  productDetailsAccess: true,
   headerNav: [
     { label: 'Home', path: '/', isComingSoon: false, order: 0 },
     { label: 'About', path: '/about', isComingSoon: false, order: 1 },

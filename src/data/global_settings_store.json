@@ -22,7 +22,7 @@
   "copyrightText": "AlGhaf Collective. All rights reserved. | Powered by Clixdot",
   "showApplicationsNav": false,
   "applicationsComingSoon": false,
-  "productDetailsAccess": false,
+  "productDetailsAccess": true,
   "headerNav": [
     {
       "label": "Home",
@@ -98,6 +98,6 @@
   "defaultKeywords": "AlGhaf Collective, modular homes UAE, prefabrication Dubai, luxury modular architecture, MOVA, PENTA, ENTRA",
   "defaultOgImage": "/assets/images/ax.jpg",
   "createdAt": "2026-10-15T10:36:59.889Z",
-  "updatedAt": "2026-10-16T11:45:16.845Z",
+  "updatedAt": "2026-10-16T12:45:46.425Z",
   "__v": 0
 }

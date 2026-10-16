@@ -395,7 +395,7 @@ export default function ProductMasterEditorPage({ params }: { params: Promise<{ 
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <Link
-            href={`/products/${product.slug}`}
+            href={`/products/${product.slug}?preview=true`}
             target="_blank"
             className="admin-btn admin-btn-secondary"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem' }}
