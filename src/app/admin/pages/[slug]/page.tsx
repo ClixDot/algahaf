@@ -2963,6 +2963,28 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                               }
                             }
                             setEditingSection({ ...editingSection, videoUrl: val });
+
+                            if (val.includes('goo.gl')) {
+                              fetch(`/api/resolve-map?url=${encodeURIComponent(val)}`)
+                                .then((r) => r.json())
+                                .then((d) => {
+                                  if (d.embedUrl) {
+                                    setEditingSection((prev: any) => {
+                                      if (!prev) return prev;
+                                      const updatedItems = prev.items && prev.items.length > 0
+                                        ? [{ ...prev.items[0], title: d.placeName || prev.items[0]?.title }]
+                                        : prev.items;
+                                      return {
+                                        ...prev,
+                                        videoUrl: d.embedUrl,
+                                        subtitle: d.placeName || prev.subtitle,
+                                        items: updatedItems,
+                                      };
+                                    });
+                                  }
+                                })
+                                .catch(() => {});
+                            }
                           }}
                           placeholder="https://www.google.com/maps/embed?pb=... or paste <iframe> tag"
                           style={{ fontFamily: 'monospace', fontSize: '0.82rem', marginBottom: '0.4rem' }}
@@ -3086,12 +3108,54 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                       {/* Live Interactive Map Preview */}
                       {editingSection.videoUrl ? (
                         <div>
+                          {editingSection.videoUrl.includes('goo.gl') && (
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                gap: '0.5rem',
+                                padding: '0.55rem 0.75rem',
+                                backgroundColor: '#FEF3C7',
+                                border: '1px solid #F59E0B',
+                                borderRadius: '6px',
+                                marginBottom: '0.65rem',
+                                fontSize: '0.8rem',
+                                color: '#92400E',
+                              }}
+                            >
+                              <span>
+                                ⚠️ <strong>Short link detected (maps.app.goo.gl).</strong> Google blocks direct embedding of share links.
+                              </span>
+                              <button
+                                type="button"
+                                onClick={async () => {
+                                  try {
+                                    const res = await fetch(`/api/resolve-map?url=${encodeURIComponent(editingSection.videoUrl)}`);
+                                    const data = await res.json();
+                                    if (data.embedUrl) {
+                                      setEditingSection({
+                                        ...editingSection,
+                                        videoUrl: data.embedUrl,
+                                        subtitle: data.placeName || editingSection.subtitle,
+                                      });
+                                    }
+                                  } catch (err) {}
+                                }}
+                                className="admin-btn admin-btn-primary"
+                                style={{ padding: '0.25rem 0.65rem', fontSize: '0.74rem', whiteSpace: 'nowrap' }}
+                              >
+                                ⚡ Click to Convert into Working Embed
+                              </button>
+                            </div>
+                          )}
+
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
                             <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--admin-text-muted)' }}>
                               Live Interactive Map Preview:
                             </span>
-                            <span style={{ fontSize: '0.72rem', color: 'var(--admin-forest)', fontWeight: 600 }}>
-                              ✓ Active Embed URL
+                            <span style={{ fontSize: '0.72rem', color: editingSection.videoUrl.includes('goo.gl') ? '#B45309' : 'var(--admin-forest)', fontWeight: 600 }}>
+                              {editingSection.videoUrl.includes('goo.gl') ? '⚠ Short link (Click Convert button above)' : '✓ Active Embed URL'}
                             </span>
                           </div>
                           <div
