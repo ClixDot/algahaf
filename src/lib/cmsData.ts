@@ -208,6 +208,17 @@ export const DEFAULT_HOME_SECTIONS: CmsSectionItem[] = [
         category: 'Residential',
         image: '/assets/images/built_more_than_homes_01_web.jpg',
         link: '/applications/modular-homes',
+        heroEyebrow: 'APPLICATIONS — RESIDENTIAL',
+        heroTitle: 'Modular Homes &\nPrivate Residences.',
+        heroDesc: 'A UAE-rooted modular architecture and construction approach reimagining residential living through precision engineering and sustainable design.',
+        detailHeroImage: '/assets/images/built_more_than_homes_01_web.jpg',
+        originEyebrow: 'OUR RESIDENTIAL VISION',
+        originHeadline: 'Harmonious Living. Built for the UAE.',
+        storyParagraphs: [
+          'The Ghaf tree has thrived in the UAE’s desert for generations — resilient and sustaining life in the harshest conditions. Inspired by that enduring spirit, AlGhaf modular residences are engineered to harmonize with the desert while delivering absolute luxury and thermal serenity.',
+          'From primary luxury desert residences to estate guest pavilions and independent family annexes, our modular homes offer expansive double-height volumes, floor-to-ceiling desert-tested glass facades, cantilevered pergolas for natural solar shading, and bespoke interiors completed with turnkey precision.',
+          'Bringing this vision together with the design, prefabrication, and modular construction expertise of CK Living Concepts, AlGhaf Collective delivers precision-engineered homes up to 50% faster than conventional on-site construction — fully customizable from 30 m² to 300 m².',
+        ],
       },
       {
         id: 'hospitality-resorts',
@@ -215,6 +226,17 @@ export const DEFAULT_HOME_SECTIONS: CmsSectionItem[] = [
         category: 'Hospitality',
         image: '/assets/images/built_more_than_homes_02_web.jpg',
         link: '/applications/hospitality',
+        heroEyebrow: 'APPLICATIONS — HOSPITALITY',
+        heroTitle: 'Hospitality &\nBoutique Resorts.',
+        heroDesc: 'Accelerated development for world-class guest sanctuaries deployed with minimal environmental disturbance in remote and pristine terrains.',
+        detailHeroImage: '/assets/images/built_more_than_homes_02_web.jpg',
+        originEyebrow: 'OUR HOSPITALITY VISION',
+        originHeadline: 'Rapid Deployment for World-Class Destinations.',
+        storyParagraphs: [
+          'Empowering resort operators and developers to deploy luxury guest keys in remote or pristine terrains with minimal environmental disturbance. Deliver exceptional guest experiences months ahead of conventional construction schedules.',
+          'Every boutique suite is acoustically isolated and pre-fitted with five-star finishes, offering repeatable, luxury-grade consistency across multiple keys with minimal on-site disruption to delicate natural ecosystems.',
+          'With modular prefabrication by CK Living Concepts, opening timelines are compressed by up to 50%, enabling operators to welcome guests and generate revenue significantly faster.',
+        ],
       },
       {
         id: 'farm-living-estates',
@@ -222,6 +244,17 @@ export const DEFAULT_HOME_SECTIONS: CmsSectionItem[] = [
         category: 'Residential & Agriculture',
         image: '/assets/images/built_more_than_homes_03_web.jpg',
         link: '/applications/farm-living',
+        heroEyebrow: 'APPLICATIONS — FARM & RANCH',
+        heroTitle: 'Farm Living &\nDesert Ranches.',
+        heroDesc: 'Modern architectural retreats tailored for agricultural estates, equestrian ranches, and private desert farms.',
+        detailHeroImage: '/assets/images/built_more_than_homes_03_web.jpg',
+        originEyebrow: 'OUR RANCH LIVING VISION',
+        originHeadline: 'Harmonizing Architecture with Rural Serenity.',
+        storyParagraphs: [
+          'Modern architectural retreats tailored for agricultural estates, equestrian ranches, and desert farms. Designed to frame panoramic views, provide insulated comfort against day-and-night temperature swings, and blend harmoniously into rural surroundings.',
+          'Generous shaded verandas and outdoor dining pergolas expand the usable living space, while dust-sealed multi-point fenestration and durable exterior materials withstand sand abrasion and harsh sun exposure.',
+          'Engineered with off-grid compatibility and rapid factory assembly, AlGhaf delivers serene agricultural sanctuaries without disturbing active farm operations.',
+        ],
       },
       {
         id: 'eco-developments',
@@ -229,6 +262,17 @@ export const DEFAULT_HOME_SECTIONS: CmsSectionItem[] = [
         category: 'Hospitality & Wellness',
         image: '/assets/images/built_more_than_homes_04_web.jpg',
         link: '/applications/eco-retreats',
+        heroEyebrow: 'APPLICATIONS — ECO RETREATS',
+        heroTitle: 'Eco Retreats &\nNature Escapes.',
+        heroDesc: 'Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways.',
+        detailHeroImage: '/assets/images/built_more_than_homes_04_web.jpg',
+        originEyebrow: 'OUR ECOLOGICAL VISION',
+        originHeadline: 'Light on the Land. Deeply Connected to Nature.',
+        storyParagraphs: [
+          'Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways. Built with sustainable materials and compatible with off-grid solar and greywater systems.',
+          'Lightweight foundation options leave natural topography undisturbed, while high solar reflectivity and passive natural ventilation ensure exceptional energy efficiency.',
+          'Constructed with recyclable steel structural frames and non-toxic interior finishes, creating authentic nature escapes that honor the fragile desert ecosystem.',
+        ],
       },
     ],
   },
@@ -598,6 +642,17 @@ export const DEFAULT_APPLICATIONS_SECTIONS: CmsSectionItem[] = [
         image: '/assets/images/built_more_than_homes_01_web.jpg',
         imageAlt: 'Modular Homes & Private Residences',
         imagePosition: 'center center',
+        heroEyebrow: 'APPLICATIONS — RESIDENTIAL',
+        heroTitle: 'Modular Homes &\nPrivate Residences.',
+        heroDesc: 'A UAE-rooted modular architecture and construction approach reimagining residential living through precision engineering and sustainable design.',
+        detailHeroImage: '/assets/images/built_more_than_homes_01_web.jpg',
+        originEyebrow: 'OUR RESIDENTIAL VISION',
+        originHeadline: 'Harmonious Living. Built for the UAE.',
+        storyParagraphs: [
+          'The Ghaf tree has thrived in the UAE’s desert for generations — resilient and sustaining life in the harshest conditions. Inspired by that enduring spirit, AlGhaf modular residences are engineered to harmonize with the desert while delivering absolute luxury and thermal serenity.',
+          'From primary luxury desert residences to estate guest pavilions and independent family annexes, our modular homes offer expansive double-height volumes, floor-to-ceiling desert-tested glass facades, cantilevered pergolas for natural solar shading, and bespoke interiors completed with turnkey precision.',
+          'Bringing this vision together with the design, prefabrication, and modular construction expertise of CK Living Concepts, AlGhaf Collective delivers precision-engineered homes up to 50% faster than conventional on-site construction — fully customizable from 30 m² to 300 m².',
+        ],
         overviewBtnText: 'Overview',
         overviewUrl: '/applications/modular-homes',
         overviewOpenNewTab: false,
@@ -623,6 +678,17 @@ export const DEFAULT_APPLICATIONS_SECTIONS: CmsSectionItem[] = [
         image: '/assets/images/built_more_than_homes_02_web.jpg',
         imageAlt: 'Hospitality & Boutique Resorts',
         imagePosition: 'center center',
+        heroEyebrow: 'APPLICATIONS — HOSPITALITY',
+        heroTitle: 'Hospitality &\nBoutique Resorts.',
+        heroDesc: 'Accelerated development for world-class guest sanctuaries deployed with minimal environmental disturbance in remote and pristine terrains.',
+        detailHeroImage: '/assets/images/built_more_than_homes_02_web.jpg',
+        originEyebrow: 'OUR HOSPITALITY VISION',
+        originHeadline: 'Rapid Deployment for World-Class Destinations.',
+        storyParagraphs: [
+          'Empowering resort operators and developers to deploy luxury guest keys in remote or pristine terrains with minimal environmental disturbance. Deliver exceptional guest experiences months ahead of conventional construction schedules.',
+          'Every boutique suite is acoustically isolated and pre-fitted with five-star finishes, offering repeatable, luxury-grade consistency across multiple keys with minimal on-site disruption to delicate natural ecosystems.',
+          'With modular prefabrication by CK Living Concepts, opening timelines are compressed by up to 50%, enabling operators to welcome guests and generate revenue significantly faster.',
+        ],
         overviewBtnText: 'Overview',
         overviewUrl: '/applications/hospitality',
         overviewOpenNewTab: false,
@@ -648,6 +714,17 @@ export const DEFAULT_APPLICATIONS_SECTIONS: CmsSectionItem[] = [
         image: '/assets/images/built_more_than_homes_03_web.jpg',
         imageAlt: 'Farm Living & Desert Ranches',
         imagePosition: 'center center',
+        heroEyebrow: 'APPLICATIONS — FARM & RANCH',
+        heroTitle: 'Farm Living &\nDesert Ranches.',
+        heroDesc: 'Modern architectural retreats tailored for agricultural estates, equestrian ranches, and private desert farms.',
+        detailHeroImage: '/assets/images/built_more_than_homes_03_web.jpg',
+        originEyebrow: 'OUR RANCH LIVING VISION',
+        originHeadline: 'Harmonizing Architecture with Rural Serenity.',
+        storyParagraphs: [
+          'Modern architectural retreats tailored for agricultural estates, equestrian ranches, and desert farms. Designed to frame panoramic views, provide insulated comfort against day-and-night temperature swings, and blend harmoniously into rural surroundings.',
+          'Generous shaded verandas and outdoor dining pergolas expand the usable living space, while dust-sealed multi-point fenestration and durable exterior materials withstand sand abrasion and harsh sun exposure.',
+          'Engineered with off-grid compatibility and rapid factory assembly, AlGhaf delivers serene agricultural sanctuaries without disturbing active farm operations.',
+        ],
         overviewBtnText: 'Overview',
         overviewUrl: '/applications/farm-living',
         overviewOpenNewTab: false,
@@ -673,6 +750,17 @@ export const DEFAULT_APPLICATIONS_SECTIONS: CmsSectionItem[] = [
         image: '/assets/images/built_more_than_homes_04_web.jpg',
         imageAlt: 'Eco Retreats & Nature Escapes',
         imagePosition: 'center center',
+        heroEyebrow: 'APPLICATIONS — ECO RETREATS',
+        heroTitle: 'Eco Retreats &\nNature Escapes.',
+        heroDesc: 'Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways.',
+        detailHeroImage: '/assets/images/built_more_than_homes_04_web.jpg',
+        originEyebrow: 'OUR ECOLOGICAL VISION',
+        originHeadline: 'Light on the Land. Deeply Connected to Nature.',
+        storyParagraphs: [
+          'Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways. Built with sustainable materials and compatible with off-grid solar and greywater systems.',
+          'Lightweight foundation options leave natural topography undisturbed, while high solar reflectivity and passive natural ventilation ensure exceptional energy efficiency.',
+          'Constructed with recyclable steel structural frames and non-toxic interior finishes, creating authentic nature escapes that honor the fragile desert ecosystem.',
+        ],
         overviewBtnText: 'Overview',
         overviewUrl: '/applications/eco-retreats',
         overviewOpenNewTab: false,
@@ -698,6 +786,17 @@ export const DEFAULT_APPLICATIONS_SECTIONS: CmsSectionItem[] = [
         image: '/assets/renders/CINE_EXT_3D_img1.jpg',
         imageAlt: 'Private Entertainment & Media Lounges',
         imagePosition: 'center center',
+        heroEyebrow: 'APPLICATIONS — SPECIALIZED',
+        heroTitle: 'Private Entertainment &\nMedia Lounges.',
+        heroDesc: 'Standalone entertainment pavilions engineered to studio recording criteria for immersive cinema, gaming, and social hosting.',
+        detailHeroImage: '/assets/renders/CINE_EXT_3D_img1.jpg',
+        originEyebrow: 'OUR ENTERTAINMENT VISION',
+        originHeadline: 'A Private Immersive Acoustic Sanctuary.',
+        storyParagraphs: [
+          'Standalone entertainment pavilions engineered to studio recording criteria. Created for immersive cinema, esports gaming, musical performance, and social hosting, equipped with optional bar and luxury restroom modules.',
+          'Laboratory-calibrated acoustic treatment and STC 60+ isolation guarantee complete sound containment, while integrated 4K laser projection framing and Dolby Atmos conduits deliver supreme audiovisual performance.',
+          'Prefabricated with turnkey precision, each entertainment pavilion arrives ready for plug-and-play operation without the noise and disruption of site remodeling.',
+        ],
         overviewBtnText: 'Overview',
         overviewUrl: '/applications/entertainment-social',
         overviewOpenNewTab: false,
@@ -723,6 +822,17 @@ export const DEFAULT_APPLICATIONS_SECTIONS: CmsSectionItem[] = [
         image: '/assets/images/imgupscaler-enhanced-6.jpg',
         imageAlt: 'Wellness Pavilions & Private Gyms',
         imagePosition: 'center center',
+        heroEyebrow: 'APPLICATIONS — WELLNESS',
+        heroTitle: 'Wellness Pavilions &\nPrivate Gyms.',
+        heroDesc: 'Dedicated sanctuaries for personal wellbeing, thermal saunas, private fitness suites, and meditation retreats.',
+        detailHeroImage: '/assets/images/imgupscaler-enhanced-6.jpg',
+        originEyebrow: 'OUR WELLNESS VISION',
+        originHeadline: 'Restorative Spaces for Vitality and Peace.',
+        storyParagraphs: [
+          'Private yoga pavilions, thermal saunas, personal fitness training suites, and meditation sanctuaries situated in private gardens or resort grounds, filled with natural daylight and peaceful acoustic calm.',
+          'Featuring reinforced floor load capacities for heavy fitness equipment, moisture-controlled fresh air ventilation systems, and expansive timber-slatted acoustic feature walls.',
+          'Designed to create a seamless extension of mindful living, each wellness module provides a private oasis of health and rejuvenation.',
+        ],
         overviewBtnText: 'Overview',
         overviewUrl: '/applications/wellness-retreat',
         overviewOpenNewTab: false,
@@ -879,7 +989,7 @@ export const DEFAULT_CONTACT_SECTIONS: CmsSectionItem[] = [
         fieldKey: 'name',
         title: 'Full Name',
         label: 'Full Name *',
-        placeholder: 'Your full name',
+        placeholder: '',
         type: 'text',
         required: true,
         order: 2,
@@ -889,7 +999,7 @@ export const DEFAULT_CONTACT_SECTIONS: CmsSectionItem[] = [
         fieldKey: 'company',
         title: 'Company',
         label: 'Company (Optional)',
-        placeholder: 'Company or Family Office',
+        placeholder: '',
         type: 'text',
         required: false,
         order: 3,
@@ -899,7 +1009,7 @@ export const DEFAULT_CONTACT_SECTIONS: CmsSectionItem[] = [
         fieldKey: 'email',
         title: 'Email Address',
         label: 'Email Address *',
-        placeholder: 'name@domain.com',
+        placeholder: '',
         type: 'email',
         required: true,
         order: 4,
@@ -909,7 +1019,7 @@ export const DEFAULT_CONTACT_SECTIONS: CmsSectionItem[] = [
         fieldKey: 'phone',
         title: 'Phone / WhatsApp',
         label: 'Phone / WhatsApp *',
-        placeholder: '+971 50 000 0000',
+        placeholder: '',
         type: 'tel',
         required: true,
         order: 5,
@@ -954,7 +1064,7 @@ export const DEFAULT_CONTACT_SECTIONS: CmsSectionItem[] = [
         fieldKey: 'description',
         title: 'Tell Us About Your Project',
         label: 'Tell Us About Your Project *',
-        placeholder: 'Plot status, intended purpose, timeline, or specific architectural questions...',
+        placeholder: '',
         type: 'textarea',
         required: true,
         order: 8,
@@ -1299,6 +1409,13 @@ export async function saveCmsSection(
       }
       saveLocalStorage(resSec.pageSlug, local);
 
+      // Two-way synchronization for application detail fields between home-applications and applications-cards
+      if (resSec.sectionId === 'home-applications' && Array.isArray(resSec.items)) {
+        syncHomeToApplicationsCatalog(resSec.items);
+      } else if (resSec.sectionId === 'applications-cards' && Array.isArray(resSec.items)) {
+        syncCatalogToHomeApplications(resSec.items);
+      }
+
       return resSec;
     }
   } catch (err: any) {
@@ -1326,7 +1443,93 @@ export async function saveCmsSection(
   }
   saveLocalStorage(sectionData.pageSlug, local);
 
+  // Two-way synchronization for application detail fields between home-applications and applications-cards
+  if (sectionData.sectionId === 'home-applications' && Array.isArray(sectionData.items)) {
+    syncHomeToApplicationsCatalog(sectionData.items);
+  } else if (sectionData.sectionId === 'applications-cards' && Array.isArray(sectionData.items)) {
+    syncCatalogToHomeApplications(sectionData.items);
+  }
+
   return result;
+}
+
+function syncApplicationDetailFields(targetItem: any, sourceItem: any) {
+  return {
+    ...targetItem,
+    title: sourceItem.title || targetItem.title,
+    category: sourceItem.category || targetItem.category,
+    image: sourceItem.image || targetItem.image,
+    url: sourceItem.url || sourceItem.image || targetItem.url,
+    detailHeroImage: sourceItem.detailHeroImage || sourceItem.image || targetItem.detailHeroImage,
+    heroEyebrow: sourceItem.heroEyebrow !== undefined ? sourceItem.heroEyebrow : targetItem.heroEyebrow,
+    heroTitle: sourceItem.heroTitle !== undefined ? sourceItem.heroTitle : targetItem.heroTitle,
+    heroDesc: sourceItem.heroDesc !== undefined ? sourceItem.heroDesc : targetItem.heroDesc,
+    originEyebrow: sourceItem.originEyebrow !== undefined ? sourceItem.originEyebrow : targetItem.originEyebrow,
+    originHeadline: sourceItem.originHeadline !== undefined ? sourceItem.originHeadline : targetItem.originHeadline,
+    storyParagraphs: sourceItem.storyParagraphs !== undefined ? sourceItem.storyParagraphs : targetItem.storyParagraphs,
+  };
+}
+
+function syncHomeToApplicationsCatalog(homeItems: any[]) {
+  try {
+    const appSections = ensureLocalStorage('applications');
+    const cardsSec = appSections.find((s) => s.sectionId === 'applications-cards');
+    if (!cardsSec || !Array.isArray(cardsSec.items)) return;
+
+    let modified = false;
+    const updatedCards = cardsSec.items.map((card: any) => {
+      const match = homeItems.find((h: any) =>
+        h.id === card.id ||
+        (h.id === 'modular-homes' && card.id === 'modular-homes') ||
+        (h.id === 'hospitality-resorts' && card.id === 'hospitality') ||
+        (h.id === 'farm-living-estates' && card.id === 'farm-living') ||
+        (h.id === 'eco-developments' && card.id === 'eco-retreats')
+      );
+      if (match) {
+        modified = true;
+        return syncApplicationDetailFields(card, match);
+      }
+      return card;
+    });
+
+    if (modified) {
+      cardsSec.items = updatedCards;
+      saveLocalStorage('applications', appSections);
+    }
+  } catch (err) {
+    console.warn('Sync home to applications catalog notice:', err);
+  }
+}
+
+function syncCatalogToHomeApplications(catalogItems: any[]) {
+  try {
+    const homeSections = ensureLocalStorage('home');
+    const bentoSec = homeSections.find((s) => s.sectionId === 'home-applications');
+    if (!bentoSec || !Array.isArray(bentoSec.items)) return;
+
+    let modified = false;
+    const updatedBento = bentoSec.items.map((bento: any) => {
+      const match = catalogItems.find((c: any) =>
+        c.id === bento.id ||
+        (bento.id === 'modular-homes' && c.id === 'modular-homes') ||
+        (bento.id === 'hospitality-resorts' && c.id === 'hospitality') ||
+        (bento.id === 'farm-living-estates' && c.id === 'farm-living') ||
+        (bento.id === 'eco-developments' && c.id === 'eco-retreats')
+      );
+      if (match) {
+        modified = true;
+        return syncApplicationDetailFields(bento, match);
+      }
+      return bento;
+    });
+
+    if (modified) {
+      bentoSec.items = updatedBento;
+      saveLocalStorage('home', homeSections);
+    }
+  } catch (err) {
+    console.warn('Sync catalog to home applications notice:', err);
+  }
 }
 
 /**

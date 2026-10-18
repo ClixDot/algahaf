@@ -6,6 +6,24 @@ import { companyInfo } from '../../data/companyData';
 
 export default function FloatingActions() {
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [phone, setPhone] = useState(companyInfo.contact.phone);
+  const [whatsapp, setWhatsapp] = useState(companyInfo.contact.whatsapp);
+  const [whatsappMessage, setWhatsappMessage] = useState(
+    'Hello AlGhaf Collective, I would like to enquire about your modular living systems.'
+  );
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.settings) {
+          if (data.settings.phone) setPhone(data.settings.phone);
+          if (data.settings.whatsapp) setWhatsapp(data.settings.whatsapp);
+          if (data.settings.whatsappMessage) setWhatsappMessage(data.settings.whatsappMessage);
+        }
+      })
+      .catch((err) => console.warn('Floating actions sync notice:', err));
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -31,7 +49,11 @@ export default function FloatingActions() {
     }
   };
 
-  const whatsappUrl = `https://wa.me/${companyInfo.contact.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello AlGhaf Collective, I would like to enquire about your modular living systems.')}`;
+  const cleanPhone = (phone || '').trim();
+  const cleanWhatsappNumber = (whatsapp || '').replace(/[^0-9]/g, '');
+  const whatsappUrl = `https://wa.me/${cleanWhatsappNumber}?text=${encodeURIComponent(
+    whatsappMessage || 'Hello AlGhaf Collective, I would like to enquire about your modular living systems.'
+  )}`;
 
   return (
     <div
@@ -81,7 +103,7 @@ export default function FloatingActions() {
 
       {/* Direct Call Icon */}
       <a
-        href={`tel:${companyInfo.contact.phone}`}
+        href={`tel:${cleanPhone}`}
         aria-label="Call AlGhaf Collective"
         style={{
           width: '48px',

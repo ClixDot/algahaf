@@ -11,6 +11,7 @@ export interface IGlobalSettings extends Document {
   city: string;
   country: string;
   whatsapp: string;
+  whatsappMessage?: string;
   instagram: string;
   linkedin: string;
   facebook: string;
@@ -56,6 +57,10 @@ const GlobalSettingsSchema = new Schema<IGlobalSettings>(
     city: { type: String, default: 'Dubai' },
     country: { type: String, default: 'United Arab Emirates' },
     whatsapp: { type: String, default: '+971500000000' },
+    whatsappMessage: {
+      type: String,
+      default: 'Hello AlGhaf Collective, I would like to enquire about your modular living systems.',
+    },
     instagram: { type: String, default: 'https://www.instagram.com/alghafcollective' },
     linkedin: { type: String, default: 'https://www.linkedin.com/company/alghafcollective' },
     facebook: { type: String, default: 'https://www.facebook.com/alghafcollective' },

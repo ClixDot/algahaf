@@ -9,6 +9,7 @@
   "city": "Dubai",
   "country": "United Arab Emirates",
   "whatsapp": "+971 50 892 4110",
+  "whatsappMessage": "Hello AlGhaf Collective, I would like to enquire about your modular living systems.",
   "instagram": "https://www.instagram.com/alghafcollective",
   "linkedin": "https://www.linkedin.com/company/alghafcollective",
   "facebook": "https://www.facebook.com/alghafcollective",
@@ -22,7 +23,7 @@
   "copyrightText": "AlGhaf Collective. All rights reserved. | Powered by Clixdot",
   "showApplicationsNav": false,
   "applicationsComingSoon": false,
-  "productDetailsAccess": true,
+  "productDetailsAccess": false,
   "headerNav": [
     {
       "label": "Home",

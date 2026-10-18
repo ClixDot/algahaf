@@ -259,9 +259,31 @@ export default function About({ initialSections = [] }: AboutProps) {
     image: '/assets/images/imgupscaler-enhanced-7.jpg',
     link: '/contact',
   };
-  const officeMapUrl =
-    officeSec?.videoUrl ||
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14441.428489814526!2d55.2954752!3d25.1861054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f68307d896173%3A0xe54d924192b6a555!2sDubai%20Design%20District!5e0!3m2!1sen!2sae!4v1710000000000!5m2!1sen!2sae';
+
+  const resolveMapUrl = (raw?: string) => {
+    const DEFAULT_MAP =
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14441.428489814526!2d55.2954752!3d25.1861054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f68307d896173%3A0xe54d924192b6a555!2sDubai%20Design%20District!5e0!3m2!1sen!2sae!4v1710000000000!5m2!1sen!2sae';
+    if (!raw) return DEFAULT_MAP;
+    const str = raw.trim();
+    const iframeMatch = str.match(/src=["']([^"']+)["']/i);
+    if (iframeMatch && iframeMatch[1]) {
+      return iframeMatch[1];
+    }
+    if (str.includes('/embed') || str.includes('output=embed')) {
+      return str;
+    }
+    const qMatch = str.match(/[?&]q=([^&]+)/);
+    if (qMatch && qMatch[1]) {
+      return `https://maps.google.com/maps?q=${qMatch[1]}&output=embed`;
+    }
+    const placeMatch = str.match(/\/place\/([^/@?]+)/);
+    if (placeMatch && placeMatch[1]) {
+      return `https://maps.google.com/maps?q=${placeMatch[1]}&output=embed`;
+    }
+    return str || DEFAULT_MAP;
+  };
+
+  const officeMapUrl = resolveMapUrl(officeSec?.videoUrl);
 
   return (
     <main ref={aboutRef} style={{ margin: 0, padding: 0 }}>

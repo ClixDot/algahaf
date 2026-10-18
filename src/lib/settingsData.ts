@@ -16,6 +16,7 @@ export const DEFAULT_SETTINGS = {
   city: 'Dubai',
   country: 'United Arab Emirates',
   whatsapp: '+971500000000',
+  whatsappMessage: 'Hello AlGhaf Collective, I would like to enquire about your modular living systems.',
   instagram: 'https://www.instagram.com/alghafcollective',
   linkedin: 'https://www.linkedin.com/company/alghafcollective',
   facebook: 'https://www.facebook.com/alghafcollective',

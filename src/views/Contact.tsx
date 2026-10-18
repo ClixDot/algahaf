@@ -515,7 +515,6 @@ export default function Contact({ initialSections = [] }: ContactProps) {
                             id="name"
                             type="text"
                             className={`form-input ${errors.name ? 'error' : ''}`}
-                            placeholder="Your full name"
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           />
@@ -528,7 +527,6 @@ export default function Contact({ initialSections = [] }: ContactProps) {
                             id="company"
                             type="text"
                             className="form-input"
-                            placeholder="Company or Family Office"
                             value={formData.company}
                             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                           />
@@ -543,7 +541,6 @@ export default function Contact({ initialSections = [] }: ContactProps) {
                             id="email"
                             type="email"
                             className={`form-input ${errors.email ? 'error' : ''}`}
-                            placeholder="name@domain.com"
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           />
@@ -556,7 +553,6 @@ export default function Contact({ initialSections = [] }: ContactProps) {
                             id="phone"
                             type="tel"
                             className={`form-input ${errors.phone ? 'error' : ''}`}
-                            placeholder="+971 50 000 0000"
                             value={formData.phone}
                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           />
@@ -606,7 +602,6 @@ export default function Contact({ initialSections = [] }: ContactProps) {
                           id="description"
                           rows={4}
                           className={`form-textarea ${errors.description ? 'error' : ''}`}
-                          placeholder="Plot status, intended purpose, timeline, or specific architectural questions..."
                           value={formData.description}
                           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         />

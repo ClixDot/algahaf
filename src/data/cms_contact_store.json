@@ -120,7 +120,7 @@
         "fieldKey": "name",
         "title": "Full Name",
         "label": "Full Name *",
-        "placeholder": "Your full name",
+        "placeholder": "",
         "type": "text",
         "required": true,
         "order": 2
@@ -130,7 +130,7 @@
         "fieldKey": "company",
         "title": "Company",
         "label": "Company (Optional)",
-        "placeholder": "Company or Family Office",
+        "placeholder": "",
         "type": "text",
         "required": false,
         "order": 3
@@ -140,7 +140,7 @@
         "fieldKey": "email",
         "title": "Email Address",
         "label": "Email Address *",
-        "placeholder": "name@domain.com",
+        "placeholder": "",
         "type": "email",
         "required": true,
         "order": 4
@@ -150,7 +150,7 @@
         "fieldKey": "phone",
         "title": "Phone / WhatsApp",
         "label": "Phone / WhatsApp *",
-        "placeholder": "+971 50 000 0000",
+        "placeholder": "",
         "type": "tel",
         "required": true,
         "order": 5
@@ -195,7 +195,7 @@
         "fieldKey": "description",
         "title": "Tell Us About Your Project",
         "label": "Tell Us About Your Project *",
-        "placeholder": "Plot status, intended purpose, timeline, or specific architectural questions...",
+        "placeholder": "",
         "type": "textarea",
         "required": true,
         "order": 8

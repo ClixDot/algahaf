@@ -15,6 +15,8 @@ import {
   Globe,
   Settings,
   Users,
+  Phone,
+  MessageCircle,
   History,
   LogOut,
   ExternalLink,
@@ -121,6 +123,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { label: 'Media Library', path: '/admin/media', icon: ImageIcon },
     { label: 'Footer Management', path: '/admin/footer', icon: Footprints },
     { label: 'Contact & Enquiries', path: '/admin/enquiries', icon: MessageSquare },
+    { label: 'Floating WhatsApp & Call', path: '/admin/settings', icon: Phone },
     { label: 'Admin Users', path: '/admin/users', icon: Users },
   ];
 

@@ -36,6 +36,7 @@ import {
   MapPin,
   Clock,
 } from 'lucide-react';
+import { applicationsData } from '../../../../data/applicationsData';
 
 interface SectionItem {
   _id?: string;
@@ -359,6 +360,532 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
       it.order = i + 1;
     });
     setEditingSection({ ...editingSection, items: newItems });
+  };
+
+  // Helper to render the comprehensive Application Detail Page Content Editor (/applications/[slug])
+  const renderApplicationDetailEditor = (item: any, idx: number, sectionKey: string) => {
+    if (!editingSection) return null;
+
+    const defaultApp = applicationsData.find((a) =>
+      a.id === item.id ||
+      (item.id === 'hospitality-resorts' && a.id === 'hospitality') ||
+      (item.id === 'farm-living-estates' && a.id === 'farm-living') ||
+      (item.id === 'eco-developments' && a.id === 'eco-retreats') ||
+      a.title?.toLowerCase() === item.title?.toLowerCase()
+    ) || applicationsData[idx % applicationsData.length];
+
+    const detailSlug =
+      item.id === 'hospitality-resorts' ? 'hospitality' :
+      item.id === 'farm-living-estates' ? 'farm-living' :
+      item.id === 'eco-developments' ? 'eco-retreats' :
+      item.id || defaultApp.id;
+
+    const detailUrl = `/applications/${detailSlug}`;
+
+    const heroEyebrowVal = item.heroEyebrow !== undefined ? item.heroEyebrow : defaultApp.heroEyebrow || `APPLICATIONS — ${(item.category || defaultApp.category || 'RESIDENTIAL').toUpperCase()}`;
+    const heroTitleVal = item.heroTitle !== undefined ? item.heroTitle : defaultApp.heroTitle || item.title || defaultApp.title;
+    const heroDescVal = item.heroDesc !== undefined ? item.heroDesc : defaultApp.heroDesc || item.description || defaultApp.description;
+    const heroImgVal = item.detailHeroImage || item.image || item.url || defaultApp.image;
+
+    const originEyebrowVal = item.originEyebrow !== undefined ? item.originEyebrow : defaultApp.originEyebrow || `OUR ${(item.category || defaultApp.category || 'RESIDENTIAL').toUpperCase()} VISION`;
+    const originHeadlineVal = item.originHeadline !== undefined ? item.originHeadline : defaultApp.originHeadline || 'Harmonious Living. Built for the UAE.';
+
+    const paragraphs: string[] = Array.isArray(item.storyParagraphs) && item.storyParagraphs.length > 0
+      ? item.storyParagraphs
+      : typeof item.storyParagraphs === 'string' && item.storyParagraphs.trim()
+      ? item.storyParagraphs.split('\n\n').filter(Boolean)
+      : (defaultApp.storyParagraphs || [
+          'The Ghaf tree has thrived in the UAE’s desert for generations — resilient and sustaining life in the harshest conditions. Inspired by that enduring spirit, AlGhaf modular residences are engineered to harmonize with the desert while delivering absolute luxury and thermal serenity.',
+          'From primary luxury desert residences to estate guest pavilions and independent family annexes, our modular homes offer expansive double-height volumes, floor-to-ceiling desert-tested glass facades, cantilevered pergolas for natural solar shading, and bespoke interiors completed with turnkey precision.',
+          'Bringing this vision together with the design, prefabrication, and modular construction expertise of CK Living Concepts, AlGhaf Collective delivers precision-engineered homes up to 50% faster than conventional on-site construction — fully customizable from 30 m² to 300 m².'
+        ]);
+
+    const isUploading = slideUploadingIndex === idx;
+
+    return (
+      <div
+        style={{
+          borderTop: '2px solid rgba(82, 105, 75, 0.18)',
+          backgroundColor: '#FAF8F5',
+          padding: '1.25rem',
+        }}
+      >
+        {/* Header Bar */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
+            paddingBottom: '0.85rem',
+            marginBottom: '1.15rem',
+            borderBottom: '1px solid rgba(82, 105, 75, 0.14)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                backgroundColor: 'var(--admin-accent-gold)',
+                color: '#1E231D',
+                fontWeight: 700,
+                fontSize: '0.75rem',
+                padding: '0.22rem 0.65rem',
+                borderRadius: '4px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em',
+              }}
+            >
+              <FileText size={13} /> Detail Page Content
+            </span>
+            <span style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--admin-forest-dark)' }}>
+              Live Route:
+            </span>
+            <code
+              style={{
+                fontSize: '0.82rem',
+                backgroundColor: 'rgba(82, 105, 75, 0.1)',
+                color: 'var(--admin-forest-dark)',
+                padding: '0.15rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600,
+              }}
+            >
+              {detailUrl}
+            </code>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <a
+              href={detailUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="admin-btn admin-btn-secondary"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                fontSize: '0.78rem',
+                color: 'var(--admin-forest)',
+                borderColor: 'var(--admin-forest)',
+                padding: '0.3rem 0.65rem',
+                textDecoration: 'none',
+              }}
+              title="Open public detail page in a new browser tab"
+            >
+              <ExternalLink size={13} /> View Live Detail Page
+            </a>
+          </div>
+        </div>
+
+        {/* SECTION 1: HERO BANNER SETTINGS */}
+        <div
+          style={{
+            backgroundColor: '#FFFFFF',
+            border: '1px solid var(--admin-border-light)',
+            borderRadius: '8px',
+            padding: '1rem 1.15rem',
+            marginBottom: '1rem',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.85rem' }}>
+            <span
+              style={{
+                backgroundColor: 'var(--admin-forest)',
+                color: '#FFF',
+                fontSize: '0.7rem',
+                fontWeight: 700,
+                padding: '0.15rem 0.45rem',
+                borderRadius: '3px',
+              }}
+            >
+              01
+            </span>
+            <h5 style={{ margin: 0, fontSize: '0.88rem', fontWeight: 700, color: 'var(--admin-forest-dark)' }}>
+              Detail Page Hero Header (Top Full-Bleed Banner)
+            </h5>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 2fr', gap: '1rem', marginBottom: '0.85rem' }}>
+            <div>
+              <label className="admin-label">Hero Eyebrow (Category Header)</label>
+              <input
+                type="text"
+                className="admin-input"
+                value={heroEyebrowVal}
+                onChange={(e) => {
+                  const newItems = [...(editingSection.items || [])];
+                  newItems[idx] = { ...newItems[idx], heroEyebrow: e.target.value };
+                  setEditingSection({ ...editingSection, items: newItems });
+                }}
+                placeholder="e.g. APPLICATIONS — RESIDENTIAL"
+              />
+            </div>
+
+            <div>
+              <label className="admin-label">
+                Hero Main Headline / Title (Supports multi-line with Enter)
+              </label>
+              <textarea
+                rows={2}
+                className="admin-textarea"
+                style={{ minHeight: '42px', resize: 'vertical' }}
+                value={heroTitleVal}
+                onChange={(e) => {
+                  const newItems = [...(editingSection.items || [])];
+                  newItems[idx] = { ...newItems[idx], heroTitle: e.target.value };
+                  setEditingSection({ ...editingSection, items: newItems });
+                }}
+                placeholder="Modular Homes &\nPrivate Residences."
+              />
+            </div>
+          </div>
+
+          <div style={{ marginBottom: '0.85rem' }}>
+            <label className="admin-label">Hero Subtitle / Narrative Description</label>
+            <textarea
+              rows={2}
+              className="admin-textarea"
+              value={heroDescVal}
+              onChange={(e) => {
+                const newItems = [...(editingSection.items || [])];
+                newItems[idx] = { ...newItems[idx], heroDesc: e.target.value };
+                setEditingSection({ ...editingSection, items: newItems });
+              }}
+              placeholder="A UAE-rooted modular architecture and construction approach..."
+            />
+          </div>
+
+          {/* Hero Background Image Controls */}
+          <div
+            style={{
+              backgroundColor: 'rgba(82, 105, 75, 0.04)',
+              border: '1px solid var(--admin-border-light)',
+              borderRadius: '6px',
+              padding: '0.85rem',
+              display: 'grid',
+              gridTemplateColumns: '110px 1fr',
+              gap: '1rem',
+              alignItems: 'center',
+            }}
+          >
+            <div
+              style={{
+                width: '110px',
+                height: '70px',
+                borderRadius: '6px',
+                overflow: 'hidden',
+                backgroundColor: '#1E231D',
+                border: '1px solid var(--admin-border-light)',
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={heroImgVal}
+                alt={item.title || 'Detail Hero'}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = defaultApp.image;
+                }}
+              />
+            </div>
+
+            <div>
+              <label className="admin-label" style={{ marginBottom: '0.35rem' }}>
+                Detail Page Hero Background Photography
+              </label>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                <input
+                  type="text"
+                  className="admin-input"
+                  style={{ flex: '1 1 240px', fontSize: '0.82rem' }}
+                  value={heroImgVal}
+                  onChange={(e) => {
+                    const newItems = [...(editingSection.items || [])];
+                    newItems[idx] = { ...newItems[idx], detailHeroImage: e.target.value, image: e.target.value };
+                    setEditingSection({ ...editingSection, items: newItems });
+                  }}
+                  placeholder="/assets/images/... or Cloudinary URL"
+                />
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  id={`detail-hero-upload-${sectionKey}-${idx}`}
+                  style={{ display: 'none' }}
+                  disabled={isUploading}
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    try {
+                      setSlideUploadingIndex(idx);
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      formData.append('folder', 'alghaf_applications');
+                      formData.append('altText', `${item.title || 'Application'} Hero Banner`);
+                      const res = await fetch('/api/admin/media', { method: 'POST', body: formData });
+                      if (res.ok) {
+                        const data = await res.json();
+                        const uploadedUrl = data.media?.secureUrl || data.media?.url;
+                        const newItems = [...(editingSection.items || [])];
+                        newItems[idx] = {
+                          ...newItems[idx],
+                          detailHeroImage: uploadedUrl,
+                          image: uploadedUrl,
+                        };
+                        setEditingSection({ ...editingSection, items: newItems });
+                        setAlert({ type: 'success', message: 'Hero banner photo uploaded successfully!' });
+                      } else {
+                        const err = await res.json();
+                        setAlert({ type: 'error', message: err.error || 'Failed to upload photo' });
+                      }
+                    } catch (err: any) {
+                      setAlert({ type: 'error', message: err.message || 'Error uploading photo' });
+                    } finally {
+                      setSlideUploadingIndex(null);
+                    }
+                  }}
+                />
+
+                <label
+                  htmlFor={`detail-hero-upload-${sectionKey}-${idx}`}
+                  className="admin-btn admin-btn-primary"
+                  style={{
+                    padding: '0.4rem 0.75rem',
+                    fontSize: '0.78rem',
+                    cursor: isUploading ? 'not-allowed' : 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {isUploading ? <RefreshCw className="animate-spin" size={13} /> : <UploadCloud size={13} />}
+                  {isUploading ? 'Uploading...' : 'Upload Hero Photo'}
+                </label>
+
+                {item.image && heroImgVal !== item.image && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newItems = [...(editingSection.items || [])];
+                      newItems[idx] = { ...newItems[idx], detailHeroImage: item.image };
+                      setEditingSection({ ...editingSection, items: newItems });
+                    }}
+                    className="admin-btn admin-btn-secondary"
+                    style={{ padding: '0.4rem 0.65rem', fontSize: '0.75rem' }}
+                    title="Set detail hero image to match card image"
+                  >
+                    Use Card Image
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 2: EDITORIAL VISION & STORY SECTION */}
+        <div
+          style={{
+            backgroundColor: '#FFFFFF',
+            border: '1px solid var(--admin-border-light)',
+            borderRadius: '8px',
+            padding: '1rem 1.15rem',
+            marginBottom: '1rem',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.85rem' }}>
+            <span
+              style={{
+                backgroundColor: 'var(--admin-forest)',
+                color: '#FFF',
+                fontSize: '0.7rem',
+                fontWeight: 700,
+                padding: '0.15rem 0.45rem',
+                borderRadius: '3px',
+              }}
+            >
+              02
+            </span>
+            <h5 style={{ margin: 0, fontSize: '0.88rem', fontWeight: 700, color: 'var(--admin-forest-dark)' }}>
+              Editorial Story & Vision Section (Second Section Below Hero)
+            </h5>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 2fr', gap: '1rem', marginBottom: '0.85rem' }}>
+            <div>
+              <label className="admin-label">Vision Left-Column Eyebrow Anchor</label>
+              <input
+                type="text"
+                className="admin-input"
+                value={originEyebrowVal}
+                onChange={(e) => {
+                  const newItems = [...(editingSection.items || [])];
+                  newItems[idx] = { ...newItems[idx], originEyebrow: e.target.value };
+                  setEditingSection({ ...editingSection, items: newItems });
+                }}
+                placeholder="e.g. OUR RESIDENTIAL VISION"
+              />
+            </div>
+
+            <div>
+              <label className="admin-label">Vision Main Heading / Headline</label>
+              <input
+                type="text"
+                className="admin-input"
+                value={originHeadlineVal}
+                onChange={(e) => {
+                  const newItems = [...(editingSection.items || [])];
+                  newItems[idx] = { ...newItems[idx], originHeadline: e.target.value };
+                  setEditingSection({ ...editingSection, items: newItems });
+                }}
+                placeholder="e.g. Harmonious Living. Built for the UAE."
+              />
+            </div>
+          </div>
+
+          {/* Story Paragraphs Editor */}
+          <div style={{ marginTop: '0.85rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+              <label className="admin-label" style={{ margin: 0, fontWeight: 700 }}>
+                Narrative Story Paragraphs ({paragraphs.length})
+              </label>
+              <button
+                type="button"
+                onClick={() => {
+                  const newParas = [...paragraphs, ''];
+                  const newItems = [...(editingSection.items || [])];
+                  newItems[idx] = { ...newItems[idx], storyParagraphs: newParas };
+                  setEditingSection({ ...editingSection, items: newItems });
+                }}
+                className="admin-btn admin-btn-secondary"
+                style={{ padding: '0.25rem 0.55rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}
+              >
+                <Plus size={13} /> Add Paragraph
+              </button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+              {paragraphs.map((paraText, pIdx) => (
+                <div
+                  key={pIdx}
+                  style={{
+                    display: 'flex',
+                    gap: '0.5rem',
+                    alignItems: 'flex-start',
+                    backgroundColor: 'var(--admin-surface-muted)',
+                    padding: '0.65rem',
+                    borderRadius: '6px',
+                    border: '1px solid var(--admin-border-light)',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      color: 'var(--admin-forest)',
+                      padding: '0.2rem 0.45rem',
+                      backgroundColor: 'rgba(82, 105, 75, 0.1)',
+                      borderRadius: '4px',
+                      whiteSpace: 'nowrap',
+                      marginTop: '0.2rem',
+                    }}
+                  >
+                    P{pIdx + 1}
+                  </span>
+
+                  <textarea
+                    rows={3}
+                    className="admin-textarea"
+                    style={{ flex: 1, fontSize: '0.82rem', lineHeight: 1.45 }}
+                    value={paraText}
+                    onChange={(e) => {
+                      const newParas = [...paragraphs];
+                      newParas[pIdx] = e.target.value;
+                      const newItems = [...(editingSection.items || [])];
+                      newItems[idx] = { ...newItems[idx], storyParagraphs: newParas };
+                      setEditingSection({ ...editingSection, items: newItems });
+                    }}
+                    placeholder={`Paragraph ${pIdx + 1} content...`}
+                  />
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                    <button
+                      type="button"
+                      disabled={pIdx === 0}
+                      onClick={() => {
+                        if (pIdx === 0) return;
+                        const newParas = [...paragraphs];
+                        const temp = newParas[pIdx - 1];
+                        newParas[pIdx - 1] = newParas[pIdx];
+                        newParas[pIdx] = temp;
+                        const newItems = [...(editingSection.items || [])];
+                        newItems[idx] = { ...newItems[idx], storyParagraphs: newParas };
+                        setEditingSection({ ...editingSection, items: newItems });
+                      }}
+                      className="admin-btn admin-btn-secondary"
+                      style={{ padding: '0.2rem 0.35rem', opacity: pIdx === 0 ? 0.3 : 1 }}
+                      title="Move Up"
+                    >
+                      <MoveUp size={12} />
+                    </button>
+                    <button
+                      type="button"
+                      disabled={pIdx === paragraphs.length - 1}
+                      onClick={() => {
+                        if (pIdx === paragraphs.length - 1) return;
+                        const newParas = [...paragraphs];
+                        const temp = newParas[pIdx + 1];
+                        newParas[pIdx + 1] = newParas[pIdx];
+                        newParas[pIdx] = temp;
+                        const newItems = [...(editingSection.items || [])];
+                        newItems[idx] = { ...newItems[idx], storyParagraphs: newParas };
+                        setEditingSection({ ...editingSection, items: newItems });
+                      }}
+                      className="admin-btn admin-btn-secondary"
+                      style={{ padding: '0.2rem 0.35rem', opacity: pIdx === paragraphs.length - 1 ? 0.3 : 1 }}
+                      title="Move Down"
+                    >
+                      <MoveDown size={12} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (paragraphs.length <= 1) {
+                          const newItems = [...(editingSection.items || [])];
+                          newItems[idx] = { ...newItems[idx], storyParagraphs: [''] };
+                          setEditingSection({ ...editingSection, items: newItems });
+                          return;
+                        }
+                        const newParas = paragraphs.filter((_, i) => i !== pIdx);
+                        const newItems = [...(editingSection.items || [])];
+                        newItems[idx] = { ...newItems[idx], storyParagraphs: newParas };
+                        setEditingSection({ ...editingSection, items: newItems });
+                      }}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: 'var(--admin-danger)',
+                        cursor: 'pointer',
+                        padding: '0.2rem',
+                      }}
+                      title="Delete Paragraph"
+                    >
+                      <Trash2 size={13} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   const fetchPageDetails = async () => {
@@ -2363,45 +2890,209 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                         marginBottom: '1.5rem',
                       }}
                     >
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                         <div>
                           <h4 style={{ margin: 0, fontSize: '0.95rem', color: 'var(--admin-forest-dark)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                             <MapPin size={16} color="var(--admin-forest)" />
                             Google Maps Interactive Background Embed (iframe)
                           </h4>
                           <span style={{ fontSize: '0.78rem', color: 'var(--admin-text-muted)' }}>
-                            Paste the embed URL from Google Maps: Share &gt; Embed a map &gt; copy only the URL inside src="..."
+                            Paste embed URL, full &lt;iframe&gt; code, standard Google Maps link, or place name (auto-converted).
                           </span>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setEditingSection({
-                              ...editingSection,
-                              videoUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14441.428489814526!2d55.2954752!3d25.1861054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f68307d896173%3A0xe54d924192b6a555!2sDubai%20Design%20District!5e0!3m2!1sen!2sae!4v1710000000000!5m2!1sen!2sae',
-                            });
-                          }}
-                          className="admin-btn admin-btn-secondary"
-                          style={{ padding: '0.25rem 0.6rem', fontSize: '0.74rem' }}
-                        >
-                          Reset to AlGhaf Default Map
-                        </button>
+                        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const addr = editingSection.subtitle || editingSection.items?.[0]?.subtitle || 'Dubai Design District Building 7 Dubai';
+                              const cleanAddr = addr.replace(/\n/g, ' ');
+                              const generated = `https://maps.google.com/maps?q=${encodeURIComponent(cleanAddr)}&output=embed`;
+                              setEditingSection({
+                                ...editingSection,
+                                videoUrl: generated,
+                              });
+                            }}
+                            className="admin-btn admin-btn-secondary"
+                            style={{ padding: '0.25rem 0.6rem', fontSize: '0.74rem' }}
+                            title="Generate map embed directly from the office address below"
+                          >
+                            ⚡ Auto-Generate from Address
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEditingSection({
+                                ...editingSection,
+                                videoUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14441.428489814526!2d55.2954752!3d25.1861054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f68307d896173%3A0xe54d924192b6a555!2sDubai%20Design%20District!5e0!3m2!1sen!2sae!4v1710000000000!5m2!1sen!2sae',
+                              });
+                            }}
+                            className="admin-btn admin-btn-secondary"
+                            style={{ padding: '0.25rem 0.6rem', fontSize: '0.74rem' }}
+                          >
+                            Reset to Default Map
+                          </button>
+                        </div>
                       </div>
 
-                      <input
-                        type="text"
-                        className="admin-input"
-                        value={editingSection.videoUrl || ''}
-                        onChange={(e) => setEditingSection({ ...editingSection, videoUrl: e.target.value })}
-                        placeholder="https://www.google.com/maps/embed?pb=..."
-                        style={{ fontFamily: 'monospace', fontSize: '0.82rem', marginBottom: '0.75rem' }}
-                      />
+                      {/* Map Embed Input with auto-sanitization */}
+                      <div style={{ marginBottom: '0.75rem' }}>
+                        <input
+                          type="text"
+                          className="admin-input"
+                          value={editingSection.videoUrl || ''}
+                          onChange={(e) => {
+                            let val = e.target.value.trim();
+                            // 1. Extract src if user pasted full <iframe> tag
+                            const iframeMatch = val.match(/src=["']([^"']+)["']/i);
+                            if (iframeMatch && iframeMatch[1]) {
+                              val = iframeMatch[1];
+                            }
+                            // 2. If standard google maps link with query or place
+                            else if (!val.includes('/embed') && !val.includes('output=embed')) {
+                              const qMatch = val.match(/[?&]q=([^&]+)/);
+                              if (qMatch && qMatch[1]) {
+                                val = `https://maps.google.com/maps?q=${qMatch[1]}&output=embed`;
+                              } else {
+                                const placeMatch = val.match(/\/place\/([^/@?]+)/);
+                                if (placeMatch && placeMatch[1]) {
+                                  val = `https://maps.google.com/maps?q=${placeMatch[1]}&output=embed`;
+                                } else if (val.length > 3 && !val.startsWith('http://') && !val.startsWith('https://')) {
+                                  // User typed location name like "Dubai Marina" or "Business Bay"
+                                  val = `https://maps.google.com/maps?q=${encodeURIComponent(val)}&output=embed`;
+                                }
+                              }
+                            }
+                            setEditingSection({ ...editingSection, videoUrl: val });
+                          }}
+                          placeholder="https://www.google.com/maps/embed?pb=... or paste <iframe> tag"
+                          style={{ fontFamily: 'monospace', fontSize: '0.82rem', marginBottom: '0.4rem' }}
+                        />
+
+                        {/* Quick Presets */}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.4rem', marginTop: '0.35rem' }}>
+                          <span style={{ fontSize: '0.72rem', color: 'var(--admin-text-muted)', fontWeight: 600 }}>Quick Locations:</span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEditingSection({
+                                ...editingSection,
+                                videoUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14441.428489814526!2d55.2954752!3d25.1861054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f68307d896173%3A0xe54d924192b6a555!2sDubai%20Design%20District!5e0!3m2!1sen!2sae!4v1710000000000!5m2!1sen!2sae',
+                              });
+                            }}
+                            className="admin-btn admin-btn-secondary"
+                            style={{ padding: '0.15rem 0.45rem', fontSize: '0.7rem' }}
+                          >
+                            📍 Dubai Design District (d3)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEditingSection({
+                                ...editingSection,
+                                videoUrl: 'https://maps.google.com/maps?q=Downtown+Dubai+United+Arab+Emirates&output=embed',
+                              });
+                            }}
+                            className="admin-btn admin-btn-secondary"
+                            style={{ padding: '0.15rem 0.45rem', fontSize: '0.7rem' }}
+                          >
+                            📍 Downtown Dubai
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEditingSection({
+                                ...editingSection,
+                                videoUrl: 'https://maps.google.com/maps?q=Dubai+Marina+Dubai+United+Arab+Emirates&output=embed',
+                              });
+                            }}
+                            className="admin-btn admin-btn-secondary"
+                            style={{ padding: '0.15rem 0.45rem', fontSize: '0.7rem' }}
+                          >
+                            📍 Dubai Marina
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEditingSection({
+                                ...editingSection,
+                                videoUrl: 'https://maps.google.com/maps?q=Al+Maryah+Island+Abu+Dhabi+UAE&output=embed',
+                              });
+                            }}
+                            className="admin-btn admin-btn-secondary"
+                            style={{ padding: '0.15rem 0.45rem', fontSize: '0.7rem' }}
+                          >
+                            📍 Abu Dhabi
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Location Name & Address Synchronization Fields */}
+                      <div
+                        style={{
+                          display: 'grid',
+                          gridTemplateColumns: '1fr 1.2fr',
+                          gap: '0.85rem',
+                          padding: '0.85rem 1rem',
+                          backgroundColor: 'var(--admin-surface-muted)',
+                          borderRadius: '6px',
+                          border: '1px solid var(--admin-border-light)',
+                          marginBottom: '1rem',
+                        }}
+                      >
+                        <div>
+                          <label className="admin-label" style={{ fontSize: '0.78rem', marginBottom: '0.25rem' }}>
+                            Location / District Title (Card & Badge)
+                          </label>
+                          <input
+                            type="text"
+                            className="admin-input"
+                            style={{ fontSize: '0.82rem', padding: '0.4rem 0.65rem' }}
+                            value={editingSection.subtitle || ''}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              const currentItem = (editingSection.items && editingSection.items[0]) || { id: 'office-card' };
+                              setEditingSection({
+                                ...editingSection,
+                                subtitle: val,
+                                items: [{ ...currentItem, title: val }],
+                              });
+                            }}
+                            placeholder="e.g. Dubai Design District (d3)"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="admin-label" style={{ fontSize: '0.78rem', marginBottom: '0.25rem' }}>
+                            Physical Street Address (Card Body)
+                          </label>
+                          <input
+                            type="text"
+                            className="admin-input"
+                            style={{ fontSize: '0.82rem', padding: '0.4rem 0.65rem' }}
+                            value={(editingSection.items?.[0]?.subtitle || 'Building 7, Dubai, United Arab Emirates').replace(/\n/g, ', ')}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              const currentItem = (editingSection.items && editingSection.items[0]) || { id: 'office-card' };
+                              setEditingSection({
+                                ...editingSection,
+                                items: [{ ...currentItem, subtitle: val }],
+                              });
+                            }}
+                            placeholder="e.g. Building 7, Dubai, United Arab Emirates"
+                          />
+                        </div>
+                      </div>
 
                       {/* Live Interactive Map Preview */}
                       {editingSection.videoUrl ? (
                         <div>
-                          <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--admin-text-muted)', marginBottom: '0.35rem' }}>
-                            Live Interactive Map Preview:
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--admin-text-muted)' }}>
+                              Live Interactive Map Preview:
+                            </span>
+                            <span style={{ fontSize: '0.72rem', color: 'var(--admin-forest)', fontWeight: 600 }}>
+                              ✓ Active Embed URL
+                            </span>
                           </div>
                           <div
                             style={{
@@ -4016,7 +4707,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                                   newItems[idx] = { ...newItems[idx], placeholder: e.target.value };
                                   setEditingSection({ ...editingSection, items: newItems });
                                 }}
-                                placeholder="e.g. Your full name or +971 50 000 0000"
+                                placeholder="Field placeholder (leave blank for none)"
                               />
                             </div>
 
@@ -5372,6 +6063,9 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                                 </div>
                               </div>
                             </div>
+
+                            {/* Dedicated Application Detail Page Content & Visuals */}
+                            {renderApplicationDetailEditor(item, idx, 'home-applications')}
                           </div>
                         );
                       }
@@ -6228,6 +6922,9 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                                 </div>
                               </div>
                             </div>
+
+                            {/* Dedicated Application Detail Page Content & Visuals */}
+                            {renderApplicationDetailEditor(item, idx, 'applications-cards')}
                           </div>
                         );
                       }

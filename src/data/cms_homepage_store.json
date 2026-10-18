@@ -184,7 +184,18 @@
         "category": "Residential",
         "image": "/assets/images/built_more_than_homes_01_web.jpg",
         "link": "/applications/modular-homes",
-        "url": "/assets/images/built_more_than_homes_01_web.jpg"
+        "url": "/assets/images/built_more_than_homes_01_web.jpg",
+        "heroEyebrow": "APPLICATIONS — RESIDENTIAL",
+        "heroTitle": "Modular Homes &\nPrivate Residences.",
+        "heroDesc": "A UAE-rooted modular architecture and construction approach reimagining residential living through precision engineering and sustainable design.",
+        "detailHeroImage": "/assets/images/built_more_than_homes_01_web.jpg",
+        "originEyebrow": "OUR RESIDENTIAL VISION",
+        "originHeadline": "Harmonious Living. Built for the UAE.",
+        "storyParagraphs": [
+          "The Ghaf tree has thrived in the UAE’s desert for generations — resilient and sustaining life in the harshest conditions. Inspired by that enduring spirit, AlGhaf modular residences are engineered to harmonize with the desert while delivering absolute luxury and thermal serenity.",
+          "From primary luxury desert residences to estate guest pavilions and independent family annexes, our modular homes offer expansive double-height volumes, floor-to-ceiling desert-tested glass facades, cantilevered pergolas for natural solar shading, and bespoke interiors completed with turnkey precision.",
+          "Bringing this vision together with the design, prefabrication, and modular construction expertise of CK Living Concepts, AlGhaf Collective delivers precision-engineered homes up to 50% faster than conventional on-site construction — fully customizable from 30 m² to 300 m²."
+        ]
       },
       {
         "id": "hospitality-resorts",
@@ -192,7 +203,18 @@
         "category": "Hospitality",
         "image": "/assets/images/built_more_than_homes_02_web.jpg",
         "link": "/applications/hospitality",
-        "url": "/assets/images/built_more_than_homes_02_web.jpg"
+        "url": "/assets/images/built_more_than_homes_02_web.jpg",
+        "heroEyebrow": "APPLICATIONS — HOSPITALITY",
+        "heroTitle": "Hospitality &\nBoutique Resorts.",
+        "heroDesc": "Accelerated development for world-class guest sanctuaries deployed with minimal environmental disturbance in remote and pristine terrains.",
+        "detailHeroImage": "/assets/images/built_more_than_homes_02_web.jpg",
+        "originEyebrow": "OUR HOSPITALITY VISION",
+        "originHeadline": "Rapid Deployment for World-Class Destinations.",
+        "storyParagraphs": [
+          "Empowering resort operators and developers to deploy luxury guest keys in remote or pristine terrains with minimal environmental disturbance. Deliver exceptional guest experiences months ahead of conventional construction schedules.",
+          "Every boutique suite is acoustically isolated and pre-fitted with five-star finishes, offering repeatable, luxury-grade consistency across multiple keys with minimal on-site disruption to delicate natural ecosystems.",
+          "With modular prefabrication by CK Living Concepts, opening timelines are compressed by up to 50%, enabling operators to welcome guests and generate revenue significantly faster."
+        ]
       },
       {
         "id": "farm-living-estates",
@@ -200,7 +222,18 @@
         "category": "Residential & Agriculture",
         "image": "/assets/images/built_more_than_homes_03_web.jpg",
         "link": "/applications/farm-living",
-        "url": "/assets/images/built_more_than_homes_03_web.jpg"
+        "url": "/assets/images/built_more_than_homes_03_web.jpg",
+        "heroEyebrow": "APPLICATIONS — FARM & RANCH",
+        "heroTitle": "Farm Living &\nDesert Ranches.",
+        "heroDesc": "Modern architectural retreats tailored for agricultural estates, equestrian ranches, and private desert farms.",
+        "detailHeroImage": "/assets/images/built_more_than_homes_03_web.jpg",
+        "originEyebrow": "OUR RANCH LIVING VISION",
+        "originHeadline": "Harmonizing Architecture with Rural Serenity.",
+        "storyParagraphs": [
+          "Modern architectural retreats tailored for agricultural estates, equestrian ranches, and desert farms. Designed to frame panoramic views, provide insulated comfort against day-and-night temperature swings, and blend harmoniously into rural surroundings.",
+          "Generous shaded verandas and outdoor dining pergolas expand the usable living space, while dust-sealed multi-point fenestration and durable exterior materials withstand sand abrasion and harsh sun exposure.",
+          "Engineered with off-grid compatibility and rapid factory assembly, AlGhaf delivers serene agricultural sanctuaries without disturbing active farm operations."
+        ]
       },
       {
         "id": "eco-developments",
@@ -208,7 +241,18 @@
         "category": "Hospitality & Wellness",
         "image": "/assets/images/built_more_than_homes_04_web.jpg",
         "link": "/applications/eco-retreats",
-        "url": "/assets/images/built_more_than_homes_04_web.jpg"
+        "url": "/assets/images/built_more_than_homes_04_web.jpg",
+        "heroEyebrow": "APPLICATIONS — ECO RETREATS",
+        "heroTitle": "Eco Retreats &\nNature Escapes.",
+        "heroDesc": "Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways.",
+        "detailHeroImage": "/assets/images/built_more_than_homes_04_web.jpg",
+        "originEyebrow": "OUR ECOLOGICAL VISION",
+        "originHeadline": "Light on the Land. Deeply Connected to Nature.",
+        "storyParagraphs": [
+          "Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways. Built with sustainable materials and compatible with off-grid solar and greywater systems.",
+          "Lightweight foundation options leave natural topography undisturbed, while high solar reflectivity and passive natural ventilation ensure exceptional energy efficiency.",
+          "Constructed with recyclable steel structural frames and non-toxic interior finishes, creating authentic nature escapes that honor the fragile desert ecosystem."
+        ]
       }
     ],
     "isVisible": true,

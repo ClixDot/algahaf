@@ -37,11 +37,42 @@
     "isVisible": true,
     "status": "published",
     "items": [
-      { "id": "cat-all", "name": "All", "slug": "all", "order": 0, "isVisible": true, "isLocked": true },
-      { "id": "cat-residential", "name": "Residential", "slug": "residential", "order": 1, "isVisible": true },
-      { "id": "cat-hospitality", "name": "Hospitality", "slug": "hospitality", "order": 2, "isVisible": true },
-      { "id": "cat-wellness", "name": "Wellness", "slug": "wellness", "order": 3, "isVisible": true },
-      { "id": "cat-specialized", "name": "Specialized", "slug": "specialized", "order": 4, "isVisible": true }
+      {
+        "id": "cat-all",
+        "name": "All",
+        "slug": "all",
+        "order": 0,
+        "isVisible": true,
+        "isLocked": true
+      },
+      {
+        "id": "cat-residential",
+        "name": "Residential",
+        "slug": "residential",
+        "order": 1,
+        "isVisible": true
+      },
+      {
+        "id": "cat-hospitality",
+        "name": "Hospitality",
+        "slug": "hospitality",
+        "order": 2,
+        "isVisible": true
+      },
+      {
+        "id": "cat-wellness",
+        "name": "Wellness",
+        "slug": "wellness",
+        "order": 3,
+        "isVisible": true
+      },
+      {
+        "id": "cat-specialized",
+        "name": "Specialized",
+        "slug": "specialized",
+        "order": 4,
+        "isVisible": true
+      }
     ]
   },
   {
@@ -60,15 +91,34 @@
         "id": "modular-homes",
         "title": "Modular Homes & Private Residences",
         "category": "Residential",
-        "categories": ["Residential"],
+        "categories": [
+          "Residential"
+        ],
         "tagline": "Architecture designed for mindful modern living.",
         "description": "From primary luxury residences to estate guest pavilions and independent family annexes. AlGhaf modular homes offer expansive double-height volumes, floor-to-ceiling desert-tested glass facades, and bespoke interiors completed with turnkey precision.",
         "detailedDescription": "The Ghaf tree has thrived in the UAE’s desert for generations — resilient and sustaining life in the harshest conditions. Inspired by that enduring spirit, AlGhaf modular residences are engineered to harmonize with the desert while delivering absolute luxury and thermal serenity.",
-        "recommendedProducts": ["PENTA", "MOVA"],
-        "compatibility": ["PENTA", "MOVA"],
+        "recommendedProducts": [
+          "PENTA",
+          "MOVA"
+        ],
+        "compatibility": [
+          "PENTA",
+          "MOVA"
+        ],
         "image": "/assets/images/built_more_than_homes_01_web.jpg",
         "imageAlt": "Modular Homes & Private Residences",
         "imagePosition": "center center",
+        "heroEyebrow": "APPLICATIONS — RESIDENTIAL",
+        "heroTitle": "Modular Homes &\nPrivate Residences.",
+        "heroDesc": "A UAE-rooted modular architecture and construction approach reimagining residential living through precision engineering and sustainable design.",
+        "detailHeroImage": "/assets/images/built_more_than_homes_01_web.jpg",
+        "originEyebrow": "OUR RESIDENTIAL VISION",
+        "originHeadline": "Harmonious Living. Built for the UAE.",
+        "storyParagraphs": [
+          "The Ghaf tree has thrived in the UAE’s desert for generations — resilient and sustaining life in the harshest conditions. Inspired by that enduring spirit, AlGhaf modular residences are engineered to harmonize with the desert while delivering absolute luxury and thermal serenity.",
+          "From primary luxury desert residences to estate guest pavilions and independent family annexes, our modular homes offer expansive double-height volumes, floor-to-ceiling desert-tested glass facades, cantilevered pergolas for natural solar shading, and bespoke interiors completed with turnkey precision.",
+          "Bringing this vision together with the design, prefabrication, and modular construction expertise of CK Living Concepts, AlGhaf Collective delivers precision-engineered homes up to 50% faster than conventional on-site construction — fully customizable from 30 m² to 300 m²."
+        ],
         "overviewBtnText": "Overview",
         "overviewUrl": "/applications/modular-homes",
         "overviewOpenNewTab": false,
@@ -83,15 +133,36 @@
         "id": "hospitality",
         "title": "Hospitality & Boutique Resorts",
         "category": "Hospitality",
-        "categories": ["Hospitality"],
+        "categories": [
+          "Hospitality"
+        ],
         "tagline": "Accelerated development for world-class guest sanctuaries.",
         "description": "Empowering resort operators and developers to deploy luxury guest keys in remote or pristine terrains with minimal environmental disturbance. Deliver exceptional guest experiences months ahead of conventional construction schedules.",
         "detailedDescription": "Every boutique suite is acoustically isolated and pre-fitted with five-star finishes, offering repeatable, luxury-grade consistency across multiple keys with minimal on-site disruption to delicate natural ecosystems.",
-        "recommendedProducts": ["PENTA", "MOVA", "ENTRA"],
-        "compatibility": ["PENTA", "MOVA", "ENTRA"],
+        "recommendedProducts": [
+          "PENTA",
+          "MOVA",
+          "ENTRA"
+        ],
+        "compatibility": [
+          "PENTA",
+          "MOVA",
+          "ENTRA"
+        ],
         "image": "/assets/images/built_more_than_homes_02_web.jpg",
         "imageAlt": "Hospitality & Boutique Resorts",
         "imagePosition": "center center",
+        "heroEyebrow": "APPLICATIONS — HOSPITALITY",
+        "heroTitle": "Hospitality &\nBoutique Resorts.",
+        "heroDesc": "Accelerated development for world-class guest sanctuaries deployed with minimal environmental disturbance in remote and pristine terrains.",
+        "detailHeroImage": "/assets/images/built_more_than_homes_02_web.jpg",
+        "originEyebrow": "OUR HOSPITALITY VISION",
+        "originHeadline": "Rapid Deployment for World-Class Destinations.",
+        "storyParagraphs": [
+          "Empowering resort operators and developers to deploy luxury guest keys in remote or pristine terrains with minimal environmental disturbance. Deliver exceptional guest experiences months ahead of conventional construction schedules.",
+          "Every boutique suite is acoustically isolated and pre-fitted with five-star finishes, offering repeatable, luxury-grade consistency across multiple keys with minimal on-site disruption to delicate natural ecosystems.",
+          "With modular prefabrication by CK Living Concepts, opening timelines are compressed by up to 50%, enabling operators to welcome guests and generate revenue significantly faster."
+        ],
         "overviewBtnText": "Overview",
         "overviewUrl": "/applications/hospitality",
         "overviewOpenNewTab": false,
@@ -106,15 +177,34 @@
         "id": "farm-living",
         "title": "Farm Living & Desert Ranches",
         "category": "Residential",
-        "categories": ["Residential"],
+        "categories": [
+          "Residential"
+        ],
         "tagline": "Sanctuaries of calm set amidst agricultural landscapes.",
         "description": "Modern architectural retreats tailored for agricultural estates, equestrian ranches, and desert farms. Designed to frame panoramic views, provide insulated comfort against day-and-night temperature swings, and blend harmoniously into rural surroundings.",
         "detailedDescription": "Generous shaded verandas and outdoor dining pergolas expand the usable living space, while dust-sealed multi-point fenestration and durable exterior materials withstand sand abrasion and harsh sun exposure.",
-        "recommendedProducts": ["MOVA", "PENTA"],
-        "compatibility": ["MOVA", "PENTA"],
+        "recommendedProducts": [
+          "MOVA",
+          "PENTA"
+        ],
+        "compatibility": [
+          "MOVA",
+          "PENTA"
+        ],
         "image": "/assets/images/built_more_than_homes_03_web.jpg",
         "imageAlt": "Farm Living & Desert Ranches",
         "imagePosition": "center center",
+        "heroEyebrow": "APPLICATIONS — FARM & RANCH",
+        "heroTitle": "Farm Living &\nDesert Ranches.",
+        "heroDesc": "Modern architectural retreats tailored for agricultural estates, equestrian ranches, and private desert farms.",
+        "detailHeroImage": "/assets/images/built_more_than_homes_03_web.jpg",
+        "originEyebrow": "OUR RANCH LIVING VISION",
+        "originHeadline": "Harmonizing Architecture with Rural Serenity.",
+        "storyParagraphs": [
+          "Modern architectural retreats tailored for agricultural estates, equestrian ranches, and desert farms. Designed to frame panoramic views, provide insulated comfort against day-and-night temperature swings, and blend harmoniously into rural surroundings.",
+          "Generous shaded verandas and outdoor dining pergolas expand the usable living space, while dust-sealed multi-point fenestration and durable exterior materials withstand sand abrasion and harsh sun exposure.",
+          "Engineered with off-grid compatibility and rapid factory assembly, AlGhaf delivers serene agricultural sanctuaries without disturbing active farm operations."
+        ],
         "overviewBtnText": "Overview",
         "overviewUrl": "/applications/farm-living",
         "overviewOpenNewTab": false,
@@ -129,15 +219,35 @@
         "id": "eco-retreats",
         "title": "Eco Retreats & Nature Escapes",
         "category": "Hospitality",
-        "categories": ["Hospitality", "Wellness"],
+        "categories": [
+          "Hospitality",
+          "Wellness"
+        ],
         "tagline": "Light on the land, deeply connected to nature.",
         "description": "Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways. Built with sustainable materials and compatible with off-grid solar and greywater systems.",
         "detailedDescription": "Lightweight foundation options leave natural topography undisturbed, while high solar reflectivity and passive natural ventilation ensure exceptional energy efficiency.",
-        "recommendedProducts": ["MOVA", "PENTA"],
-        "compatibility": ["MOVA", "PENTA"],
+        "recommendedProducts": [
+          "MOVA",
+          "PENTA"
+        ],
+        "compatibility": [
+          "MOVA",
+          "PENTA"
+        ],
         "image": "/assets/images/built_more_than_homes_04_web.jpg",
         "imageAlt": "Eco Retreats & Nature Escapes",
         "imagePosition": "center center",
+        "heroEyebrow": "APPLICATIONS — ECO RETREATS",
+        "heroTitle": "Eco Retreats &\nNature Escapes.",
+        "heroDesc": "Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways.",
+        "detailHeroImage": "/assets/images/built_more_than_homes_04_web.jpg",
+        "originEyebrow": "OUR ECOLOGICAL VISION",
+        "originHeadline": "Light on the Land. Deeply Connected to Nature.",
+        "storyParagraphs": [
+          "Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways. Built with sustainable materials and compatible with off-grid solar and greywater systems.",
+          "Lightweight foundation options leave natural topography undisturbed, while high solar reflectivity and passive natural ventilation ensure exceptional energy efficiency.",
+          "Constructed with recyclable steel structural frames and non-toxic interior finishes, creating authentic nature escapes that honor the fragile desert ecosystem."
+        ],
         "overviewBtnText": "Overview",
         "overviewUrl": "/applications/eco-retreats",
         "overviewOpenNewTab": false,
@@ -152,15 +262,32 @@
         "id": "entertainment-social",
         "title": "Private Entertainment & Media Lounges",
         "category": "Specialized",
-        "categories": ["Specialized"],
+        "categories": [
+          "Specialized"
+        ],
         "tagline": "A private immersive audio-visual environment.",
         "description": "Standalone entertainment pavilions engineered to studio recording criteria. Created for immersive cinema, esports gaming, musical performance, and social hosting, equipped with optional bar and luxury restroom modules.",
         "detailedDescription": "Laboratory-calibrated acoustic treatment and STC 60+ isolation guarantee complete sound containment, while integrated 4K laser projection framing and Dolby Atmos conduits deliver supreme audiovisual performance.",
-        "recommendedProducts": ["ENTRA"],
-        "compatibility": ["ENTRA"],
+        "recommendedProducts": [
+          "ENTRA"
+        ],
+        "compatibility": [
+          "ENTRA"
+        ],
         "image": "/assets/renders/CINE_EXT_3D_img1.jpg",
         "imageAlt": "Private Entertainment & Media Lounges",
         "imagePosition": "center center",
+        "heroEyebrow": "APPLICATIONS — SPECIALIZED",
+        "heroTitle": "Private Entertainment &\nMedia Lounges.",
+        "heroDesc": "Standalone entertainment pavilions engineered to studio recording criteria for immersive cinema, gaming, and social hosting.",
+        "detailHeroImage": "/assets/renders/CINE_EXT_3D_img1.jpg",
+        "originEyebrow": "OUR ENTERTAINMENT VISION",
+        "originHeadline": "A Private Immersive Acoustic Sanctuary.",
+        "storyParagraphs": [
+          "Standalone entertainment pavilions engineered to studio recording criteria. Created for immersive cinema, esports gaming, musical performance, and social hosting, equipped with optional bar and luxury restroom modules.",
+          "Laboratory-calibrated acoustic treatment and STC 60+ isolation guarantee complete sound containment, while integrated 4K laser projection framing and Dolby Atmos conduits deliver supreme audiovisual performance.",
+          "Prefabricated with turnkey precision, each entertainment pavilion arrives ready for plug-and-play operation without the noise and disruption of site remodeling."
+        ],
         "overviewBtnText": "Overview",
         "overviewUrl": "/applications/entertainment-social",
         "overviewOpenNewTab": false,
@@ -175,15 +302,32 @@
         "id": "wellness-retreat",
         "title": "Wellness Pavilions & Private Gyms",
         "category": "Wellness",
-        "categories": ["Wellness"],
+        "categories": [
+          "Wellness"
+        ],
         "tagline": "Dedicated sanctuaries for personal wellbeing and vitality.",
         "description": "Private yoga pavilions, thermal saunas, personal fitness training suites, and meditation sanctuaries situated in private gardens or resort grounds, filled with natural daylight and peaceful acoustic calm.",
         "detailedDescription": "Featuring reinforced floor load capacities for heavy fitness equipment, moisture-controlled fresh air ventilation systems, and expansive timber-slatted acoustic feature walls.",
-        "recommendedProducts": ["MOVA"],
-        "compatibility": ["MOVA"],
+        "recommendedProducts": [
+          "MOVA"
+        ],
+        "compatibility": [
+          "MOVA"
+        ],
         "image": "/assets/images/imgupscaler-enhanced-6.jpg",
         "imageAlt": "Wellness Pavilions & Private Gyms",
         "imagePosition": "center center",
+        "heroEyebrow": "APPLICATIONS — WELLNESS",
+        "heroTitle": "Wellness Pavilions &\nPrivate Gyms.",
+        "heroDesc": "Dedicated sanctuaries for personal wellbeing, thermal saunas, private fitness suites, and meditation retreats.",
+        "detailHeroImage": "/assets/images/imgupscaler-enhanced-6.jpg",
+        "originEyebrow": "OUR WELLNESS VISION",
+        "originHeadline": "Restorative Spaces for Vitality and Peace.",
+        "storyParagraphs": [
+          "Private yoga pavilions, thermal saunas, personal fitness training suites, and meditation sanctuaries situated in private gardens or resort grounds, filled with natural daylight and peaceful acoustic calm.",
+          "Featuring reinforced floor load capacities for heavy fitness equipment, moisture-controlled fresh air ventilation systems, and expansive timber-slatted acoustic feature walls.",
+          "Designed to create a seamless extension of mindful living, each wellness module provides a private oasis of health and rejuvenation."
+        ],
         "overviewBtnText": "Overview",
         "overviewUrl": "/applications/wellness-retreat",
         "overviewOpenNewTab": false,

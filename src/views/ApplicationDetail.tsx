@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -10,8 +10,93 @@ export default function ApplicationDetail() {
   const { id } = useParams();
   const detailRef = useRef(null);
 
-  // Match application by id or fallback to modular-homes (Residential)
-  const app = applicationsData.find(item => item.id === id) || applicationsData[0];
+  // Match initial fallback from static data
+  const defaultApp = applicationsData.find(item =>
+    item.id === id ||
+    (id === 'hospitality-resorts' && item.id === 'hospitality') ||
+    (id === 'farm-living-estates' && item.id === 'farm-living') ||
+    (id === 'eco-developments' && item.id === 'eco-retreats')
+  ) || applicationsData[0];
+
+  const [app, setApp] = useState(defaultApp);
+
+  useEffect(() => {
+    // Reset to current id's default
+    const currentDefault = applicationsData.find(item =>
+      item.id === id ||
+      (id === 'hospitality-resorts' && item.id === 'hospitality') ||
+      (id === 'farm-living-estates' && item.id === 'farm-living') ||
+      (id === 'eco-developments' && item.id === 'eco-retreats')
+    ) || applicationsData[0];
+    setApp(currentDefault);
+
+    // Fetch dynamic live CMS data
+    Promise.allSettled([
+      fetch('/api/sections?pageSlug=applications', { cache: 'no-store' }).then(r => r.json()),
+      fetch('/api/sections?pageSlug=home', { cache: 'no-store' }).then(r => r.json()),
+    ])
+      .then(([appRes, homeRes]) => {
+        let matchedCard: any = null;
+
+        if (appRes.status === 'fulfilled' && Array.isArray(appRes.value?.sections)) {
+          const cardsSec = appRes.value.sections.find((s: any) => s.sectionId === 'applications-cards');
+          matchedCard = cardsSec?.items?.find((item: any) =>
+            item.id === id ||
+            item.slug === id ||
+            (id === 'modular-homes' && (item.id === 'modular-homes' || item.category === 'Residential')) ||
+            (id === 'hospitality' && (item.id === 'hospitality' || item.id === 'hospitality-resorts')) ||
+            (id === 'hospitality-resorts' && (item.id === 'hospitality' || item.id === 'hospitality-resorts')) ||
+            (id === 'farm-living' && (item.id === 'farm-living' || item.id === 'farm-living-estates')) ||
+            (id === 'farm-living-estates' && (item.id === 'farm-living' || item.id === 'farm-living-estates')) ||
+            (id === 'eco-retreats' && (item.id === 'eco-retreats' || item.id === 'eco-developments')) ||
+            (id === 'eco-developments' && (item.id === 'eco-retreats' || item.id === 'eco-developments')) ||
+            (id === 'entertainment-social' && item.id === 'entertainment-social') ||
+            (id === 'wellness-retreat' && item.id === 'wellness-retreat') ||
+            (item.overviewUrl && item.overviewUrl.endsWith(`/${id}`)) ||
+            (item.link && item.link.endsWith(`/${id}`))
+          );
+        }
+
+        if (!matchedCard && homeRes.status === 'fulfilled' && Array.isArray(homeRes.value?.sections)) {
+          const bentoSec = homeRes.value.sections.find((s: any) => s.sectionId === 'home-applications');
+          matchedCard = bentoSec?.items?.find((item: any) =>
+            item.id === id ||
+            item.slug === id ||
+            (id === 'modular-homes' && (item.id === 'modular-homes' || item.category === 'Residential')) ||
+            (id === 'hospitality' && (item.id === 'hospitality' || item.id === 'hospitality-resorts')) ||
+            (id === 'hospitality-resorts' && (item.id === 'hospitality' || item.id === 'hospitality-resorts')) ||
+            (id === 'farm-living' && (item.id === 'farm-living' || item.id === 'farm-living-estates')) ||
+            (id === 'farm-living-estates' && (item.id === 'farm-living' || item.id === 'farm-living-estates')) ||
+            (id === 'eco-retreats' && (item.id === 'eco-retreats' || item.id === 'eco-developments')) ||
+            (id === 'eco-developments' && (item.id === 'eco-retreats' || item.id === 'eco-developments')) ||
+            (item.link && item.link.endsWith(`/${id}`))
+          );
+        }
+
+        if (matchedCard) {
+          setApp(prev => ({
+            ...prev,
+            ...matchedCard,
+            title: matchedCard.title || prev.title,
+            image: matchedCard.detailHeroImage || matchedCard.heroImage || matchedCard.image || prev.image,
+            heroEyebrow: matchedCard.heroEyebrow || prev.heroEyebrow,
+            heroTitle: matchedCard.heroTitle || matchedCard.title || prev.heroTitle,
+            heroDesc: matchedCard.heroDesc || matchedCard.description || prev.heroDesc,
+            originEyebrow: matchedCard.originEyebrow || prev.originEyebrow,
+            originHeadline: matchedCard.originHeadline || prev.originHeadline,
+            storyParagraphs: Array.isArray(matchedCard.storyParagraphs) && matchedCard.storyParagraphs.length > 0
+              ? matchedCard.storyParagraphs
+              : typeof matchedCard.storyParagraphs === 'string' && matchedCard.storyParagraphs.trim()
+              ? matchedCard.storyParagraphs.split('\n\n').filter(Boolean)
+              : prev.storyParagraphs,
+            features: Array.isArray(matchedCard.features) && matchedCard.features.length > 0
+              ? matchedCard.features
+              : prev.features,
+          }));
+        }
+      })
+      .catch(err => console.warn('ApplicationDetail dynamic CMS notice:', err));
+  }, [id]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -123,7 +208,7 @@ export default function ApplicationDetail() {
               </h2>
               <div className="origin-story-text origin-anim-item">
                 {app.storyParagraphs && app.storyParagraphs.length > 0 ? (
-                  app.storyParagraphs.map((para, idx) => (
+                  app.storyParagraphs.map((para: string, idx: number) => (
                     <p key={idx}>{para}</p>
                   ))
                 ) : (

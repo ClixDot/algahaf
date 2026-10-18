@@ -19,6 +19,8 @@ import {
   EyeOff,
   Compass,
   RefreshCw,
+  Phone,
+  MessageCircle,
 } from 'lucide-react';
 
 export default function AdminOverviewPage() {
@@ -33,6 +35,8 @@ export default function AdminOverviewPage() {
     recentEnquiries: [],
   });
   const [showApplicationsNav, setShowApplicationsNav] = useState(true);
+  const [phone, setPhone] = useState('+971 4 288 9412');
+  const [whatsapp, setWhatsapp] = useState('+971 50 892 4110');
   const [loading, setLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isTogglingNav, setIsTogglingNav] = useState(false);
@@ -53,10 +57,14 @@ export default function AdminOverviewPage() {
 
       if (sRes && sRes.ok) {
         const sData = await sRes.json();
-        if (sData?.settings && typeof sData.settings.showApplicationsNav === 'boolean') {
-          setShowApplicationsNav(sData.settings.showApplicationsNav);
-        } else if (sData?.settings && typeof sData.settings.applicationsComingSoon === 'boolean') {
-          setShowApplicationsNav(!sData.settings.applicationsComingSoon);
+        if (sData?.settings) {
+          if (typeof sData.settings.showApplicationsNav === 'boolean') {
+            setShowApplicationsNav(sData.settings.showApplicationsNav);
+          } else if (typeof sData.settings.applicationsComingSoon === 'boolean') {
+            setShowApplicationsNav(!sData.settings.applicationsComingSoon);
+          }
+          if (sData.settings.phone) setPhone(sData.settings.phone);
+          if (sData.settings.whatsapp) setWhatsapp(sData.settings.whatsapp);
         }
       }
     } catch (e) {
@@ -293,6 +301,109 @@ export default function AdminOverviewPage() {
           </button>
         </div>
       )}
+
+      {/* Floating Action Numbers Banner */}
+      <div
+        className="admin-card"
+        style={{
+          marginBottom: '1.75rem',
+          padding: '1.15rem 1.5rem',
+          backgroundColor: '#FFFFFF',
+          border: '1px solid var(--admin-border)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <div
+              style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '50%',
+                backgroundColor: '#52694B',
+                color: '#FAF8F5',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 10px rgba(82, 105, 75, 0.25)',
+              }}
+              title="Calling Button"
+            >
+              <Phone size={17} />
+            </div>
+            <div
+              style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '50%',
+                backgroundColor: '#25D366',
+                color: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 10px rgba(37, 211, 102, 0.25)',
+              }}
+              title="WhatsApp Button"
+            >
+              <MessageCircle size={19} />
+            </div>
+          </div>
+
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+              <span style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--admin-text-main)' }}>
+                Website Floating Action Buttons:
+              </span>
+              <span
+                style={{
+                  fontSize: '0.78rem',
+                  fontWeight: 600,
+                  padding: '0.2rem 0.6rem',
+                  borderRadius: '6px',
+                  backgroundColor: 'rgba(82, 105, 75, 0.1)',
+                  color: 'var(--admin-forest)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                }}
+              >
+                <Phone size={12} /> Call: {phone}
+              </span>
+              <span
+                style={{
+                  fontSize: '0.78rem',
+                  fontWeight: 600,
+                  padding: '0.2rem 0.6rem',
+                  borderRadius: '6px',
+                  backgroundColor: 'rgba(37, 211, 102, 0.12)',
+                  color: '#128C7E',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                }}
+              >
+                <MessageCircle size={12} /> WhatsApp: {whatsapp}
+              </span>
+            </div>
+            <div style={{ fontSize: '0.84rem', color: 'var(--admin-text-muted)', marginTop: '0.2rem' }}>
+              Live floating buttons on the bottom-right of the website use these numbers.
+            </div>
+          </div>
+        </div>
+
+        <Link
+          href="/admin/settings"
+          className="admin-btn admin-btn-secondary"
+          style={{ fontSize: '0.82rem', padding: '0.45rem 1rem', textDecoration: 'none' }}
+        >
+          <span>Change Numbers</span>
+          <ArrowUpRight size={14} />
+        </Link>
+      </div>
 
       {/* Metric Cards Grid */}
       <div

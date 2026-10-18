@@ -228,7 +228,6 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
                   id="modal-name"
                   type="text"
                   className={`form-input ${errors.name ? 'error' : ''}`}
-                  placeholder="e.g. Sultan Al-Qasimi"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
@@ -242,7 +241,6 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
                     id="modal-email"
                     type="email"
                     className={`form-input ${errors.email ? 'error' : ''}`}
-                    placeholder="name@domain.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
@@ -255,7 +253,6 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
                     id="modal-phone"
                     type="tel"
                     className={`form-input ${errors.phone ? 'error' : ''}`}
-                    placeholder="+971 50 000 0000"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   />
@@ -303,7 +300,6 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
                   id="modal-message"
                   className="form-textarea"
                   rows={3}
-                  placeholder="Plot details, size requirements, intended application..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 />

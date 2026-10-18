@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     const sections = await getCmsSections(pageSlug, 'live');
     return NextResponse.json({ success: true, pageSlug, sections }, {
       headers: {
-        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=59',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
       },
     });
   } catch (error: any) {
