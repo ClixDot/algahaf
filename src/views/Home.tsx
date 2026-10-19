@@ -38,6 +38,8 @@ export default function Home({ initialSections = [], initialDetailsOpen = false 
   const [sections, setSections] = useState<any[]>(initialSections);
 
   useEffect(() => {
+    // Only fetch client-side if server didn't provide sections (rare fallback)
+    if (initialSections && initialSections.length > 0) return;
     fetch('/api/sections?pageSlug=home')
       .then((res) => res.json())
       .then((data) => {

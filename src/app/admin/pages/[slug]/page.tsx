@@ -99,6 +99,28 @@ export const getCleanSlugTitle = (slugStr: string, rawTitle?: string) => {
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : 'Page';
 };
 
+// Helper to identify Product Showcase Cards on /products page (MOVA, PENTA, ENTRA, etc.)
+const isProductShowcaseSection = (sec: any) => {
+  if (!sec) return false;
+  const sid = (sec.sectionId || sec.id || '').trim().toLowerCase();
+  return (
+    sid === 'products-mova' ||
+    sid === 'products-penta' ||
+    sid === 'products-entra' ||
+    (sec.pageSlug === 'products' && (sid.includes('mova') || sid.includes('penta') || sid.includes('entra') || sid.includes('showcase')))
+  );
+};
+
+// Default high-resolution architectural renders for each product
+const getDefaultProductImage = (sec: any) => {
+  if (!sec) return '/assets/renders/MOVA_EXT_3D_img1.jpg';
+  const sid = (sec.sectionId || sec.id || '').trim().toLowerCase();
+  if (sid.includes('mova')) return '/assets/renders/MOVA_EXT_3D_img1.jpg';
+  if (sid.includes('penta')) return '/assets/images/imgupscaler-enhanced-7.jpg';
+  if (sid.includes('entra')) return '/assets/renders/CINE_EXT_3D_img1.jpg';
+  return '/assets/renders/MOVA_EXT_3D_img1.jpg';
+};
+
 // Helper to check if a section actually uses section-level background/featured media on the live website
 const sectionHasMedia = (sec: any) => {
   if (!sec) return false;
@@ -106,6 +128,9 @@ const sectionHasMedia = (sec: any) => {
 
   // Multi-slide hero sections manage images inside the Hero Slider Images tab, not single media
   if (isHeroSection(sec)) return false;
+
+  // Product showcase sections definitely have featured product media on live website
+  if (isProductShowcaseSection(sec)) return true;
 
   // Sections that explicitly DO NOT have any section-level background/image on the live website
   const noMediaSections = [
@@ -137,6 +162,9 @@ const sectionHasMedia = (sec: any) => {
     'products-hero',        // Products hero banner photography
     'process-hero',         // Process hero banner photography
     'applications-hero',    // Applications hero banner photography
+    'products-mova',        // MOVA showcase card main hero render
+    'products-penta',       // PENTA showcase card main hero render
+    'products-entra',       // ENTRA showcase card main hero render
   ];
 
   if (hasMediaSections.includes(sid)) return true;
@@ -231,6 +259,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
   const [mediaUploadError, setMediaUploadError] = useState<string | null>(null);
   const [slideUploadingIndex, setSlideUploadingIndex] = useState<number | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const productFileInputRef = useRef<HTMLInputElement>(null);
 
   const addNewHeroSlide = () => {
     if (!editingSection) return;
@@ -1149,6 +1178,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
     } finally {
       setUploadingMedia(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
+      if (productFileInputRef.current) productFileInputRef.current.value = '';
     }
   };
 
@@ -1837,6 +1867,29 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                           <ImageIcon size={15} />
                           Hero Media
                         </button>
+                      ) : isProductShowcaseSection(sec) ? (
+                        <button
+                          onClick={() => {
+                            setEditingSection({ ...sec });
+                            setActiveTab('media');
+                            setIsModalOpen(true);
+                          }}
+                          className="admin-btn admin-btn-secondary"
+                          style={{
+                            padding: '0.45rem 0.85rem',
+                            fontSize: '0.82rem',
+                            borderColor: 'var(--admin-forest)',
+                            color: 'var(--admin-forest)',
+                            fontWeight: 600,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.4rem',
+                          }}
+                          title={`Upload or Replace ${sec.title || 'Product'} Showcase Image`}
+                        >
+                          <ImageIcon size={15} />
+                          Product Image
+                        </button>
                       ) : sectionHasMedia(sec) ? (
                         <button
                           onClick={() => {
@@ -1977,6 +2030,8 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                         ? 'Interactive Map & Photo'
                         : secId === 'about-philosophy'
                         ? 'Right-Side Visual & Cloudinary'
+                        : isProductShowcaseSection(editingSection)
+                        ? 'Product Image & Media'
                         : 'Media & Cloudinary'}
                     </button>
                   )}
@@ -2010,6 +2065,8 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                         ? `Contact Information Cards (${editingSection.items?.length || 0})`
                         : secId === 'products-comparison'
                         ? `Comparison Specs (${editingSection.items?.length || 0})`
+                        : isProductShowcaseSection(editingSection)
+                        ? `Product Highlights & Specs (${editingSection.items?.length || 0})`
                         : secId === 'applications-categories'
                         ? `Category Filters (${editingSection.items?.length || 5})`
                         : secId === 'applications-cards'
@@ -2620,15 +2677,260 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
 
                     {/* Optional Action Button Label */}
                     {(editingSection.ctaText !== undefined || editingSection.sectionId === 'contact-form' || editingSection.sectionId?.includes('cta')) && (
-                      <div style={{ marginBottom: '1rem' }}>
-                        <label className="admin-label">Action / Submit Button Label</label>
-                        <input
-                          type="text"
-                          className="admin-input"
-                          value={editingSection.ctaText || ''}
-                          onChange={(e) => setEditingSection({ ...editingSection, ctaText: e.target.value })}
-                          placeholder="e.g. Send Enquiry"
-                        />
+                      <div style={{ display: 'grid', gridTemplateColumns: editingSection.ctaUrl !== undefined ? '1fr 1fr' : '1fr', gap: '1rem', marginBottom: '1rem' }}>
+                        <div>
+                          <label className="admin-label">Action / Submit Button Label</label>
+                          <input
+                            type="text"
+                            className="admin-input"
+                            value={editingSection.ctaText || ''}
+                            onChange={(e) => setEditingSection({ ...editingSection, ctaText: e.target.value })}
+                            placeholder="e.g. View Complete Details & Plans"
+                          />
+                        </div>
+                        {editingSection.ctaUrl !== undefined && (
+                          <div>
+                            <label className="admin-label">Target Page / Details URL</label>
+                            <input
+                              type="text"
+                              className="admin-input"
+                              value={editingSection.ctaUrl || ''}
+                              onChange={(e) => setEditingSection({ ...editingSection, ctaUrl: e.target.value })}
+                              placeholder="/products/mova"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* DEDICATED PRODUCT SHOWCASE IMAGE & LIVE PREVIEW BOX */}
+                    {isProductShowcaseSection(editingSection) && (
+                      <div
+                        style={{
+                          backgroundColor: 'rgba(82, 105, 75, 0.05)',
+                          border: '1.5px solid var(--admin-forest)',
+                          borderRadius: '10px',
+                          padding: '1.25rem',
+                          marginBottom: '1.25rem',
+                        }}
+                      >
+                        {/* Header */}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', borderBottom: '1px solid rgba(82, 105, 75, 0.15)', paddingBottom: '0.65rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <div
+                              style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                backgroundColor: 'var(--admin-forest)',
+                                color: '#fff',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                              }}
+                            >
+                              <ImageIcon size={16} />
+                            </div>
+                            <div>
+                              <span style={{ fontWeight: 600, color: 'var(--admin-forest-dark)', fontSize: '0.95rem' }}>
+                                Product Showcase Image (Live Public Catalog)
+                              </span>
+                              <span style={{ fontSize: '0.75rem', color: 'var(--admin-text-muted)', display: 'block' }}>
+                                Featured photography or 3D architectural render displayed on the public /products showcase card.
+                              </span>
+                            </div>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const defImg = getDefaultProductImage(editingSection);
+                                setEditingSection({
+                                  ...editingSection,
+                                  mediaUrl: defImg,
+                                  thumbnailUrl: defImg,
+                                });
+                              }}
+                              className="admin-btn admin-btn-secondary"
+                              style={{ padding: '0.25rem 0.65rem', fontSize: '0.75rem' }}
+                              title="Restore default product render"
+                            >
+                              ↺ Reset to Default Render
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* 2-Column: Left = Image Live Preview, Right = Change Controls & Cloudinary */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(220px, 1fr) 1.5fr', gap: '1.25rem', alignItems: 'center' }}>
+                          
+                          {/* Left Column: Visual Preview */}
+                          <div>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                              <label className="admin-label" style={{ margin: 0, fontSize: '0.78rem', fontWeight: 600 }}>
+                                Current Product Image Preview
+                              </label>
+                              <span style={{ fontSize: '0.72rem', color: 'var(--admin-forest)', fontWeight: 600 }}>
+                                ● Live on Website
+                              </span>
+                            </div>
+
+                            <div
+                              style={{
+                                width: '100%',
+                                height: '190px',
+                                borderRadius: '8px',
+                                overflow: 'hidden',
+                                backgroundColor: '#1E231D',
+                                border: '1px solid var(--admin-border)',
+                                position: 'relative',
+                                boxShadow: '0 4px 14px rgba(0,0,0,0.12)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                              }}
+                            >
+                              {editingSection.mediaUrl || getDefaultProductImage(editingSection) ? (
+                                <img
+                                  src={editingSection.mediaUrl || getDefaultProductImage(editingSection)}
+                                  alt={editingSection.mediaAlt || editingSection.title || 'Product Showcase Image'}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                  onError={(e) => {
+                                    const target = e.currentTarget as HTMLImageElement;
+                                    const def = getDefaultProductImage(editingSection);
+                                    if (target.src !== def) {
+                                      target.src = def;
+                                    }
+                                  }}
+                                />
+                              ) : (
+                                <div style={{ color: 'var(--admin-text-muted)', fontSize: '0.8rem', textAlign: 'center', padding: '1rem' }}>
+                                  <ImageIcon size={32} style={{ opacity: 0.4, margin: '0 auto 0.5rem auto' }} />
+                                  No product image selected
+                                </div>
+                              )}
+
+                              {/* Product Badge overlay */}
+                              <div
+                                style={{
+                                  position: 'absolute',
+                                  top: '0.5rem',
+                                  left: '0.5rem',
+                                  backgroundColor: 'rgba(20, 23, 19, 0.85)',
+                                  color: '#FAF8F5',
+                                  padding: '0.2rem 0.55rem',
+                                  borderRadius: '4px',
+                                  fontSize: '0.7rem',
+                                  fontWeight: 600,
+                                  letterSpacing: '0.05em',
+                                  backdropFilter: 'blur(4px)',
+                                  border: '1px solid rgba(255,255,255,0.15)',
+                                }}
+                              >
+                                {editingSection.title || 'PRODUCT'}
+                              </div>
+                            </div>
+
+                            <div
+                              style={{
+                                fontSize: '0.72rem',
+                                color: 'var(--admin-text-muted)',
+                                marginTop: '0.4rem',
+                                wordBreak: 'break-all',
+                                fontFamily: 'monospace',
+                                backgroundColor: '#fff',
+                                padding: '0.25rem 0.5rem',
+                                borderRadius: '4px',
+                                border: '1px solid var(--admin-border-light)',
+                              }}
+                            >
+                              {editingSection.mediaUrl || getDefaultProductImage(editingSection)}
+                            </div>
+                          </div>
+
+                          {/* Right Column: Upload Button & Direct URL Input */}
+                          <div>
+                            {/* Cloudinary File Upload Button */}
+                            <div style={{ marginBottom: '1rem' }}>
+                              <label className="admin-label" style={{ fontWeight: 600, marginBottom: '0.4rem' }}>
+                                Upload New Product Image (Cloudinary)
+                              </label>
+                              <input
+                                ref={productFileInputRef}
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleMediaUpload(e, 'mediaUrl')}
+                                style={{ display: 'none' }}
+                                id="product-showcase-file-picker"
+                              />
+                              <label
+                                htmlFor="product-showcase-file-picker"
+                                className="admin-btn admin-btn-primary"
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  gap: '0.5rem',
+                                  cursor: 'pointer',
+                                  width: '100%',
+                                  padding: '0.6rem 1rem',
+                                  fontSize: '0.85rem',
+                                  fontWeight: 600,
+                                  boxShadow: '0 2px 6px rgba(82, 105, 75, 0.25)',
+                                }}
+                              >
+                                {uploadingMedia ? <RefreshCw className="animate-spin" size={16} /> : <UploadCloud size={16} />}
+                                {uploadingMedia ? 'Uploading to Cloudinary...' : 'Choose & Upload New Image'}
+                              </label>
+                              <span style={{ fontSize: '0.74rem', color: 'var(--admin-text-muted)', marginTop: '0.35rem', display: 'block' }}>
+                                Uploads high-resolution JPG, PNG, or WebP to Cloudinary CDN with instant auto-optimization.
+                              </span>
+                              {mediaUploadError && (
+                                <div style={{ color: 'var(--admin-danger)', fontSize: '0.78rem', marginTop: '0.4rem' }}>
+                                  {mediaUploadError}
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Manual URL / Path Input */}
+                            <div style={{ marginBottom: '0.75rem' }}>
+                              <label className="admin-label" style={{ fontWeight: 600, marginBottom: '0.25rem' }}>
+                                Or Image Asset Path / CDN URL
+                              </label>
+                              <input
+                                type="text"
+                                className="admin-input"
+                                value={editingSection.mediaUrl || ''}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  setEditingSection({
+                                    ...editingSection,
+                                    mediaUrl: val,
+                                    thumbnailUrl: val,
+                                  });
+                                }}
+                                placeholder="/assets/renders/... or https://res.cloudinary.com/..."
+                                style={{ fontFamily: 'monospace', fontSize: '0.82rem' }}
+                              />
+                            </div>
+
+                            {/* Image Alt Text */}
+                            <div>
+                              <label className="admin-label" style={{ fontWeight: 600, marginBottom: '0.25rem' }}>
+                                Image Accessibility Alt Text
+                              </label>
+                              <input
+                                type="text"
+                                className="admin-input"
+                                value={editingSection.mediaAlt || ''}
+                                onChange={(e) => setEditingSection({ ...editingSection, mediaAlt: e.target.value })}
+                                placeholder={`e.g. ${editingSection.title || 'Product'} Architectural Showcase`}
+                                style={{ fontSize: '0.82rem' }}
+                              />
+                            </div>
+                          </div>
+
+                        </div>
                       </div>
                     )}
 
@@ -3407,10 +3709,14 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                     >
                       <UploadCloud size={36} style={{ color: 'var(--admin-forest)', margin: '0 auto 0.75rem auto' }} />
                       <h4 style={{ margin: '0 0 0.25rem 0', fontSize: '1rem', color: 'var(--admin-forest-dark)' }}>
-                        Upload Media to Cloudinary
+                        {isProductShowcaseSection(editingSection)
+                          ? `Upload ${editingSection.title || 'Product'} Image to Cloudinary`
+                          : 'Upload Media to Cloudinary'}
                       </h4>
                       <p style={{ fontSize: '0.82rem', color: 'var(--admin-text-muted)', margin: '0 0 1rem 0' }}>
-                        Upload high-resolution images or videos directly to Cloudinary CDN for instant optimized delivery.
+                        {isProductShowcaseSection(editingSection)
+                          ? 'Upload high-resolution photography or 3D architectural renders directly to Cloudinary CDN for instant live delivery on the /products showcase card.'
+                          : 'Upload high-resolution images or videos directly to Cloudinary CDN for instant optimized delivery.'}
                       </p>
 
                       <input
@@ -3441,7 +3747,11 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                     {/* Manual URL Input */}
                     <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
                       <div>
-                        <label className="admin-label">Image or Background Media URL</label>
+                        <label className="admin-label">
+                          {isProductShowcaseSection(editingSection)
+                            ? 'Product Showcase Image Asset URL or CDN Link'
+                            : 'Image or Background Media URL'}
+                        </label>
                         <input
                           type="text"
                           className="admin-input"
@@ -3453,7 +3763,11 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                               thumbnailUrl: e.target.value,
                             })
                           }
-                          placeholder="/assets/images/... or Cloudinary URL"
+                          placeholder={
+                            isProductShowcaseSection(editingSection)
+                              ? '/assets/renders/... or Cloudinary URL'
+                              : '/assets/images/... or Cloudinary URL'
+                          }
                         />
                       </div>
                       <div>
@@ -3468,6 +3782,27 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                         </select>
                       </div>
                     </div>
+
+                    {/* Quick Reset for Product Showcase Sections */}
+                    {isProductShowcaseSection(editingSection) && (
+                      <div style={{ marginBottom: '1.25rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const defImg = getDefaultProductImage(editingSection);
+                            setEditingSection({
+                              ...editingSection,
+                              mediaUrl: defImg,
+                              thumbnailUrl: defImg,
+                            });
+                          }}
+                          className="admin-btn admin-btn-secondary"
+                          style={{ padding: '0.3rem 0.7rem', fontSize: '0.76rem' }}
+                        >
+                          ↺ Reset to Default Product Render
+                        </button>
+                      </div>
+                    )}
 
                     {/* Optional Video Stream URL for Process Section */}
                     {(editingSection.sectionId === 'home-process' || editingSection.mediaType === 'video') && (
@@ -3484,7 +3819,7 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                     )}
 
                     {/* Media Live Preview Box */}
-                    {editingSection.mediaUrl && (
+                    {(editingSection.mediaUrl || isProductShowcaseSection(editingSection)) && (
                       <div style={{ marginBottom: '1rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
                           <label className="admin-label" style={{ margin: 0 }}>Media Aspect & Crop Preview</label>
@@ -3516,13 +3851,16 @@ export default function PageEditor({ params }: { params: Promise<{ slug: string 
                             />
                           ) : (
                             <img
-                              src={editingSection.mediaUrl}
+                              src={editingSection.mediaUrl || (isProductShowcaseSection(editingSection) ? getDefaultProductImage(editingSection) : '')}
                               alt="Section Media Preview"
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                               onError={(e) => {
                                 const target = e.currentTarget as HTMLImageElement;
-                                if (!target.src.includes('about_bg.png')) {
-                                  target.src = '/assets/images/about_bg.png';
+                                const fallback = isProductShowcaseSection(editingSection)
+                                  ? getDefaultProductImage(editingSection)
+                                  : '/assets/images/about_bg.png';
+                                if (!target.src.includes(fallback)) {
+                                  target.src = fallback;
                                 }
                               }}
                             />

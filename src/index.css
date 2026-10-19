@@ -2327,3 +2327,27 @@ body {
   transform: none !important;
 }
 
+/* ==========================================================================
+   PAGE TRANSITION — SMOOTH FADE-IN ON ROUTE CHANGE
+   ========================================================================== */
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition-enter {
+  animation: pageEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+/* Prevent flash of unstyled content on first paint */
+.page-transition-enter > * {
+  backface-visibility: hidden;
+}

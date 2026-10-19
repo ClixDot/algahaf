@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import SmoothScrollProvider from '../common/SmoothScrollProvider';
 import ScrollToTop from '../common/ScrollToTop';
@@ -14,15 +14,25 @@ interface WebsiteShellProps {
 
 export default function WebsiteShell({ children }: WebsiteShellProps) {
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
+  const [transitionKey, setTransitionKey] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const prevPathname = useRef(pathname);
 
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
+  // Trigger transition class whenever pathname changes
+  useEffect(() => {
+    if (prevPathname.current !== pathname) {
+      prevPathname.current = pathname;
+      setTransitionKey((k) => k + 1);
+      setIsTransitioning(true);
+
+      // Remove class after animation completes so it can re-trigger next nav
+      const timer = setTimeout(() => setIsTransitioning(false), 400);
+      return () => clearTimeout(timer);
+    }
+  }, [pathname]);
 
   const isAdmin = pathname?.startsWith('/admin');
 
-  // If in admin dashboard or admin login, do NOT render website navbar, footer, or public floating actions
   if (isAdmin) {
     return <>{children}</>;
   }
@@ -42,7 +52,11 @@ export default function WebsiteShell({ children }: WebsiteShellProps) {
       >
         <ScrollToTop />
         <Navbar />
-        <div style={{ flex: 1, width: '100%', maxWidth: '100%', overflowX: 'clip' }}>
+        <div
+          key={transitionKey}
+          className={isTransitioning ? 'page-transition-enter' : undefined}
+          style={{ flex: 1, width: '100%', maxWidth: '100%', overflowX: 'clip' }}
+        >
           {children}
         </div>
         <FloatingActions />

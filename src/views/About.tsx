@@ -44,6 +44,8 @@ export default function About({ initialSections = [] }: AboutProps) {
   const [sections, setSections] = useState<any[]>(initialSections);
 
   useEffect(() => {
+    // Only fetch client-side if server didn't provide sections (rare fallback)
+    if (initialSections && initialSections.length > 0) return;
     fetch('/api/sections?pageSlug=about')
       .then((res) => res.json())
       .then((data) => {
