@@ -29,6 +29,15 @@ function InstagramIcon({ size = 18, color = 'currentColor', ...props }) {
   );
 }
 
+function formatSocialUrl(url?: string): string {
+  if (!url) return '';
+  const trimmed = url.trim();
+  if (!trimmed) return '';
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (/^\/\//.test(trimmed)) return `https:${trimmed}`;
+  return `https://${trimmed}`;
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -36,9 +45,10 @@ export default function Navbar() {
   const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
   const [applicationsComingSoon, setApplicationsComingSoon] = useState(false);
   const [showApplicationsNav, setShowApplicationsNav] = useState(false);
+  const [instagram, setInstagram] = useState<string>(companyInfo.contact.instagram);
   const pathname = usePathname();
 
-  // Sync settings for Applications Navlink toggle & Coming Soon
+  // Sync settings for Applications Navlink toggle, Coming Soon, and Instagram
   useEffect(() => {
     fetch('/api/settings')
       .then((res) => res.json())
@@ -48,6 +58,9 @@ export default function Navbar() {
             setShowApplicationsNav(data.settings.showApplicationsNav);
           }
           setApplicationsComingSoon(Boolean(data.settings.applicationsComingSoon));
+          if (data.settings.instagram) {
+            setInstagram(data.settings.instagram);
+          }
         }
       })
       .catch((err) => console.warn('Navbar settings sync notice:', err));
@@ -271,7 +284,7 @@ export default function Navbar() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               {/* Instagram Icon Link (to the left of Contact button) */}
               <a
-                href={companyInfo.contact.instagram || 'https://www.instagram.com/alghafcollective'}
+                href={formatSocialUrl(instagram || companyInfo.contact.instagram)}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow AlGhaf Collective on Instagram"
@@ -507,7 +520,7 @@ export default function Navbar() {
                 <span>Dubai, United Arab Emirates</span>
               </div>
               <a
-                href={companyInfo.contact.instagram || 'https://www.instagram.com/alghafcollective'}
+                href={formatSocialUrl(instagram || companyInfo.contact.instagram)}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow AlGhaf Collective on Instagram"

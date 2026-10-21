@@ -50,10 +50,14 @@ export default function FloatingActions() {
   };
 
   const cleanPhone = (phone || '').trim();
-  const cleanWhatsappNumber = (whatsapp || '').replace(/[^0-9]/g, '');
-  const whatsappUrl = `https://wa.me/${cleanWhatsappNumber}?text=${encodeURIComponent(
-    whatsappMessage || 'Hello AlGhaf Collective, I would like to enquire about your modular living systems.'
-  )}`;
+  const rawWhatsapp = (whatsapp || '').trim();
+  const cleanWhatsappNumber = rawWhatsapp.replace(/[^0-9]/g, '');
+  const whatsappUrl =
+    rawWhatsapp.startsWith('http://') || rawWhatsapp.startsWith('https://')
+      ? rawWhatsapp
+      : `https://wa.me/${cleanWhatsappNumber}?text=${encodeURIComponent(
+          whatsappMessage || 'Hello AlGhaf Collective, I would like to enquire about your modular living systems.'
+        )}`;
 
   return (
     <div

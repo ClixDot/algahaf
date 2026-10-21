@@ -10,15 +10,15 @@ export const DEFAULT_SETTINGS = {
   tagline: 'Design Smarter. Build Precisely.',
   companyName: 'AlGhaf Collective',
   legalName: 'AlGhaf Modular Living Concepts LLC',
-  phone: '+971 4 000 0000',
-  email: 'info@alghafcollective.ae',
-  address: 'Building 7, Dubai Design District (d3)',
+  phone: '+971 582793399',
+  email: 'info@alghafcollective.com',
+  address: 'RAG Biz HQ, Office #3, Addiyar Building ,Al Wasl Jumeirah, Dubai ,United Arab Emirates.',
   city: 'Dubai',
   country: 'United Arab Emirates',
-  whatsapp: '+971500000000',
+  whatsapp: '+971 582793399',
   whatsappMessage: 'Hello AlGhaf Collective, I would like to enquire about your modular living systems.',
   instagram: 'https://www.instagram.com/alghafcollective',
-  linkedin: 'https://www.linkedin.com/company/alghafcollective',
+  linkedin: 'https://www.linkedin.com/company/alghaf-collective/home/',
   facebook: 'https://www.facebook.com/alghafcollective',
   headerLogo: '/assets/logos/AlGhaf_logo_-10.png',
   footerLogo: '/assets/logos/AlGhaf_logo_-08.png',
@@ -100,13 +100,37 @@ export async function getGlobalSettings(): Promise<any> {
 
 export async function updateGlobalSettings(data: any): Promise<any> {
   const current = ensureLocalSettings();
-  const merged = { ...current, ...data };
+
+  // Helper to ensure valid URL for social links
+  const normalizeUrl = (url?: string) => {
+    if (!url || typeof url !== 'string') return url;
+    const trimmed = url.trim();
+    if (!trimmed) return '';
+    if (/^https?:\/\//i.test(trimmed) || /^\/\//.test(trimmed)) return trimmed;
+    return `https://${trimmed}`;
+  };
+
+  const sanitizedData = { ...data };
+  if (typeof sanitizedData.whatsapp === 'string') {
+    sanitizedData.whatsapp = sanitizedData.whatsapp.trim();
+  }
+  if (typeof sanitizedData.instagram === 'string') {
+    sanitizedData.instagram = normalizeUrl(sanitizedData.instagram);
+  }
+  if (typeof sanitizedData.linkedin === 'string') {
+    sanitizedData.linkedin = normalizeUrl(sanitizedData.linkedin);
+  }
+  if (typeof sanitizedData.facebook === 'string') {
+    sanitizedData.facebook = normalizeUrl(sanitizedData.facebook);
+  }
+
+  const merged = { ...current, ...sanitizedData };
   
   // Clean up _id and __v before updating in MongoDB
   const { _id, __v, ...cleanPayload } = merged;
 
   // Save locally first so update is immediate
-  saveLocalSettings(merged);
+  saveLocalSettings(cleanPayload);
 
   try {
     const timeoutPromise = new Promise((_, reject) =>
@@ -123,9 +147,9 @@ export async function updateGlobalSettings(data: any): Promise<any> {
       }
     ).lean();
     if (updated) {
-      const res = { ...DEFAULT_SETTINGS, ...merged, ...(updated as any) };
-      if (typeof data.productDetailsAccess === 'boolean') {
-        res.productDetailsAccess = data.productDetailsAccess;
+      const res = { ...DEFAULT_SETTINGS, ...(updated as any), ...cleanPayload };
+      if (typeof sanitizedData.productDetailsAccess === 'boolean') {
+        res.productDetailsAccess = sanitizedData.productDetailsAccess;
       }
       saveLocalSettings(res);
       return res;
@@ -134,5 +158,5 @@ export async function updateGlobalSettings(data: any): Promise<any> {
     console.warn('MongoDB save warning for global settings:', dbErr.message);
   }
 
-  return merged;
+  return cleanPayload;
 }

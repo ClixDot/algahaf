@@ -11,13 +11,13 @@ export const companyInfo = {
     symbolism: "A symbol of peace, adaptability, and resilience across the UAE and Arabian Peninsula, thriving with minimal water and providing shelter in extreme desert conditions."
   },
   contact: {
-    email: "info@alghafcollective.ae",
-    phone: "+971 4 288 9412",
-    whatsapp: "+971 50 892 4110",
+    email: "info@alghafcollective.com",
+    phone: "+971 582793399",
+    whatsapp: "+971 582793399",
     instagram: "https://www.instagram.com/alghafcollective",
-    linkedin: "https://www.linkedin.com/company/alghafcollective",
+    linkedin: "https://www.linkedin.com/company/alghaf-collective/home/",
     facebook: "https://www.facebook.com/alghafcollective",
-    address: "Dubai Design District (d3), Building 7, Dubai, United Arab Emirates",
+    address: "RAG Biz HQ, Office #3, Addiyar Building ,Al Wasl Jumeirah, Dubai ,United Arab Emirates.",
     country: "United Arab Emirates",
     workingHours: "Monday – Friday: 9:00 AM – 6:00 PM GST"
   },

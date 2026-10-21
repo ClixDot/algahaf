@@ -14,7 +14,9 @@
     "isVisible": true,
     "displayOrder": 1,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:54.733Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-20T10:59:39.091Z",
+    "updatedAt": "2026-10-20T10:59:39.091Z"
   },
   {
     "_id": "6ad20eeb3aff37a95565d271",
@@ -30,19 +32,21 @@
     "isVisible": true,
     "displayOrder": 2,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:54.814Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-20T10:59:39.091Z",
+    "updatedAt": "2026-10-20T10:59:39.091Z"
   },
   {
     "_id": "6ad20eeb3aff37a95565d272",
     "pageSlug": "products",
     "sectionId": "products-mova",
     "sectionName": "MOVA Product Showcase Card",
-    "thumbnailUrl": "/assets/renders/MOVA_EXT_3D_img1.jpg",
+    "thumbnailUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792416948/alghaf_website/p1zw0v1mgwihkozsfs8f.png",
     "eyebrow": "MODULAR LIVING",
     "title": "MOVA",
     "subtitle": "Modular Optimized Versatile Architecture",
     "content": "A versatile modular building system engineered to create adaptable, high-quality architectural spaces with greater speed, efficiency, and climate control.",
-    "mediaUrl": "/assets/renders/MOVA_EXT_3D_img1.jpg",
+    "mediaUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792416948/alghaf_website/p1zw0v1mgwihkozsfs8f.png",
     "mediaType": "image",
     "mediaAlt": "MOVA Modular Living System",
     "ctaText": "View Complete Details & Plans",
@@ -78,19 +82,21 @@
     "isVisible": true,
     "displayOrder": 3,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:54.894Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-20T10:59:39.091Z",
+    "updatedAt": "2026-10-20T10:59:39.091Z"
   },
   {
     "_id": "6ad20eeb3aff37a95565d273",
     "pageSlug": "products",
     "sectionId": "products-penta",
     "sectionName": "PENTA Product Showcase Card",
-    "thumbnailUrl": "/assets/images/imgupscaler-enhanced-7.jpg",
+    "thumbnailUrl": "https://i.pinimg.com/736x/d7/8a/98/d78a98b01c15cce68329ce72de17c08b.jpg",
     "eyebrow": "LUXURY ARCHITECTURAL LIVING",
     "title": "PENTA",
     "subtitle": "Elevated Modular Living",
     "content": "AlGhaf Collective’s signature premium collection featuring double-height living spaces, mezzanine architecture, and bespoke craftsmanship.",
-    "mediaUrl": "/assets/images/imgupscaler-enhanced-7.jpg",
+    "mediaUrl": "https://i.pinimg.com/736x/d7/8a/98/d78a98b01c15cce68329ce72de17c08b.jpg",
     "mediaType": "image",
     "mediaAlt": "PENTA Elevated Modular Living",
     "ctaText": "View Complete Details & Plans",
@@ -126,19 +132,21 @@
     "isVisible": true,
     "displayOrder": 4,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:54.973Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-21T10:49:12.026Z",
+    "updatedAt": "2026-10-21T10:49:12.027Z"
   },
   {
     "_id": "6ad20eeb3aff37a95565d274",
     "pageSlug": "products",
     "sectionId": "products-entra",
     "sectionName": "ENTRA Product Showcase Card",
-    "thumbnailUrl": "/assets/renders/ENTRA_EXT_3D_img1.jpg",
+    "thumbnailUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792416931/alghaf_website/bnexguqkrqwreylcd6w7.png",
     "eyebrow": "PRIVATE ENTERTAINMENT",
     "title": "ENTRA",
     "subtitle": "Private Entertainment. Reimagined.",
     "content": "An immersive, acoustically engineered entertainment space designed for private cinema, gaming, social hospitality, and luxury events.",
-    "mediaUrl": "/assets/renders/ENTRA_EXT_3D_img1.jpg",
+    "mediaUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792416931/alghaf_website/bnexguqkrqwreylcd6w7.png",
     "mediaType": "image",
     "mediaAlt": "ENTRA Private Entertainment",
     "ctaText": "View Complete Details & Plans",
@@ -174,7 +182,9 @@
     "isVisible": true,
     "displayOrder": 5,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:55.055Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-20T10:59:39.091Z",
+    "updatedAt": "2026-10-20T10:59:39.091Z"
   },
   {
     "_id": "6ad20eeb3aff37a95565d275",
@@ -233,6 +243,8 @@
     "isVisible": true,
     "displayOrder": 6,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:55.160Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-20T10:59:39.091Z",
+    "updatedAt": "2026-10-20T10:59:39.091Z"
   }
 ]

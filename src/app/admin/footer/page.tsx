@@ -10,7 +10,27 @@ import {
   Plus,
   Trash2,
   Sparkles,
+  ExternalLink,
 } from 'lucide-react';
+
+function formatSocialUrl(url?: string): string {
+  if (!url) return '';
+  const trimmed = url.trim();
+  if (!trimmed) return '';
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (/^\/\//.test(trimmed)) return `https:${trimmed}`;
+  return `https://${trimmed}`;
+}
+
+function formatWhatsAppUrl(val?: string): string {
+  if (!val) return '';
+  const trimmed = val.trim();
+  if (!trimmed) return '';
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  const digits = trimmed.replace(/[^0-9]/g, '');
+  if (!digits) return '';
+  return `https://wa.me/${digits}`;
+}
 
 interface FooterSettings {
   footerLogo: string;
@@ -57,18 +77,18 @@ export default function FooterEditorPage() {
           const data = await res.json();
           if (data.settings) {
             const s = data.settings;
-            if (s.footerLogo) setFooterLogo(s.footerLogo);
-            if (s.footerTagline) setFooterTagline(s.footerTagline);
-            if (s.footerDescription) setFooterDescription(s.footerDescription);
-            if (s.phone) setPhone(s.phone);
-            if (s.email) setEmail(s.email);
-            if (s.address) setAddress(s.address);
-            if (s.city) setCity(s.city);
-            if (s.country) setCountry(s.country);
-            if (s.whatsapp) setWhatsapp(s.whatsapp);
-            if (s.instagram) setInstagram(s.instagram);
-            if (s.linkedin) setLinkedin(s.linkedin);
-            if (s.facebook) setFacebook(s.facebook);
+            if (s.footerLogo !== undefined && s.footerLogo !== null) setFooterLogo(s.footerLogo);
+            if (s.footerTagline !== undefined && s.footerTagline !== null) setFooterTagline(s.footerTagline);
+            if (s.footerDescription !== undefined && s.footerDescription !== null) setFooterDescription(s.footerDescription);
+            if (s.phone !== undefined && s.phone !== null) setPhone(s.phone);
+            if (s.email !== undefined && s.email !== null) setEmail(s.email);
+            if (s.address !== undefined && s.address !== null) setAddress(s.address);
+            if (s.city !== undefined && s.city !== null) setCity(s.city);
+            if (s.country !== undefined && s.country !== null) setCountry(s.country);
+            if (s.whatsapp !== undefined && s.whatsapp !== null) setWhatsapp(s.whatsapp);
+            if (s.instagram !== undefined && s.instagram !== null) setInstagram(s.instagram);
+            if (s.linkedin !== undefined && s.linkedin !== null) setLinkedin(s.linkedin);
+            if (s.facebook !== undefined && s.facebook !== null) setFacebook(s.facebook);
           }
         }
       } catch (e: any) {
@@ -84,30 +104,44 @@ export default function FooterEditorPage() {
     e.preventDefault();
     try {
       setSaving(true);
+      setAlert(null);
+
+      const cleanWhatsapp = (whatsapp || '').trim();
+      const cleanInstagram = formatSocialUrl(instagram);
+      const cleanLinkedin = formatSocialUrl(linkedin);
+      const cleanFacebook = formatSocialUrl(facebook);
+
+      // Keep local input fields clean and normalized
+      setWhatsapp(cleanWhatsapp);
+      setInstagram(cleanInstagram);
+      setLinkedin(cleanLinkedin);
+      setFacebook(cleanFacebook);
+
       const res = await fetch('/api/admin/settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          footerLogo,
-          footerTagline,
-          footerDescription,
-          phone,
-          email,
-          address,
-          city,
-          country,
-          whatsapp,
-          instagram,
-          linkedin,
-          facebook,
+          footerLogo: footerLogo.trim(),
+          footerTagline: footerTagline.trim(),
+          footerDescription: footerDescription.trim(),
+          phone: phone.trim(),
+          email: email.trim(),
+          address: address.trim(),
+          city: city.trim(),
+          country: country.trim(),
+          whatsapp: cleanWhatsapp,
+          instagram: cleanInstagram,
+          linkedin: cleanLinkedin,
+          facebook: cleanFacebook,
         }),
       });
 
       if (res.ok) {
         setAlert({
           type: 'success',
-          message: 'Footer content and social channels saved successfully!',
+          message: 'Footer content & social channels saved successfully! Changes are live across the website.',
         });
+        setTimeout(() => setAlert(null), 6000);
       } else {
         const err = await res.json();
         setAlert({ type: 'error', message: err.error || 'Failed to update footer' });
@@ -279,50 +313,120 @@ export default function FooterEditorPage() {
 
         {/* Social Channels & WhatsApp */}
         <div className="admin-card" style={{ marginBottom: '1.5rem' }}>
-          <h2 style={{ fontSize: '1.15rem', fontWeight: 600, marginBottom: '1.25rem' }}>
-            Social Channels & Instant Messaging
-          </h2>
+          <div style={{ marginBottom: '1.25rem' }}>
+            <h2 style={{ fontSize: '1.15rem', fontWeight: 600, margin: '0 0 0.25rem 0' }}>
+              Social Channels & Instant Messaging
+            </h2>
+            <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--admin-text-muted)' }}>
+              Configure official links. These dynamically power website footer social icons, header Instagram link, floating actions, and contact points.
+            </p>
+          </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.25rem' }}>
             <div>
-              <label className="admin-label">WhatsApp Number / Direct Link</label>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                <label className="admin-label" style={{ margin: 0 }}>WhatsApp Number / Direct Link</label>
+                {whatsapp && (
+                  <a
+                    href={formatWhatsAppUrl(whatsapp)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: '0.78rem', color: 'var(--admin-forest)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', textDecoration: 'none', fontWeight: 600 }}
+                  >
+                    Test Link <ExternalLink size={12} />
+                  </a>
+                )}
+              </div>
               <input
                 type="text"
                 className="admin-input"
                 value={whatsapp}
                 onChange={(e) => setWhatsapp(e.target.value)}
-                placeholder="+971500000000"
+                placeholder="+971 582793399"
               />
+              <span style={{ fontSize: '0.75rem', color: 'var(--admin-text-muted)', display: 'block', marginTop: '0.35rem' }}>
+                Accepts international phone number (+971...) or direct wa.me link.
+              </span>
             </div>
+
             <div>
-              <label className="admin-label">Instagram Profile URL</label>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                <label className="admin-label" style={{ margin: 0 }}>Instagram Profile URL</label>
+                {instagram && (
+                  <a
+                    href={formatSocialUrl(instagram)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: '0.78rem', color: 'var(--admin-forest)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', textDecoration: 'none', fontWeight: 600 }}
+                  >
+                    Test Profile <ExternalLink size={12} />
+                  </a>
+                )}
+              </div>
               <input
                 type="text"
                 className="admin-input"
                 value={instagram}
                 onChange={(e) => setInstagram(e.target.value)}
+                placeholder="https://www.instagram.com/alghafcollective"
               />
+              <span style={{ fontSize: '0.75rem', color: 'var(--admin-text-muted)', display: 'block', marginTop: '0.35rem' }}>
+                Direct Instagram URL. Updates header, footer, and mobile drawer.
+              </span>
             </div>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
             <div>
-              <label className="admin-label">LinkedIn Company Page</label>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                <label className="admin-label" style={{ margin: 0 }}>LinkedIn Company Page</label>
+                {linkedin && (
+                  <a
+                    href={formatSocialUrl(linkedin)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: '0.78rem', color: 'var(--admin-forest)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', textDecoration: 'none', fontWeight: 600 }}
+                  >
+                    Test Page <ExternalLink size={12} />
+                  </a>
+                )}
+              </div>
               <input
                 type="text"
                 className="admin-input"
                 value={linkedin}
                 onChange={(e) => setLinkedin(e.target.value)}
+                placeholder="https://www.linkedin.com/company/alghaf-collective/home/"
               />
+              <span style={{ fontSize: '0.75rem', color: 'var(--admin-text-muted)', display: 'block', marginTop: '0.35rem' }}>
+                LinkedIn company page link. Updates footer social icon.
+              </span>
             </div>
+
             <div>
-              <label className="admin-label">Facebook Page URL</label>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                <label className="admin-label" style={{ margin: 0 }}>Facebook Page URL</label>
+                {facebook && (
+                  <a
+                    href={formatSocialUrl(facebook)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: '0.78rem', color: 'var(--admin-forest)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', textDecoration: 'none', fontWeight: 600 }}
+                  >
+                    Test Page <ExternalLink size={12} />
+                  </a>
+                )}
+              </div>
               <input
                 type="text"
                 className="admin-input"
                 value={facebook}
                 onChange={(e) => setFacebook(e.target.value)}
+                placeholder="https://www.facebook.com/alghafcollective"
               />
+              <span style={{ fontSize: '0.75rem', color: 'var(--admin-text-muted)', display: 'block', marginTop: '0.35rem' }}>
+                Official Facebook page link. Updates footer social icon.
+              </span>
             </div>
           </div>
         </div>

@@ -15,7 +15,9 @@
     "isVisible": true,
     "displayOrder": 1,
     "status": "published",
-    "updatedAt": "2026-10-15T10:37:00.909Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-19T11:43:46.268Z",
+    "updatedAt": "2026-10-19T11:43:46.268Z"
   },
   {
     "_id": "6ad0acce3aff37a955649568",
@@ -36,8 +38,8 @@
     "displayOrder": 2,
     "status": "published",
     "draftContent": null,
-    "publishedAt": "2026-10-16T11:46:52.495Z",
-    "updatedAt": "2026-10-16T11:46:52.495Z"
+    "publishedAt": "2026-10-19T11:43:46.268Z",
+    "updatedAt": "2026-10-19T11:43:46.268Z"
   },
   {
     "_id": "6ad20ecf5bf84f45ecc7211a",
@@ -82,7 +84,9 @@
     "isVisible": true,
     "displayOrder": 3,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:27.091Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-19T11:43:46.268Z",
+    "updatedAt": "2026-10-19T11:43:46.268Z"
   },
   {
     "_id": "6ad20ecf5bf84f45ecc7211b",
@@ -121,7 +125,9 @@
     "isVisible": true,
     "displayOrder": 4,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:27.287Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-19T11:43:46.268Z",
+    "updatedAt": "2026-10-19T11:43:46.268Z"
   },
   {
     "_id": "6ad20ecf5bf84f45ecc7211c",
@@ -141,8 +147,11 @@
         "category": "Modular Living",
         "tagline": "One System. Endless Possibilities.",
         "shortDescription": "A versatile modular building system engineered to create adaptable, high-quality architectural spaces with greater speed, efficiency, and climate control.",
-        "heroImage": "/assets/renders/MOVA_EXT_3D_img1.jpg",
-        "slug": "mova"
+        "heroImage": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410075/alghaf_products/z4238lsf118blihtmzyt.png",
+        "slug": "mova",
+        "image": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410075/alghaf_products/z4238lsf118blihtmzyt.png",
+        "url": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410075/alghaf_products/z4238lsf118blihtmzyt.png",
+        "mediaUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792581330/alghaf_products/r16zpfrge3wmqdjwv0uy.jpg"
       },
       {
         "id": "penta",
@@ -150,8 +159,11 @@
         "category": "Luxury Architectural Living",
         "tagline": "Designed to Stand Apart. Built to Perform.",
         "shortDescription": "AlGhaf Collective’s signature premium collection featuring double-height living spaces, mezzanine architecture, and bespoke craftsmanship.",
-        "heroImage": "/assets/images/imgupscaler-enhanced-7.jpg",
-        "slug": "penta"
+        "heroImage": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410058/alghaf_products/edirg9io70atfbtzcoej.png",
+        "slug": "penta",
+        "image": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410058/alghaf_products/edirg9io70atfbtzcoej.png",
+        "url": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410058/alghaf_products/edirg9io70atfbtzcoej.png",
+        "mediaUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410058/alghaf_products/edirg9io70atfbtzcoej.png"
       },
       {
         "id": "entra",
@@ -159,14 +171,19 @@
         "category": "Private Entertainment",
         "tagline": "Your Space. Your Experience.",
         "shortDescription": "An immersive, acoustically engineered entertainment space designed for private cinema, gaming, social hospitality, and luxury events.",
-        "heroImage": "/assets/renders/CINE_EXT_3D_img1.jpg",
-        "slug": "entra"
+        "heroImage": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410097/alghaf_products/zulnsikbaramsvxkgbiv.png",
+        "slug": "entra",
+        "url": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410097/alghaf_products/zulnsikbaramsvxkgbiv.png",
+        "image": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410097/alghaf_products/zulnsikbaramsvxkgbiv.png",
+        "mediaUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410097/alghaf_products/zulnsikbaramsvxkgbiv.png"
       }
     ],
     "isVisible": true,
     "displayOrder": 5,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:27.464Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-21T11:19:59.910Z",
+    "updatedAt": "2026-10-21T11:19:59.910Z"
   },
   {
     "_id": "6ad20ecf5bf84f45ecc7211d",
@@ -184,18 +201,7 @@
         "category": "Residential",
         "image": "/assets/images/built_more_than_homes_01_web.jpg",
         "link": "/applications/modular-homes",
-        "url": "/assets/images/built_more_than_homes_01_web.jpg",
-        "heroEyebrow": "APPLICATIONS — RESIDENTIAL",
-        "heroTitle": "Modular Homes &\nPrivate Residences.",
-        "heroDesc": "A UAE-rooted modular architecture and construction approach reimagining residential living through precision engineering and sustainable design.",
-        "detailHeroImage": "/assets/images/built_more_than_homes_01_web.jpg",
-        "originEyebrow": "OUR RESIDENTIAL VISION",
-        "originHeadline": "Harmonious Living. Built for the UAE.",
-        "storyParagraphs": [
-          "The Ghaf tree has thrived in the UAE’s desert for generations — resilient and sustaining life in the harshest conditions. Inspired by that enduring spirit, AlGhaf modular residences are engineered to harmonize with the desert while delivering absolute luxury and thermal serenity.",
-          "From primary luxury desert residences to estate guest pavilions and independent family annexes, our modular homes offer expansive double-height volumes, floor-to-ceiling desert-tested glass facades, cantilevered pergolas for natural solar shading, and bespoke interiors completed with turnkey precision.",
-          "Bringing this vision together with the design, prefabrication, and modular construction expertise of CK Living Concepts, AlGhaf Collective delivers precision-engineered homes up to 50% faster than conventional on-site construction — fully customizable from 30 m² to 300 m²."
-        ]
+        "url": "/assets/images/built_more_than_homes_01_web.jpg"
       },
       {
         "id": "hospitality-resorts",
@@ -203,18 +209,7 @@
         "category": "Hospitality",
         "image": "/assets/images/built_more_than_homes_02_web.jpg",
         "link": "/applications/hospitality",
-        "url": "/assets/images/built_more_than_homes_02_web.jpg",
-        "heroEyebrow": "APPLICATIONS — HOSPITALITY",
-        "heroTitle": "Hospitality &\nBoutique Resorts.",
-        "heroDesc": "Accelerated development for world-class guest sanctuaries deployed with minimal environmental disturbance in remote and pristine terrains.",
-        "detailHeroImage": "/assets/images/built_more_than_homes_02_web.jpg",
-        "originEyebrow": "OUR HOSPITALITY VISION",
-        "originHeadline": "Rapid Deployment for World-Class Destinations.",
-        "storyParagraphs": [
-          "Empowering resort operators and developers to deploy luxury guest keys in remote or pristine terrains with minimal environmental disturbance. Deliver exceptional guest experiences months ahead of conventional construction schedules.",
-          "Every boutique suite is acoustically isolated and pre-fitted with five-star finishes, offering repeatable, luxury-grade consistency across multiple keys with minimal on-site disruption to delicate natural ecosystems.",
-          "With modular prefabrication by CK Living Concepts, opening timelines are compressed by up to 50%, enabling operators to welcome guests and generate revenue significantly faster."
-        ]
+        "url": "/assets/images/built_more_than_homes_02_web.jpg"
       },
       {
         "id": "farm-living-estates",
@@ -222,18 +217,7 @@
         "category": "Residential & Agriculture",
         "image": "/assets/images/built_more_than_homes_03_web.jpg",
         "link": "/applications/farm-living",
-        "url": "/assets/images/built_more_than_homes_03_web.jpg",
-        "heroEyebrow": "APPLICATIONS — FARM & RANCH",
-        "heroTitle": "Farm Living &\nDesert Ranches.",
-        "heroDesc": "Modern architectural retreats tailored for agricultural estates, equestrian ranches, and private desert farms.",
-        "detailHeroImage": "/assets/images/built_more_than_homes_03_web.jpg",
-        "originEyebrow": "OUR RANCH LIVING VISION",
-        "originHeadline": "Harmonizing Architecture with Rural Serenity.",
-        "storyParagraphs": [
-          "Modern architectural retreats tailored for agricultural estates, equestrian ranches, and desert farms. Designed to frame panoramic views, provide insulated comfort against day-and-night temperature swings, and blend harmoniously into rural surroundings.",
-          "Generous shaded verandas and outdoor dining pergolas expand the usable living space, while dust-sealed multi-point fenestration and durable exterior materials withstand sand abrasion and harsh sun exposure.",
-          "Engineered with off-grid compatibility and rapid factory assembly, AlGhaf delivers serene agricultural sanctuaries without disturbing active farm operations."
-        ]
+        "url": "/assets/images/built_more_than_homes_03_web.jpg"
       },
       {
         "id": "eco-developments",
@@ -241,42 +225,35 @@
         "category": "Hospitality & Wellness",
         "image": "/assets/images/built_more_than_homes_04_web.jpg",
         "link": "/applications/eco-retreats",
-        "url": "/assets/images/built_more_than_homes_04_web.jpg",
-        "heroEyebrow": "APPLICATIONS — ECO RETREATS",
-        "heroTitle": "Eco Retreats &\nNature Escapes.",
-        "heroDesc": "Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways.",
-        "detailHeroImage": "/assets/images/built_more_than_homes_04_web.jpg",
-        "originEyebrow": "OUR ECOLOGICAL VISION",
-        "originHeadline": "Light on the Land. Deeply Connected to Nature.",
-        "storyParagraphs": [
-          "Low-impact architectural pavilions designed for sensitive ecological locations, desert conservation reserves, and mountain hideaways. Built with sustainable materials and compatible with off-grid solar and greywater systems.",
-          "Lightweight foundation options leave natural topography undisturbed, while high solar reflectivity and passive natural ventilation ensure exceptional energy efficiency.",
-          "Constructed with recyclable steel structural frames and non-toxic interior finishes, creating authentic nature escapes that honor the fragile desert ecosystem."
-        ]
+        "url": "/assets/images/built_more_than_homes_04_web.jpg"
       }
     ],
     "isVisible": true,
     "displayOrder": 6,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:27.618Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-19T11:43:46.268Z",
+    "updatedAt": "2026-10-19T11:43:46.268Z"
   },
   {
     "_id": "6ad20ecf5bf84f45ecc7211e",
     "pageSlug": "home",
     "sectionId": "home-closing",
     "sectionName": "Closing Hero & Statement",
-    "thumbnailUrl": "/assets/images/imgupscaler-enhanced-4.jpg",
+    "thumbnailUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410215/alghaf_website/yuvh7l2xrwgeiunl2vks.png",
     "eyebrow": "Closing Statement",
     "title": "Live Better.",
     "subtitle": "",
     "content": "Everything we design and build begins with one purpose — to improve the way people live. We bring architecture, technology, nature, and human experience together to create spaces that are smarter, more comfortable, and more sustainable.",
-    "mediaUrl": "/assets/images/imgupscaler-enhanced-4.jpg",
+    "mediaUrl": "https://res.cloudinary.com/pphvtdhb/image/upload/v1792410215/alghaf_website/yuvh7l2xrwgeiunl2vks.png",
     "mediaType": "image",
     "ctaText": "Enquire Now",
     "ctaUrl": "#enquiry",
     "isVisible": true,
     "displayOrder": 7,
     "status": "published",
-    "updatedAt": "2026-10-16T11:47:27.794Z"
+    "draftContent": null,
+    "publishedAt": "2026-10-19T11:43:46.268Z",
+    "updatedAt": "2026-10-19T11:43:46.268Z"
   }
 ]

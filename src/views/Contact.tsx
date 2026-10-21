@@ -76,6 +76,7 @@ const DEFAULT_FAQS = [
 
 export default function Contact({ initialSections = [] }: ContactProps) {
   const [sections, setSections] = useState<any[]>(initialSections);
+  const [settings, setSettings] = useState<any>(null);
 
   useEffect(() => {
     fetch('/api/sections?pageSlug=contact')
@@ -86,6 +87,15 @@ export default function Contact({ initialSections = [] }: ContactProps) {
         }
       })
       .catch((err) => console.warn('Contact sections sync notice:', err));
+
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.settings) {
+          setSettings(data.settings);
+        }
+      })
+      .catch((err) => console.warn('Contact settings sync notice:', err));
   }, []);
 
   const heroSec = sections.find((s) => s.sectionId === 'contact-hero');
@@ -293,7 +303,7 @@ export default function Contact({ initialSections = [] }: ContactProps) {
                       id: 'headquarters',
                       type: 'headquarters',
                       title: 'Headquarters',
-                      address: companyInfo.contact.address,
+                      address: settings?.address || companyInfo.contact.address,
                       icon: 'MapPin',
                       isVisible: true,
                     },
@@ -301,8 +311,8 @@ export default function Contact({ initialSections = [] }: ContactProps) {
                       id: 'phone-whatsapp',
                       type: 'phone',
                       title: 'Telephone & WhatsApp',
-                      phone: companyInfo.contact.phone,
-                      whatsapp: companyInfo.contact.whatsapp,
+                      phone: settings?.phone || companyInfo.contact.phone,
+                      whatsapp: settings?.whatsapp || companyInfo.contact.whatsapp,
                       icon: 'Phone',
                       isVisible: true,
                     },
@@ -310,7 +320,7 @@ export default function Contact({ initialSections = [] }: ContactProps) {
                       id: 'email',
                       type: 'email',
                       title: 'Inquiries Email',
-                      email: companyInfo.contact.email,
+                      email: settings?.email || companyInfo.contact.email,
                       icon: 'Mail',
                       isVisible: true,
                     },
@@ -387,19 +397,19 @@ export default function Contact({ initialSections = [] }: ContactProps) {
                               <div>
                                 <p style={{ fontSize: '0.9375rem', color: 'var(--color-charcoal)', margin: '0 0 0.25rem 0' }}>
                                   Main:{' '}
-                                  <a href={`tel:${card.phone || companyInfo.contact.phone}`} style={{ fontWeight: 600 }}>
-                                    {card.phone || companyInfo.contact.phone}
+                                  <a href={`tel:${(card.phone || settings?.phone || companyInfo.contact.phone || '').replace(/\s+/g, '')}`} style={{ fontWeight: 600 }}>
+                                    {card.phone || settings?.phone || companyInfo.contact.phone}
                                   </a>
                                 </p>
                                 <p style={{ fontSize: '0.9375rem', color: 'var(--color-charcoal)', margin: 0 }}>
                                   WhatsApp:{' '}
                                   <a
-                                    href={`https://wa.me/${(card.whatsapp || companyInfo.contact.whatsapp).replace(/[^0-9]/g, '')}`}
+                                    href={`https://wa.me/${(card.whatsapp || settings?.whatsapp || companyInfo.contact.whatsapp || '').replace(/[^0-9]/g, '')}`}
                                     target="_blank"
                                     rel="noreferrer"
                                     style={{ fontWeight: 600, color: '#1E7E34' }}
                                   >
-                                    {card.whatsapp || companyInfo.contact.whatsapp}
+                                    {card.whatsapp || settings?.whatsapp || companyInfo.contact.whatsapp}
                                   </a>
                                 </p>
                               </div>
@@ -407,8 +417,8 @@ export default function Contact({ initialSections = [] }: ContactProps) {
 
                             {isEmail && (
                               <p style={{ fontSize: '0.9375rem', color: 'var(--color-charcoal)', margin: 0 }}>
-                                <a href={`mailto:${card.email || companyInfo.contact.email}`} style={{ fontWeight: 600 }}>
-                                  {card.email || companyInfo.contact.email}
+                                <a href={`mailto:${card.email || settings?.email || companyInfo.contact.email}`} style={{ fontWeight: 600 }}>
+                                  {card.email || settings?.email || companyInfo.contact.email}
                                 </a>
                               </p>
                             )}
