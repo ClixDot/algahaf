@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import SmoothScrollProvider from '../common/SmoothScrollProvider';
 import ScrollToTop from '../common/ScrollToTop';
@@ -14,22 +14,13 @@ interface WebsiteShellProps {
 
 export default function WebsiteShell({ children }: WebsiteShellProps) {
   const pathname = usePathname();
-  const [transitionKey, setTransitionKey] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const prevPathname = useRef(pathname);
-
-  // Trigger transition class whenever pathname changes
-  useEffect(() => {
-    if (prevPathname.current !== pathname) {
-      prevPathname.current = pathname;
-      setTransitionKey((k) => k + 1);
-      setIsTransitioning(true);
-
-      // Remove class after animation completes so it can re-trigger next nav
-      const timer = setTimeout(() => setIsTransitioning(false), 400);
-      return () => clearTimeout(timer);
-    }
-  }, [pathname]);
+  // Skip the enter animation on the very first paint (no flash on initial load);
+  // every client-side navigation after that remounts the wrapper (key=pathname)
+  // and plays it once. Keying directly on pathname avoids the old
+  // render-then-remount cycle that mounted every new page twice.
+  const [firstPath] = useState(pathname);
+  const [hasNavigated, setHasNavigated] = useState(false);
+  if (!hasNavigated && pathname !== firstPath) setHasNavigated(true);
 
   const isAdmin = pathname?.startsWith('/admin');
 
@@ -53,8 +44,8 @@ export default function WebsiteShell({ children }: WebsiteShellProps) {
         <ScrollToTop />
         <Navbar />
         <div
-          key={transitionKey}
-          className={isTransitioning ? 'page-transition-enter' : undefined}
+          key={pathname}
+          className={hasNavigated ? 'page-transition-enter' : undefined}
           style={{ flex: 1, width: '100%', maxWidth: '100%', overflowX: 'clip' }}
         >
           {children}

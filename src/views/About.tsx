@@ -299,6 +299,7 @@ export default function About({ initialSections = [] }: AboutProps) {
             alt={heroSec?.mediaAlt || 'AlGhaf Collective Modern Architecture'}
             className="about-hero-bg"
             loading="eager"
+            fetchPriority="high"
           />
           <div className="about-hero-overlay" />
 
@@ -477,7 +478,7 @@ export default function About({ initialSections = [] }: AboutProps) {
 
               {/* Floating Office Card in Center matching reference screenshot */}
               <div className="office-floating-card">
-                <img
+                <img loading="lazy" decoding="async"
                   src={officeCard.image || officeSec?.mediaUrl || '/assets/images/imgupscaler-enhanced-7.jpg'}
                   alt={officeCard.title || 'AlGhaf Headquarters Building'}
                   className="office-floating-img"

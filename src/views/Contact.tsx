@@ -79,14 +79,17 @@ export default function Contact({ initialSections = [] }: ContactProps) {
   const [settings, setSettings] = useState<any>(null);
 
   useEffect(() => {
-    fetch('/api/sections?pageSlug=contact')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && Array.isArray(data.sections) && data.sections.length > 0) {
-          setSections(data.sections);
-        }
-      })
-      .catch((err) => console.warn('Contact sections sync notice:', err));
+    // Server already provided sections; only refetch them as a fallback
+    if (!initialSections || initialSections.length === 0) {
+      fetch('/api/sections?pageSlug=contact')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && Array.isArray(data.sections) && data.sections.length > 0) {
+            setSections(data.sections);
+          }
+        })
+        .catch((err) => console.warn('Contact sections sync notice:', err));
+    }
 
     fetch('/api/settings')
       .then((res) => res.json())

@@ -10,8 +10,10 @@ export const metadata = {
 };
 
 export default async function ProductsPage() {
-  const initialSections = await getCmsSections('products', 'live');
-  const settings = await getGlobalSettings();
+  const [initialSections, settings] = await Promise.all([
+    getCmsSections('products', 'live'),
+    getGlobalSettings(),
+  ]);
   return (
     <Products
       initialSections={initialSections}

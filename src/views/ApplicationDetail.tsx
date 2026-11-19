@@ -164,6 +164,7 @@ export default function ApplicationDetail() {
           className="about-hero-bg"
           style={{ objectPosition: 'center center' }}
           loading="eager"
+          fetchPriority="high"
         />
         <div 
           className="about-hero-overlay" 

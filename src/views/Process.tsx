@@ -195,7 +195,7 @@ export default function Process() {
                       order: isEven ? 1 : 2
                     }}
                   >
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={step.image}
                       alt={step.phase}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}

@@ -267,7 +267,7 @@ export default function ProductPenta({ initialProduct }: ProductPentaProps) {
                   onClick={() => openLightbox(activeTab === 'interior' ? interiorImages : exteriorImages, idx)}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={img} alt={`PENTA View ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img loading="lazy" decoding="async" src={img} alt={`PENTA View ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <div style={{
                     position: 'absolute',
                     inset: 0,
@@ -383,7 +383,7 @@ export default function ProductPenta({ initialProduct }: ProductPentaProps) {
                 }}>
                   <div style={{ height: '220px' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={prod.heroImage} alt={prod.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img loading="lazy" decoding="async" src={prod.heroImage} alt={prod.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   <div style={{ padding: '1.75rem' }}>
                     <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 500, color: 'var(--color-forest-dark)', marginBottom: '0.25rem' }}>

@@ -70,6 +70,8 @@ export default function Products({ initialSections = [], initialDetailsOpen = fa
   const [sections, setSections] = useState<any[]>(initialSections);
 
   useEffect(() => {
+    // Server already provided sections + settings; only fetch as a fallback
+    if (initialSections && initialSections.length > 0) return;
     fetch('/api/sections?pageSlug=products')
       .then((res) => res.json())
       .then((data) => {
@@ -299,7 +301,7 @@ export default function Products({ initialSections = [], initialDetailsOpen = fa
                         order: isEven ? 2 : 1,
                       }}
                     >
-                      <img
+                      <img loading="lazy" decoding="async"
                         src={prodHeroImage}
                         alt={sec?.mediaAlt || prodName}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}

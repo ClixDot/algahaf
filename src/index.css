@@ -2342,6 +2342,33 @@ body {
   }
 }
 
+/* Route loading state (src/app/loading.tsx): thin brand-coloured progress bar */
+.route-loading {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.route-loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  height: 3px;
+  width: 100%;
+  background: #294633;
+  transform-origin: left center;
+  animation: routeLoadingBar 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes routeLoadingBar {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(0.85); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-loading-bar { animation: none; transform: scaleX(0.85); }
+}
+
 .page-transition-enter {
   animation: pageEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
   will-change: opacity, transform;

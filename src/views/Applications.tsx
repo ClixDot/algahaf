@@ -256,7 +256,7 @@ export default function Applications() {
                 >
                   {/* Image Banner */}
                   <div style={{ height: '245px', position: 'relative', overflow: 'hidden' }}>
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={appImg}
                       alt={appAlt}
                       style={{ 

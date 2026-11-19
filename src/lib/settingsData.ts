@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { cache } from 'react';
 import path from 'path';
 import { connectToDatabase } from './mongodb';
 import { GlobalSettings } from '../models/GlobalSettings';
@@ -74,7 +75,10 @@ function saveLocalSettings(data: any) {
   }
 }
 
-export async function getGlobalSettings(): Promise<any> {
+/** Memoized per request so several server components can read settings with one DB hit. */
+export const getGlobalSettings = cache(getGlobalSettingsRaw);
+
+async function getGlobalSettingsRaw(): Promise<any> {
   try {
     const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('DB Timeout')), 8000)

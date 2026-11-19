@@ -26,16 +26,26 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
       return;
     }
 
-    // Initialize Lenis with tuned architectural smoothing
+    // Lerp-based smoothing: each frame closes 10% of the remaining distance.
+    // Unlike a fixed `duration`, it stays responsive to fast/continuous wheel
+    // input (no "laggy" feel) while still gliding smoothly to a stop.
+    // Touch devices keep native momentum scrolling (syncTouch: false), which
+    // is the fastest and most natural feel on phones.
     const lenis = new Lenis({
-      duration: 1.15,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth exponential ease-out
+      lerp: 0.1,
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1.25,
+      syncTouch: false,
+      wheelMultiplier: 1,
+      touchMultiplier: 1,
       infinite: false,
+      // Let modals/drawers/menus marked data-lenis-prevent scroll natively,
+      // and allow nested scrollable areas to scroll without fighting Lenis.
+      allowNestedScroll: true,
+      // Clicking a Next.js <Link> mid-scroll stops leftover inertia so the
+      // new page doesn't keep drifting.
+      stopInertiaOnNavigate: true,
       autoRaf: false // Controlled strictly by GSAP ticker for 100% synchronicity
     });
 
@@ -67,12 +77,12 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     window.addEventListener('load', handleLoad);
 
     // Handle internal anchor clicks smoothly via Lenis
-    const handleAnchorClick = (e) => {
-      const target = e.target.closest('a[href^="#"]');
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement | null)?.closest('a[href^="#"]');
       if (target) {
         const href = target.getAttribute('href');
         if (href && href !== '#' && href.startsWith('#')) {
-          const el = document.querySelector(href);
+          const el = document.querySelector<HTMLElement>(href);
           if (el) {
             e.preventDefault();
             lenis.scrollTo(el, { offset: -70, duration: 1.2 });

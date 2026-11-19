@@ -10,7 +10,8 @@ export default function ScrollToTop() {
   useEffect(() => {
     // Immediately snap scroll position to top using both Lenis and native API
     if ((window as any).lenis) {
-      (window as any).lenis.scrollTo(0, { immediate: true });
+      // force: also works if Lenis is momentarily stopped (e.g. mobile menu open)
+      (window as any).lenis.scrollTo(0, { immediate: true, force: true });
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 

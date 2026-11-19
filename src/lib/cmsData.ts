@@ -1,4 +1,6 @@
 import fs from 'fs';
+import { cache } from 'react';
+import { optimizeMediaDeep } from './mediaOptimize';
 import path from 'path';
 import { connectToDatabase } from './mongodb';
 import { Section } from '../models/Section';
@@ -1254,9 +1256,24 @@ function sanitizeHomeApplications(sections: CmsSectionItem[]): CmsSectionItem[] 
   });
 }
 
-export async function getCmsSections(
-  pageSlug: string = 'home',
-  mode: 'live' | 'admin' = 'live'
+/**
+ * Fetch sections for a page. Memoized per request (React `cache`) so a page's
+ * metadata + body don't hit MongoDB twice. Live mode also rewrites Cloudinary
+ * URLs to compressed, auto-format delivery URLs.
+ */
+export const getCmsSections = cache(
+  async (
+    pageSlug: string = 'home',
+    mode: 'live' | 'admin' = 'live'
+  ): Promise<CmsSectionItem[]> => {
+    const sections = await getCmsSectionsRaw(pageSlug, mode);
+    return mode === 'live' ? optimizeMediaDeep(sections) : sections;
+  }
+);
+
+async function getCmsSectionsRaw(
+  pageSlug: string,
+  mode: 'live' | 'admin'
 ): Promise<CmsSectionItem[]> {
   try {
     await connectToDatabase();

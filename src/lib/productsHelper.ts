@@ -1,4 +1,6 @@
+import { cache } from 'react';
 import { products as defaultProducts } from '../data/productsData';
+import { optimizeMediaDeep } from './mediaOptimize';
 
 export function normalizeProductData(rawProduct: any) {
   if (!rawProduct) return null;
@@ -154,7 +156,13 @@ export function getDefaultSeedProducts() {
   return defaultProducts.map((p) => normalizeProductData(p));
 }
 
-export async function getLiveProduct(idOrSlug: string) {
+/** Memoized per request; Cloudinary media URLs are rewritten to optimized delivery URLs. */
+export const getLiveProduct = cache(async (idOrSlug: string) => {
+  const product = await getLiveProductRaw(idOrSlug);
+  return product ? optimizeMediaDeep(product) : product;
+});
+
+async function getLiveProductRaw(idOrSlug: string) {
   const cleanId = (idOrSlug || '').toLowerCase().trim();
   try {
     const { connectToDatabase } = await import('./mongodb');
