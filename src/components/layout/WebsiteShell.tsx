@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import SmoothScrollProvider from '../common/SmoothScrollProvider';
 import ScrollToTop from '../common/ScrollToTop';
+import NavigationProgress from '../common/NavigationProgress';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import FloatingActions from './FloatingActions';
@@ -42,6 +43,7 @@ export default function WebsiteShell({ children }: WebsiteShellProps) {
         }}
       >
         <ScrollToTop />
+        <NavigationProgress />
         <Navbar />
         <div
           key={pathname}

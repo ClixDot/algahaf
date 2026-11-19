@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { products as defaultProducts } from '../data/productsData';
 import { optimizeMediaDeep } from './mediaOptimize';
+import { cachedRead } from './liveCache';
 
 export function normalizeProductData(rawProduct: any) {
   if (!rawProduct) return null;
@@ -158,7 +159,7 @@ export function getDefaultSeedProducts() {
 
 /** Memoized per request; Cloudinary media URLs are rewritten to optimized delivery URLs. */
 export const getLiveProduct = cache(async (idOrSlug: string) => {
-  const product = await getLiveProductRaw(idOrSlug);
+  const product = await cachedRead(`product:${(idOrSlug || '').toLowerCase().trim()}`, () => getLiveProductRaw(idOrSlug));
   return product ? optimizeMediaDeep(product) : product;
 });
 

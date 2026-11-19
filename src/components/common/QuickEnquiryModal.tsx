@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { X, CheckCircle, Send, Loader2 } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
 export interface QuickEnquiryModalProps {
   isOpen: boolean;
@@ -109,7 +110,8 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
     onClose();
   };
 
-  return (
+  // Portal to <body> so no transformed ancestor can shift this fixed overlay
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
@@ -326,5 +328,7 @@ export default function QuickEnquiryModal({ isOpen, onClose, initialProduct = ''
         )}
       </div>
     </div>
+    ,
+    document.body
   );
 }

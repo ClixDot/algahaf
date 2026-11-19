@@ -1,3 +1,4 @@
+import { invalidatesLiveCache } from '@/lib/liveCache';
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '../../../../../lib/auth';
 import { connectToDatabase } from '../../../../../lib/mongodb';
@@ -41,7 +42,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   }
 }
 
-export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export const PUT = invalidatesLiveCache(handlePUT);
+
+async function handlePUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = requireAuth(req);
   if ('errorResponse' in auth) return auth.errorResponse;
 
@@ -85,7 +88,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export const DELETE = invalidatesLiveCache(handleDELETE);
+
+async function handleDELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = requireAuth(req);
   if ('errorResponse' in auth) return auth.errorResponse;
 

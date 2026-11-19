@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { cache } from 'react';
+import { cachedRead, invalidatesLiveCache } from './liveCache';
 import path from 'path';
 import { connectToDatabase } from './mongodb';
 import { GlobalSettings } from '../models/GlobalSettings';
@@ -76,7 +77,7 @@ function saveLocalSettings(data: any) {
 }
 
 /** Memoized per request so several server components can read settings with one DB hit. */
-export const getGlobalSettings = cache(getGlobalSettingsRaw);
+export const getGlobalSettings = cache(() => cachedRead('settings', getGlobalSettingsRaw));
 
 async function getGlobalSettingsRaw(): Promise<any> {
   try {
@@ -102,7 +103,9 @@ async function getGlobalSettingsRaw(): Promise<any> {
   return ensureLocalSettings();
 }
 
-export async function updateGlobalSettings(data: any): Promise<any> {
+export const updateGlobalSettings = invalidatesLiveCache(updateGlobalSettingsRaw);
+
+async function updateGlobalSettingsRaw(data: any): Promise<any> {
   const current = ensureLocalSettings();
 
   // Helper to ensure valid URL for social links

@@ -1,3 +1,4 @@
+import { invalidatesLiveCache } from '@/lib/liveCache';
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '../../../../lib/auth';
 import { connectToDatabase } from '../../../../lib/mongodb';
@@ -46,7 +47,9 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function POST(req: NextRequest) {
+export const POST = invalidatesLiveCache(handlePOST);
+
+async function handlePOST(req: NextRequest) {
   const auth = requireAuth(req);
   if ('errorResponse' in auth) return auth.errorResponse;
 

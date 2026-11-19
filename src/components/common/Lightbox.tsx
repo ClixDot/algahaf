@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
 export type LightboxImage = string | { src?: string; title?: string; [key: string]: any };
 
@@ -46,7 +47,8 @@ export default function Lightbox({ images = [], currentIndex = 0, isOpen, onClos
   const src = typeof currentImage === 'string' ? currentImage : currentImage?.src;
   const title = typeof currentImage === 'string' ? '' : currentImage?.title;
 
-  return (
+  // Portal to <body> so no transformed ancestor can shift this fixed overlay
+  return createPortal(
     <div 
       role="dialog" 
       aria-modal="true"
@@ -187,5 +189,7 @@ export default function Lightbox({ images = [], currentIndex = 0, isOpen, onClos
         </>
       )}
     </div>
+    ,
+    document.body
   );
 }

@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { X, Sparkles, ArrowRight, Building2, Trees, Compass } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
 export interface ComingSoonModalProps {
   isOpen: boolean;
@@ -45,7 +46,8 @@ export default function ComingSoonModal({
 
   if (!isOpen) return null;
 
-  return (
+  // Portal to <body> so no transformed ancestor can shift this fixed overlay
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
@@ -325,5 +327,7 @@ export default function ComingSoonModal({
         }
       `}</style>
     </div>
+    ,
+    document.body
   );
 }

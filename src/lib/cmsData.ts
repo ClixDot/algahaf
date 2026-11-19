@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { cache } from 'react';
 import { optimizeMediaDeep } from './mediaOptimize';
+import { cachedRead, invalidatesLiveCache } from './liveCache';
 import path from 'path';
 import { connectToDatabase } from './mongodb';
 import { Section } from '../models/Section';
@@ -1266,8 +1267,12 @@ export const getCmsSections = cache(
     pageSlug: string = 'home',
     mode: 'live' | 'admin' = 'live'
   ): Promise<CmsSectionItem[]> => {
-    const sections = await getCmsSectionsRaw(pageSlug, mode);
-    return mode === 'live' ? optimizeMediaDeep(sections) : sections;
+    // Admin always reads fresh; the public site reads through the short-lived
+    // in-process cache (cleared on every admin save) to skip the DB round trip.
+    if (mode !== 'live') return getCmsSectionsRaw(pageSlug, mode);
+    return cachedRead(`cms:${pageSlug}`, async () =>
+      optimizeMediaDeep(await getCmsSectionsRaw(pageSlug, mode))
+    );
   }
 );
 
@@ -1360,7 +1365,9 @@ async function getCmsSectionsRaw(
 /**
  * Update or create a single section.
  */
-export async function saveCmsSection(
+export const saveCmsSection = invalidatesLiveCache(saveCmsSectionRaw);
+
+async function saveCmsSectionRaw(
   sectionData: Partial<CmsSectionItem> & { pageSlug: string; sectionId: string; sectionName: string },
   publishNow: boolean = false
 ): Promise<CmsSectionItem> {
@@ -1552,7 +1559,9 @@ function syncCatalogToHomeApplications(catalogItems: any[]) {
 /**
  * Reorder sections
  */
-export async function reorderCmsSections(
+export const reorderCmsSections = invalidatesLiveCache(reorderCmsSectionsRaw);
+
+async function reorderCmsSectionsRaw(
   pageSlug: string,
   orders: Array<{ sectionId: string; displayOrder: number }>
 ): Promise<boolean> {
@@ -1577,7 +1586,9 @@ export async function reorderCmsSections(
 /**
  * Publish all draft changes for a page to live
  */
-export async function publishAllCmsSections(pageSlug: string): Promise<boolean> {
+export const publishAllCmsSections = invalidatesLiveCache(publishAllCmsSectionsRaw);
+
+async function publishAllCmsSectionsRaw(pageSlug: string): Promise<boolean> {
   const now = new Date();
   try {
     await connectToDatabase();
