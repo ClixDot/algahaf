@@ -13,6 +13,15 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // The production server runs out of memory during the "Running TypeScript"
+  // step of `next build`. Type checking is done separately via
+  // `npm run typecheck` (run it before pushing), so skip it during the build.
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  // Source maps add memory pressure during build; not needed in production.
+  productionBrowserSourceMaps: false,
+  enablePrerenderSourceMaps: false,
 };
 
 export default nextConfig;

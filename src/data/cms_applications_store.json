@@ -1,5 +1,6 @@
 [
   {
+    "_id": "6ad468893aff37a955691427",
     "pageSlug": "applications",
     "sectionId": "applications-hero",
     "sectionName": "Applications Hero Banner",
@@ -11,9 +12,6 @@
     "mediaUrl": "/assets/images/image_bg_alghaf222.jpg",
     "mediaType": "image",
     "mediaAlt": "Built For More Than Homes - AlGhaf Applications",
-    "displayOrder": 1,
-    "isVisible": true,
-    "status": "published",
     "items": [
       {
         "id": "hero-styling",
@@ -23,9 +21,14 @@
         "contentWidth": "880px",
         "heroHeight": "clamp(520px, 62vh, 700px)"
       }
-    ]
+    ],
+    "isVisible": true,
+    "displayOrder": 1,
+    "status": "published",
+    "updatedAt": "2026-10-18T06:34:49.232Z"
   },
   {
+    "_id": "6ad468893aff37a955691428",
     "pageSlug": "applications",
     "sectionId": "applications-categories",
     "sectionName": "Application Categories & Filters",
@@ -33,9 +36,7 @@
     "eyebrow": "DYNAMIC CATEGORY FILTERS",
     "title": "Application Categories & Filters",
     "subtitle": "Manage filter chips and category groupings for the catalog",
-    "displayOrder": 2,
-    "isVisible": true,
-    "status": "published",
+    "mediaType": "image",
     "items": [
       {
         "id": "cat-all",
@@ -73,9 +74,14 @@
         "order": 4,
         "isVisible": true
       }
-    ]
+    ],
+    "isVisible": true,
+    "displayOrder": 2,
+    "status": "published",
+    "updatedAt": "2026-10-18T06:34:49.644Z"
   },
   {
+    "_id": "6ad468893aff37a955691429",
     "pageSlug": "applications",
     "sectionId": "applications-cards",
     "sectionName": "Application Cards Catalog",
@@ -83,9 +89,7 @@
     "eyebrow": "PORTFOLIO OF 6 CORE TYPOLOGIES",
     "title": "Application Cards & Architectural Typologies",
     "subtitle": "Complete CRUD management for individual application cards",
-    "displayOrder": 3,
-    "isVisible": true,
-    "status": "published",
+    "mediaType": "image",
     "items": [
       {
         "id": "modular-homes",
@@ -338,9 +342,14 @@
         "isVisible": true,
         "status": "published"
       }
-    ]
+    ],
+    "isVisible": true,
+    "displayOrder": 3,
+    "status": "published",
+    "updatedAt": "2026-10-18T06:34:49.950Z"
   },
   {
+    "_id": "6ad4688a3aff37a95569142a",
     "pageSlug": "applications",
     "sectionId": "applications-closing",
     "sectionName": "Closing Project Consultation CTA",
@@ -349,12 +358,14 @@
     "title": "Have a Unique Architectural Requirement?",
     "subtitle": "Our prefabrication engineers collaborate with private landowners, hoteliers, and developers across the UAE and GCC.",
     "content": "From single private pavilions to masterplanned luxury resort keys, AlGhaf delivers turnkey modular architecture with uncompromising quality.",
-    "ctaText": "Start a Consultation",
-    "ctaUrl": "/contact",
     "mediaUrl": "/assets/images/about_bg.png",
     "mediaType": "image",
-    "displayOrder": 4,
+    "ctaText": "Start a Consultation",
+    "ctaUrl": "/contact",
+    "items": [],
     "isVisible": true,
-    "status": "published"
+    "displayOrder": 4,
+    "status": "published",
+    "updatedAt": "2026-10-18T06:34:51.183Z"
   }
 ]
